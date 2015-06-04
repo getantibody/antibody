@@ -19,6 +19,22 @@ func clone(bundle string, home string) string {
 	return folder
 }
 
+func pull(bundle string, home string) string {
+	folder := home + bundle
+	pull := exec.Command("git", "-C", folder, "pull", "origin", "master")
+	pull.Start()
+	return folder
+}
+
+func update(home string) {
+	bundles, _ := ioutil.ReadDir(home)
+	for _, bundle := range bundles {
+		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
+			fmt.Println(pull(home+bundle.Name(), home))
+		}
+	}
+}
+
 func main() {
 	home := os.Getenv("HOME") + "/.antibody/"
 	stat, _ := os.Stdin.Stat()
@@ -30,6 +46,10 @@ func main() {
 			}
 		}
 	} else {
-		fmt.Println(clone(os.Args[1:][0], home))
+		if (os.Args[1:][0]) == "update" {
+			update(home)
+		} else if (os.Args[1:][0]) == "bundle" {
+			fmt.Println(clone(os.Args[1:][1], home))
+		}
 	}
 }
