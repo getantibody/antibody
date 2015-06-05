@@ -1,6 +1,6 @@
 # antibody
 
-A faster and simplified version of antigen
+A faster and simpler version of antigen
 
 ### Why?
 
