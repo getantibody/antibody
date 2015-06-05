@@ -24,12 +24,12 @@ func ProcessStdin(home string) {
 	}
 }
 
-func ProcessArgs(home string) {
-	cmd := os.Args[1:][0]
+func ProcessArgs(args []string, home string) {
+	cmd := args[0]
 	if cmd == "update" {
 		Update(home)
 	} else if cmd == "bundle" {
-		Bundle(os.Args[1:][1], home)
+		Bundle(args[1], home)
 	} else {
 		panic("Invalid command: " + cmd)
 	}

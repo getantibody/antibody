@@ -1,10 +1,12 @@
 package antibody
 
+import "os"
+
 func main() {
 	home := Home()
 	if ReadStdin() {
 		ProcessStdin(home)
 	} else {
-		ProcessArgs(home)
+		ProcessArgs(os.Args[1:], home)
 	}
 }

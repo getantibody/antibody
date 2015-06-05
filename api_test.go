@@ -17,6 +17,16 @@ func home() string {
 	return file + "/"
 }
 
+func Test_ProcessesArgsBunde(t *testing.T) {
+	home := home()
+	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home)
+}
+
+func Test_Update(t *testing.T) {
+	home := home()
+	ProcessArgs([]string{"update"}, home)
+}
+
 func Test_bundlesSinglePlugin(t *testing.T) {
 	home := home()
 	Bundle("caarlos0/zsh-pg", home)
