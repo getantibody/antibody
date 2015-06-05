@@ -19,15 +19,6 @@ func clone(bundle string, home string) string {
 	return folder
 }
 
-func cloneStdin(home string) {
-	bundles, _ := ioutil.ReadAll(os.Stdin)
-	for _, bundle := range strings.Split(string(bundles), "\n") {
-		if bundle != "" {
-			fmt.Println(clone(bundle, home))
-		}
-	}
-}
-
 func pull(bundle string, home string) string {
 	folder := home + bundle
 	pull := exec.Command("git", "-C", folder, "pull", "origin", "master")
@@ -44,6 +35,26 @@ func update(home string) {
 	}
 }
 
+func processStdin(home string) {
+	bundles, _ := ioutil.ReadAll(os.Stdin)
+	for _, bundle := range strings.Split(string(bundles), "\n") {
+		if bundle != "" {
+			fmt.Println(clone(bundle, home))
+		}
+	}
+}
+
+func processArgs(home string) {
+	cmd := os.Args[1:][0]
+	if cmd == "update" {
+		update(home)
+	} else if cmd == "bundle" {
+		fmt.Println(clone(os.Args[1:][1], home))
+	} else {
+		panic("Invalid command: " + cmd)
+	}
+}
+
 func readStdin() bool {
 	stat, _ := os.Stdin.Stat()
 	return (stat.Mode() & os.ModeCharDevice) == 0
@@ -52,12 +63,8 @@ func readStdin() bool {
 func main() {
 	home := os.Getenv("HOME") + "/.antibody/"
 	if readStdin() {
-		cloneStdin(home)
+		processStdin(home)
 	} else {
-		if (os.Args[1:][0]) == "update" {
-			update(home)
-		} else if (os.Args[1:][0]) == "bundle" {
-			fmt.Println(clone(os.Args[1:][1], home))
-		}
+		processArgs(home)
 	}
 }
