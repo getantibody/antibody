@@ -1,4 +1,4 @@
-package main
+package antibody
 
 import (
 	"fmt"
@@ -60,8 +60,16 @@ func readStdin() bool {
 	return (stat.Mode() & os.ModeCharDevice) == 0
 }
 
+func Home() string {
+	home := os.Getenv("ANTIBODY_HOME")
+	if home == "" {
+		home = os.Getenv("HOME") + "/.antibody/"
+	}
+	return home
+}
+
 func main() {
-	home := os.Getenv("HOME") + "/.antibody/"
+	home := Home()
 	if readStdin() {
 		processStdin(home)
 	} else {
