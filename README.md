@@ -18,7 +18,7 @@ libraries. I also don't need to source it as it would be necessary with
 plain old shell. The amount of shell written is needed because I can't source
 something from inside a Go program (or at least don't yet know how to do it).
 
-### What works?
+### What works
 
 The only two antigen commands I ever used:
 
@@ -28,7 +28,7 @@ The only two antigen commands I ever used:
 You don't even need apply. Running `antibody bundle` will already apply the
 bundled plugin.
 
-### What doesn't work?
+### What doesn't work
 
 - Modules without a `*.plugin.zsh` file;
 - Modules that are not in GitHub (you can open a PR if you wish);
