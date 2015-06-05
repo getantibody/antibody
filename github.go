@@ -10,8 +10,12 @@ import (
 
 const GH = "https://github.com/"
 
+func sanitize(bundle string) string {
+	return strings.Replace(bundle, "/", "-", -1)
+}
+
 func Clone(bundle string, home string) (string, error) {
-	folder := home + strings.Replace(bundle, "/", "-", -1)
+	folder := home + sanitize(bundle)
 	var cloneErr error
 	if _, err := os.Stat(folder); os.IsNotExist(err) {
 		clone := exec.Command("git", "clone", "--depth", "1", GH+bundle, folder)
@@ -20,11 +24,11 @@ func Clone(bundle string, home string) (string, error) {
 	return folder, cloneErr
 }
 
-func Pull(bundle string, home string) string {
-	folder := home + bundle
+func Pull(bundle string, home string) (string, error) {
+	folder := home + sanitize(bundle)
 	pull := exec.Command("git", "-C", folder, "pull", "origin", "master")
-	pull.Run()
-	return folder
+	err := pull.Run()
+	return folder, err
 }
 
 func Update(home string) {

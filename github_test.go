@@ -24,3 +24,13 @@ func Test_CloneInvalidRepo(t *testing.T) {
 		t.Error()
 	}
 }
+
+func Test_Pull(t *testing.T) {
+	home := home()
+	bundle := "caarlos0/antibody"
+	Clone(bundle, home)
+	_, err := Pull(bundle, home)
+	if err != nil {
+		t.Error()
+	}
+}
