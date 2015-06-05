@@ -6,6 +6,13 @@ import (
 	"testing"
 )
 
+func mockHome(t *testing.T) string {
+	home := os.TempDir()
+	t.Log("Using home ", home)
+	os.Setenv("ANTIBODY_HOME", home)
+	return home
+}
+
 func Test_loadsDefaultHome(t *testing.T) {
 	if !strings.HasSuffix(Home(), "/.antibody/") {
 		t.Error()
@@ -13,8 +20,7 @@ func Test_loadsDefaultHome(t *testing.T) {
 }
 
 func Test_loadsCustomHome(t *testing.T) {
-	home := "/tmp/blah"
-	os.Setenv("ANTIBODY_HOME", home)
+	home := mockHome(t)
 	if home != Home() {
 		t.Error()
 	}
