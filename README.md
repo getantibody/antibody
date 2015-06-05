@@ -39,8 +39,13 @@ bundled plugin.
 
 - Download the [last release](https://github.com/caarlos0/antibody/releases/);
 - Uncompress it somewhere;
-- `source antibody.zsh`;
-- That's it!
+- `source antibody.zsh`.
+
+Now, you can just `antibody bundle` stuff, e.g.,
+`antibody bundle Tarrasch/zsh-autoenv`. The repository will be cloned at
+`~/.antibody` and all `.zsh.plugin` files will be loaded.
+
+If you ever need to update your bundles, just run `antibody update`.
 
 ### In the wild
 
