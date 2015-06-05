@@ -39,7 +39,7 @@ func update(home string) {
 	bundles, _ := ioutil.ReadDir(home)
 	for _, bundle := range bundles {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
-			fmt.Println(pull(home+bundle.Name(), home))
+			fmt.Println(pull(bundle.Name(), home))
 		}
 	}
 }
