@@ -11,15 +11,15 @@ func home() string {
 
 func Test_CloneValidRepo(t *testing.T) {
 	home := home()
-	folder := Clone("caarlos0/antibody", home)
-	if folder != home+"caarlos0-antibody" {
+	folder, err := Clone("caarlos0/antibody", home)
+	if folder != home+"caarlos0-antibody" || err != nil {
 		t.Error()
 	}
 }
 
 func Test_CloneInvalidRepo(t *testing.T) {
 	home := home()
-	folder, err := Clone("caarlos0/asdasdasd-asdasdas-as222", home)
+	_, err := Clone("this-doesnt-exist", home)
 	if err == nil {
 		t.Error()
 	}
