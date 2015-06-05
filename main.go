@@ -14,7 +14,7 @@ func clone(bundle string, home string) string {
 	folder := home + strings.Replace(bundle, "/", "-", -1)
 	if _, err := os.Stat(folder); os.IsNotExist(err) {
 		clone := exec.Command("git", "clone", "--depth", "1", GH+bundle, folder)
-		clone.Start()
+		clone.Run()
 	}
 	return folder
 }
@@ -22,7 +22,7 @@ func clone(bundle string, home string) string {
 func pull(bundle string, home string) string {
 	folder := home + bundle
 	pull := exec.Command("git", "-C", folder, "pull", "origin", "master")
-	pull.Start()
+	pull.Run()
 	return folder
 }
 
