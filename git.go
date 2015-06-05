@@ -1,7 +1,6 @@
 package antibody
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
