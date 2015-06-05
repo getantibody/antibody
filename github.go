@@ -31,11 +31,18 @@ func Pull(bundle string, home string) (string, error) {
 	return folder, err
 }
 
-func Update(home string) {
+func Update(home string) ([]string, error) {
 	bundles, _ := ioutil.ReadDir(home)
+	var sourceables []string
+	var err error
 	for _, bundle := range bundles {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
-			fmt.Println(Pull(bundle.Name(), home))
+			updated, err := Pull(bundle.Name(), home)
+			if err != nil {
+				break
+			}
+			sourceables = append(sourceables, updated)
 		}
 	}
+	return sourceables, err
 }
