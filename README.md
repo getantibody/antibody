@@ -1,4 +1,4 @@
-# antibody
+# antibody [![Build Status](https://travis-ci.org/caarlos0/antibody.svg?branch=master)](https://travis-ci.org/caarlos0/antibody)
 
 A faster and simpler version of antigen
 
