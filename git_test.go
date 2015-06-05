@@ -1,19 +1,8 @@
 package antibody
 
 import (
-	"io/ioutil"
-	"os"
 	"testing"
 )
-
-func home() string {
-	file, err := ioutil.TempDir(os.TempDir(), "antibody")
-	if err != nil {
-		panic(err.Error())
-	}
-	defer os.RemoveAll(file)
-	return file + "/"
-}
 
 func Test_ClonesValidRepo(t *testing.T) {
 	home := home()

@@ -8,7 +8,7 @@ import (
 )
 
 func Bundle(bundle string, home string) {
-	folder, err := Clone(os.Args[1:][1], home)
+	folder, err := Clone(bundle, home)
 	if err != nil {
 		panic(err.Error())
 	}
