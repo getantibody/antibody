@@ -1,12 +1,11 @@
-package antibody
+package main
 
 import "os"
 
 func main() {
-	home := Home()
 	if ReadStdin() {
-		ProcessStdin(home)
+		ProcessStdin(os.Stdin, Home())
 	} else {
-		ProcessArgs(os.Args[1:], home)
+		ProcessArgs(os.Args[1:], Home())
 	}
 }

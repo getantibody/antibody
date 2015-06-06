@@ -1,4 +1,4 @@
-package antibody
+package main
 
 import (
 	"io/ioutil"
@@ -36,8 +36,9 @@ func Update(home string) ([]string, error) {
 	var err error
 	for _, bundle := range bundles {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
-			updated, err := Pull(bundle.Name(), home)
-			if err != nil {
+			updated, pullErr := Pull(bundle.Name(), home)
+			if pullErr != nil {
+				err = pullErr
 				break
 			}
 			sourceables = append(sourceables, updated)
