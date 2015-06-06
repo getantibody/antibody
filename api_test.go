@@ -17,6 +17,14 @@ func home() string {
 	return file + "/"
 }
 
+func expectError(t *testing.T) {
+	if err := recover(); err != nil {
+		t.Log("Recovered from expected error")
+	} else {
+		t.Error("Expected an error here!")
+	}
+}
+
 func TestProcessesArgsBunde(t *testing.T) {
 	home := home()
 	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home)
@@ -48,12 +56,12 @@ func TestLoadsCustomHome(t *testing.T) {
 
 func TestFailsToBundleInvalidRepos(t *testing.T) {
 	home := home()
-	defer func() {
-		if err := recover(); err != nil {
-			t.Log("Recovered from expected error")
-		} else {
-			t.Error("Expected a panic hence an invalid bundle was passed")
-		}
-	}()
+	defer expectError(t)
 	Bundle("csadsadp", home)
+}
+
+func TestFailsToProcessInvalidArgs(t *testing.T) {
+	home := home()
+	defer expectError(t)
+	ProcessArgs([]string{"nope", "caarlos0/zsh-pg"}, home)
 }
