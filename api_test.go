@@ -45,3 +45,15 @@ func TestLoadsCustomHome(t *testing.T) {
 		t.Error("Expected custom ANTIBODY_HOME")
 	}
 }
+
+func TestFailsToBundleInvalidRepos(t *testing.T) {
+	home := home()
+	defer func() {
+		if err := recover(); err != nil {
+			t.Log("Recovered from expected error")
+		} else {
+			t.Error("Expected a panic hence an invalid bundle was passed")
+		}
+	}()
+	Bundle("csadsadp", home)
+}
