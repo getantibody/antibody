@@ -19,7 +19,7 @@ func ProcessStdin(home string) {
 	bundles, _ := ioutil.ReadAll(os.Stdin)
 	for _, bundle := range strings.Split(string(bundles), "\n") {
 		if bundle != "" {
-			Bundle(bundle, home)
+			go Bundle(bundle, home)
 		}
 	}
 }
@@ -27,9 +27,9 @@ func ProcessStdin(home string) {
 func ProcessArgs(args []string, home string) {
 	cmd := args[0]
 	if cmd == "update" {
-		Update(home)
+		go Update(home)
 	} else if cmd == "bundle" {
-		Bundle(args[1], home)
+		go Bundle(args[1], home)
 	} else {
 		panic("Invalid command: " + cmd)
 	}
