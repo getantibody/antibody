@@ -10,12 +10,8 @@ import (
 
 const GH = "https://github.com/"
 
-func sanitize(bundle string) string {
-	return strings.Replace(bundle, "/", "-", -1)
-}
-
 func folder(bundle string, home string) string {
-	return home + sanitize(bundle)
+	return home + strings.Replace(bundle, "/", "-", -1)
 }
 
 func Clone(bundle string, home string) (string, error) {
