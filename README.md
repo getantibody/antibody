@@ -1,6 +1,13 @@
 # antibody [![Build Status](https://travis-ci.org/caarlos0/antibody.svg?branch=master)](https://travis-ci.org/caarlos0/antibody) [![Coverage Status](https://coveralls.io/repos/caarlos0/antibody/badge.svg?branch=master)](https://coveralls.io/r/caarlos0/antibody?branch=master)
 
-A faster and simpler version of antigen
+A faster and simpler version of antigen.
+
+> "Antigen is a small set of functions that help you easily manage your shell
+> (zsh) plugins, called bundles. The concept is pretty much the same as
+> bundles in a typical vim+pathogen setup. Antigen is to zsh, what Vundle
+> is to vim."
+> 
+> Read more: [Antigen](https://github.com/zsh-users/antigen).
 
 ### Why?
 
