@@ -13,20 +13,22 @@ install a lot of stuff for this to work.
 
 So, why Go, you might ask.
 
-Well, the compiled Go program run anywhere and doesn't depend on any shared
+Well, the compiled Go program runs anywhere and doesn't depend on any shared
 libraries. I also don't need to source it as it would be necessary with
-plain old shell. The amount of shell written is needed because I can't source
+plain simple shell. I also can do stuff in parallel with Go routines.
+The little amount of shell written is needed because I can't source
 something from inside a Go program (or at least don't yet know how to do it).
 
 ### What works
 
-The only two antigen commands I ever used:
+These are only antigen commands I ever used:
 
 - `bundle`
 - `update`
+- `apply`
 
-You don't even need apply. Running `antibody bundle` will already apply the
-bundled plugin.
+Antibody does just those three things, but you don't even need to `apply`.
+Running `antibody bundle` will already apply the bundle given bundle.
 
 ### What doesn't work
 
@@ -47,6 +49,26 @@ Now, you can just `antibody bundle` stuff, e.g.,
 
 If you ever need to update your bundles, just run `antibody update`.
 
+### Protips
+
+Prefer to use it like this:
+
+```sh
+$ cat plugins.txt
+caarlos0/jvm
+djui/alias-tips
+caarlos0/zsh-mkc
+zsh-users/zsh-completions
+caarlos0/zsh-open-github-pr
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+
+$ antibody bundle < plugins.txt
+```
+
+This way antibody can clone the bundles in parallel, so it will be faster!
+
 ### In the wild
 
-- I did this mostly for myself, so, my [dotfiles](https://github.com/caarlos0/dotfiles/pull/78);
+- I did this mostly for myself, so, my
+[dotfiles](https://github.com/caarlos0/dotfiles/pull/78);
