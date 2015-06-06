@@ -66,7 +66,14 @@ func TestFailsToProcessInvalidArgs(t *testing.T) {
 	ProcessArgs([]string{"nope", "caarlos0/zsh-pg"}, home)
 }
 
-func TestReadsStdin(t *testing.T) {
+func TestReadsStdinIsFalse(t *testing.T) {
+	if ReadStdin() {
+		t.Error("Not reading STDIN")
+	}
+}
+
+func TestReadsStdinIsTrue(t *testing.T) {
+	os.Stdin.Write([]byte("Some STDIN"))
 	if ReadStdin() {
 		t.Error("Not reading STDIN")
 	}
