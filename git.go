@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -26,8 +25,7 @@ func Clone(bundle string, home string) (string, error) {
 func Pull(bundle string, home string) (string, error) {
 	folder := folder(bundle, home)
 	pull := exec.Command("git", "-C", folder, "pull", "origin", "master")
-	err := pull.Run()
-	return folder, err
+	return folder, pull.Run()
 }
 
 func Update(home string) ([]string, error) {

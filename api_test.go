@@ -33,7 +33,7 @@ func assertBundledPlugins(t *testing.T, total int, home string) {
 	}
 }
 
-func TestProcessesArgsBunde(t *testing.T) {
+func TestProcessesArgsBundle(t *testing.T) {
 	home := home()
 	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home)
 	assertBundledPlugins(t, 1, home)
@@ -55,6 +55,7 @@ func TestUpdateWithPlugins(t *testing.T) {
 func TestBundlesSinglePlugin(t *testing.T) {
 	home := home()
 	Bundle("caarlos0/zsh-pg", home)
+	assertBundledPlugins(t, 1, home)
 }
 
 func TestLoadsDefaultHome(t *testing.T) {
@@ -83,12 +84,14 @@ func TestFailsToBundleInvalidRepos(t *testing.T) {
 	home := home()
 	defer expectError(t)
 	Bundle("csadsadp", home)
+	assertBundledPlugins(t, 0, home)
 }
 
 func TestFailsToProcessInvalidArgs(t *testing.T) {
 	home := home()
 	defer expectError(t)
 	ProcessArgs([]string{"nope", "caarlos0/zsh-pg"}, home)
+	assertBundledPlugins(t, 0, home)
 }
 
 func TestReadsStdinIsFalse(t *testing.T) {
@@ -107,6 +110,13 @@ func TestReadsStdinIsTrue(t *testing.T) {
 func TestProcessStdin(t *testing.T) {
 	home := home()
 	bundles := bytes.NewBufferString("caarlos0/zsh-pg\ncaarlos0/zsh-add-upstream")
+	ProcessStdin(bundles, home)
+	assertBundledPlugins(t, 2, home)
+}
+
+func TestProcessStdinWithEmptyLines(t *testing.T) {
+	home := home()
+	bundles := bytes.NewBufferString("\ncaarlos0/zsh-pg\ncaarlos0/zsh-add-upstream\n")
 	ProcessStdin(bundles, home)
 	assertBundledPlugins(t, 2, home)
 }
