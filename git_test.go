@@ -15,6 +15,21 @@ func TestClonesValidRepo(t *testing.T) {
 	if err != nil {
 		t.Error("No errors expected")
 	}
+	assertBundledPlugins(t, 1, home)
+}
+
+func TestClonesValidRepoTwoTimes(t *testing.T) {
+	home := home()
+	Clone("caarlos0/zsh-pg", home)
+	folder, err := Clone("caarlos0/zsh-pg", home)
+	expected := home + "caarlos0-zsh-pg"
+	if folder != expected {
+		t.Error("Got", folder, "expected", expected)
+	}
+	if err != nil {
+		t.Error("No errors expected")
+	}
+	assertBundledPlugins(t, 1, home)
 }
 
 func TestClonesInvalidRepo(t *testing.T) {
