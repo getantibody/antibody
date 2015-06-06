@@ -55,6 +55,14 @@ func TestLoadsCustomHome(t *testing.T) {
 	}
 }
 
+func TestAddsTrailingSlashToHome(t *testing.T) {
+	home := "/tmp/whatever"
+	os.Setenv("ANTIBODY_HOME", home)
+	if Home() != home+"/" {
+		t.Error("Expected a trailing slash in", Home())
+	}
+}
+
 func TestFailsToBundleInvalidRepos(t *testing.T) {
 	home := home()
 	defer expectError(t)

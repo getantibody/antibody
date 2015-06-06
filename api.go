@@ -55,7 +55,10 @@ func Home() string {
 	home := os.Getenv("ANTIBODY_HOME")
 	if home == "" {
 		home = os.Getenv("HOME") + "/.antibody/"
+	} else {
+		if !strings.HasSuffix(home, "/") {
+			home += "/"
+		}
 	}
-	fmt.Println("Home: ", home)
 	return home
 }
