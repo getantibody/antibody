@@ -1,6 +1,7 @@
 package antibody
 
 import (
+	"os"
 	"testing"
 )
 
@@ -46,5 +47,19 @@ func TestUpdatesListOfRepos(t *testing.T) {
 	}
 	if len(bundles) != 2 {
 		t.Error(len(bundles), "updated bundles, expected 2")
+	}
+}
+
+func TestUpdatesBrokenRepo(t *testing.T) {
+	home := home()
+	bundle := "caarlos0/zsh-pg"
+	folder, _ := Clone(bundle, home)
+	os.RemoveAll(folder + "/.git")
+	bundles, err := Update(home)
+	if err == nil {
+		t.Error("An error was expected")
+	}
+	if len(bundles) != 0 {
+		t.Error(len(bundles), "updated bundles, expected 0")
 	}
 }
