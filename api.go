@@ -38,9 +38,9 @@ func ProcessStdin(stdin io.Reader, home string) {
 func ProcessArgs(args []string, home string) {
 	cmd := args[0]
 	if cmd == "update" {
-		go Update(home)
+		Update(home)
 	} else if cmd == "bundle" {
-		go Bundle(args[1], home)
+		Bundle(args[1], home)
 	} else {
 		panic("Invalid command: " + cmd)
 	}
