@@ -26,14 +26,30 @@ func expectError(t *testing.T) {
 	}
 }
 
+func assertBundledPlugins(t *testing.T, total int, home string) {
+	plugins, _ := ioutil.ReadDir(home)
+	if len(plugins) != total {
+		t.Error("Expected to bundle", total, "plugins, but was", len(plugins))
+	}
+}
+
 func TestProcessesArgsBunde(t *testing.T) {
 	home := home()
 	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home)
+	assertBundledPlugins(t, 1, home)
 }
 
-func TestUpdate(t *testing.T) {
+func TestUpdateWithNoPlugins(t *testing.T) {
 	home := home()
 	ProcessArgs([]string{"update"}, home)
+	assertBundledPlugins(t, 0, home)
+}
+
+func TestUpdateWithPlugins(t *testing.T) {
+	home := home()
+	Bundle("caarlos0/zsh-pg", home)
+	ProcessArgs([]string{"update"}, home)
+	assertBundledPlugins(t, 1, home)
 }
 
 func TestBundlesSinglePlugin(t *testing.T) {
@@ -92,8 +108,5 @@ func TestProcessStdin(t *testing.T) {
 	home := home()
 	bundles := bytes.NewBufferString("caarlos0/zsh-pg\ncaarlos0/zsh-add-upstream")
 	ProcessStdin(bundles, home)
-	dirs, _ := ioutil.ReadDir(home)
-	if len(dirs) != 2 {
-		t.Error("Expected to bundle 2 plugins, but was", len(dirs))
-	}
+	assertBundledPlugins(t, 2, home)
 }
