@@ -18,7 +18,6 @@ func Bundle(bundle string, home string) {
 }
 
 func process(bundle string, home string, wg *sync.WaitGroup) {
-	fmt.Println(bundle)
 	defer wg.Done()
 	Bundle(bundle, home)
 }
