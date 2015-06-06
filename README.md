@@ -1,4 +1,4 @@
-# antibody [![Build Status](https://travis-ci.org/caarlos0/antibody.svg?branch=master)](https://travis-ci.org/caarlos0/antibody) [![Coverage Status](https://coveralls.io/repos/caarlos0/antibody/badge.svg?branch=badges)](https://coveralls.io/r/caarlos0/antibody?branch=master)
+# antibody [![Build Status](https://travis-ci.org/caarlos0/antibody.svg?branch=master)](https://travis-ci.org/caarlos0/antibody) [![Coverage Status](https://coveralls.io/repos/caarlos0/antibody/badge.svg?branch=master)](https://coveralls.io/r/caarlos0/antibody?branch=master)
 
 A faster and simpler version of antigen
 
