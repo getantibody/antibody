@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -76,5 +77,15 @@ func TestReadsStdinIsTrue(t *testing.T) {
 	os.Stdin.Write([]byte("Some STDIN"))
 	if ReadStdin() {
 		t.Error("Not reading STDIN")
+	}
+}
+
+func TestProcessStdin(t *testing.T) {
+	home := home()
+	bundles := bytes.NewBufferString("caarlos0/zsh-pg\ncaarlos0/zsh-add-upstream")
+	ProcessStdin(bundles, home)
+	dirs, _ := ioutil.ReadDir(home)
+	if len(dirs) != 2 {
+		t.Error("Expected to bundle 2 plugins, but was", len(dirs))
 	}
 }
