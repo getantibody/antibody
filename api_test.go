@@ -65,3 +65,9 @@ func TestFailsToProcessInvalidArgs(t *testing.T) {
 	defer expectError(t)
 	ProcessArgs([]string{"nope", "caarlos0/zsh-pg"}, home)
 }
+
+func TestReadsStdin(t *testing.T) {
+	if ReadStdin() {
+		t.Error("Not reading STDIN")
+	}
+}
