@@ -1,4 +1,13 @@
 language: go
-
+env:
+  - COVERALLS_TOKEN=SaBLRSuqW9sx0jQ0bqpQo5hLxDxlmKf6m
 go:
   - tip
+before_install:
+  - go get github.com/axw/gocov/gocov
+  - go get github.com/mattn/goveralls
+  - go get golang.org/x/tools/cmd/cover
+script:
+  - go test -v -covermode=count -coverprofile=coverage.out
+after_script:
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
