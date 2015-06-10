@@ -17,19 +17,18 @@ func Bundle(bundle string, home string) {
 	fmt.Println(folder)
 }
 
-func process(bundle string, home string, wg *sync.WaitGroup) {
-	defer wg.Done()
-	Bundle(bundle, home)
-}
-
 func ProcessStdin(stdin io.Reader, home string) {
 	var wg sync.WaitGroup
 	bundles, _ := ioutil.ReadAll(stdin)
 	for _, bundle := range strings.Split(string(bundles), "\n") {
-		if bundle != "" {
-			wg.Add(1)
-			go process(bundle, home, &wg)
+		if bundle == "" {
+			continue
 		}
+		wg.Add(1)
+		go func(bundle string, home string, wg *sync.WaitGroup) {
+			defer wg.Done()
+			Bundle(bundle, home)
+		}(bundle, home, &wg)
 	}
 	wg.Wait()
 }
