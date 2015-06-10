@@ -120,3 +120,32 @@ func TestProcessStdinWithEmptyLines(t *testing.T) {
 	ProcessStdin(bundles, home)
 	assertBundledPlugins(t, 2, home)
 }
+
+func TestUpdatesListOfRepos(t *testing.T) {
+	home := home()
+	bundle1 := "caarlos0/zsh-pg"
+	bundle2 := "caarlos0/zsh-add-upstream"
+	Clone(bundle1, home)
+	Clone(bundle2, home)
+	bundles, err := Update(home)
+	if err != nil {
+		t.Error("No errors expected")
+	}
+	if len(bundles) != 2 {
+		t.Error(len(bundles), "updated bundles, expected 2")
+	}
+}
+
+func TestUpdatesBrokenRepo(t *testing.T) {
+	home := home()
+	bundle := "caarlos0/zsh-mkc"
+	folder, _ := Clone(bundle, home)
+	os.RemoveAll(folder + "/.git")
+	bundles, err := Update(home)
+	if err == nil {
+		t.Error("An error was expected")
+	}
+	if len(bundles) != 0 {
+		t.Error(len(bundles), "updated bundles, expected 0")
+	}
+}
