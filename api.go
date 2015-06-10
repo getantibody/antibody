@@ -34,6 +34,21 @@ func ProcessStdin(stdin io.Reader, home string) {
 	wg.Wait()
 }
 
+func Update(home string) ([]string, error) {
+	bundles, _ := ioutil.ReadDir(home)
+	var sourceables []string
+	for _, bundle := range bundles {
+		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
+			updated, err := Pull(bundle.Name(), home)
+			if err != nil {
+				return sourceables, err
+			}
+			sourceables = append(sourceables, updated)
+		}
+	}
+	return sourceables, nil
+}
+
 func ProcessArgs(args []string, home string) {
 	cmd := args[0]
 	if cmd == "update" {

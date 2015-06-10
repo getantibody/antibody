@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
@@ -26,19 +25,4 @@ func Pull(bundle string, home string) (string, error) {
 	folder := folder(bundle, home)
 	pull := exec.Command("git", "-C", folder, "pull", "origin", "master")
 	return folder, pull.Run()
-}
-
-func Update(home string) ([]string, error) {
-	bundles, _ := ioutil.ReadDir(home)
-	var sourceables []string
-	for _, bundle := range bundles {
-		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
-			updated, err := Pull(bundle.Name(), home)
-			if err != nil {
-				return sourceables, err
-			}
-			sourceables = append(sourceables, updated)
-		}
-	}
-	return sourceables, nil
 }
