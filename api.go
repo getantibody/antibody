@@ -9,8 +9,8 @@ import (
 	"sync"
 )
 
-func Bundle(bundle string, home string) {
-	folder, err := Clone(bundle, home)
+func DoBundle(bundle string, home string) {
+	folder, err := NewGithubBundle(bundle, home).Download()
 	if err != nil {
 		panic(err.Error())
 	}
@@ -27,7 +27,7 @@ func ProcessStdin(stdin io.Reader, home string) {
 		wg.Add(1)
 		go func(bundle string, home string, wg *sync.WaitGroup) {
 			defer wg.Done()
-			Bundle(bundle, home)
+			DoBundle(bundle, home)
 		}(bundle, home, &wg)
 	}
 	wg.Wait()
@@ -38,7 +38,7 @@ func Update(home string) ([]string, error) {
 	var sourceables []string
 	for _, bundle := range bundles {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
-			updated, err := Pull(bundle.Name(), home)
+			updated, err := NewGithubBundle(bundle.Name(), home).Update()
 			if err != nil {
 				return sourceables, err
 			}
@@ -53,7 +53,7 @@ func ProcessArgs(args []string, home string) {
 	if cmd == "update" {
 		Update(home)
 	} else if cmd == "bundle" {
-		Bundle(args[1], home)
+		DoBundle(args[1], home)
 	} else {
 		panic("Invalid command: " + cmd)
 	}
