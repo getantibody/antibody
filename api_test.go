@@ -33,7 +33,7 @@ func assertBundledPlugins(t *testing.T, total int, home string) {
 	}
 }
 
-func TestProcessesArgsBundle(t *testing.T) {
+func TestProcessesArgsDoBundle(t *testing.T) {
 	home := home()
 	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home)
 	assertBundledPlugins(t, 1, home)
@@ -47,14 +47,14 @@ func TestUpdateWithNoPlugins(t *testing.T) {
 
 func TestUpdateWithPlugins(t *testing.T) {
 	home := home()
-	Bundle("caarlos0/zsh-pg", home)
+	DoBundle("caarlos0/zsh-pg", home)
 	ProcessArgs([]string{"update"}, home)
 	assertBundledPlugins(t, 1, home)
 }
 
 func TestBundlesSinglePlugin(t *testing.T) {
 	home := home()
-	Bundle("caarlos0/zsh-pg", home)
+	DoBundle("caarlos0/zsh-pg", home)
 	assertBundledPlugins(t, 1, home)
 }
 
@@ -83,7 +83,7 @@ func TestAddsTrailingSlashToHome(t *testing.T) {
 func TestFailsToBundleInvalidRepos(t *testing.T) {
 	home := home()
 	defer expectError(t)
-	Bundle("csadsadp", home)
+	DoBundle("csadsadp", home)
 	assertBundledPlugins(t, 0, home)
 }
 
@@ -125,8 +125,8 @@ func TestUpdatesListOfRepos(t *testing.T) {
 	home := home()
 	bundle1 := "caarlos0/zsh-pg"
 	bundle2 := "caarlos0/zsh-add-upstream"
-	Clone(bundle1, home)
-	Clone(bundle2, home)
+	NewGithubBundle(bundle1, home).Download()
+	NewGithubBundle(bundle2, home).Download()
 	bundles, err := Update(home)
 	if err != nil {
 		t.Error("No errors expected")
@@ -139,7 +139,7 @@ func TestUpdatesListOfRepos(t *testing.T) {
 func TestUpdatesBrokenRepo(t *testing.T) {
 	home := home()
 	bundle := "caarlos0/zsh-mkc"
-	folder, _ := Clone(bundle, home)
+	folder, _ := NewGithubBundle(bundle, home).Download()
 	os.RemoveAll(folder + "/.git")
 	bundles, err := Update(home)
 	if err == nil {
