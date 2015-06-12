@@ -1,6 +1,7 @@
 package antibody
 
 type Bundle interface {
-	Download() (string, error)
-	Update() (string, error)
+	Folder() string
+	Download() error
+	Update() error
 }
