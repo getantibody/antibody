@@ -7,3 +7,8 @@ antibody() {
     source "$bundle"/*.plugin.zsh &
   done < <( ${ANTIBODY_BINARIES}/antibody $@ )
 }
+
+_antibody() {
+  IFS=' ' read -A reply <<< "$(echo "bundle update")"
+}
+compctl -K _antibody antibody
