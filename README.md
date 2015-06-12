@@ -73,7 +73,7 @@ zsh-users/zsh-history-substring-search
 $ antibody bundle < plugins.txt
 ```
 
-This way antibody can clone the bundles in parallel, so it will be faster!
+This way antibody can concurrently clone the bundles, so it may be faster!
 
 ### In the wild
 
