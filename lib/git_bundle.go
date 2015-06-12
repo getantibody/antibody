@@ -12,23 +12,27 @@ func folder(bundle string, home string) string {
 	return home + strings.Replace(bundle, "/", "-", -1)
 }
 
-func (b gitBundle) Download() (string, error) {
+func (b gitBundle) Download() error {
 	if _, err := os.Stat(b.folder); os.IsNotExist(err) {
 		clone := exec.Command("git", "clone", "--depth", "1", b.url, b.folder)
-		return b.folder, clone.Run()
+		return clone.Run()
 	}
-	return b.folder, nil
+	return nil
 }
 
-func (b gitBundle) Update() (string, error) {
+func (b gitBundle) Update() error {
 	pull := exec.Command("git", "-C", b.folder, "pull", "origin", "master")
-	return b.folder, pull.Run()
+	return pull.Run()
+}
+
+func (b gitBundle) Folder() string {
+	return b.folder
 }
 
 type gitBundle struct {
 	url, folder string
 }
 
-func NewGithubBundle(bundle, home string) Bundle {
+func NewGitBundle(bundle, home string) Bundle {
 	return gitBundle{GH + bundle, folder(bundle, home)}
 }
