@@ -25,7 +25,7 @@ github-release release \
   --pre-release
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  alias tar="gtar"
+  PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 fi
 
 for platform in Darwin Linux; do
