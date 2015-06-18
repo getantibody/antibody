@@ -1,6 +1,6 @@
 #!/bin/bash
 RELEASE="v$1"
-CURRENT="$(git describe --tags)"
+CURRENT="$(git tag | tail -n1)"
 echo "Creating release $1..."
 
 #go get golang.org/x/tools/cmd/cover
