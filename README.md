@@ -79,3 +79,8 @@ This way antibody can concurrently clone the bundles, so it may be faster!
 
 - I did this mostly for myself, so, my
 [dotfiles](https://github.com/caarlos0/dotfiles/pull/78);
+
+
+### Throughput Graph
+
+[![Throughput Graph](https://graphs.waffle.io/caarlos0/antibody/throughput.svg)](https://waffle.io/caarlos0/antibody/metrics)
