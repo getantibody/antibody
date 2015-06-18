@@ -4,7 +4,7 @@ mkdir -p "$HOME/.antibody" || true
 
 antibody() {
   while read bundle; do
-    source "$bundle"/*.plugin.zsh &
+    source "$bundle"/*.plugin.zsh 2&> /tmp/antibody-log
   done < <( ${ANTIBODY_BINARIES}/antibody $@ )
 }
 
