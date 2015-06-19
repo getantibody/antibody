@@ -16,8 +16,8 @@ gox \
   -output="./bin/{{.Dir}}_{{.OS}}_{{.Arch}}" \
   -os="linux darwin freebsd openbsd netbsd" \
   ./...
-# git tag "$RELEASE"
-# git push origin "$RELEASE"
+git tag "$RELEASE"
+git push origin "$RELEASE"
 sed -i'' "s/HEAD/$RELEASE/g" antibody.zsh
 LOG="$(git log --pretty=oneline --abbrev-commit "$CURRENT"..HEAD)"
 github-release release \
