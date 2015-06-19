@@ -8,14 +8,17 @@ go test -v -cover ./lib
 
 # go get github.com/mitchellh/gox
 # gox -build-toolchain
-gox -osarch="linux/amd64 darwin/amd64" ./...
+gox \
+  -output="./bin/{{.Dir}}_{{.OS}}_{{.Arch}}" \
+  -osarch="linux/amd64 darwin/amd64" \
+  ./...
 
 git tag "$RELEASE"
 git push origin "$RELEASE"
 
 LOG="$(git log --pretty=oneline --abbrev-commit "$CURRENT"..HEAD)"
 
-# go get github.com/aktau/github-release
+go get github.com/aktau/github-release
 github-release release \
   --user caarlos0 \
   --repo antibody \
@@ -34,7 +37,7 @@ for platform in Darwin Linux; do
   tar \
     --transform="s/_${platform_lower}_amd64//" \
     -cvzf "$filename" \
-    "antibody_${platform_lower}_amd64" antibody.zsh
+    "bin/antibody_${platform_lower}_amd64" antibody.zsh
   github-release upload \
     --user caarlos0 \
     --repo antibody \
