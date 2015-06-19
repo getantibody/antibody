@@ -10,9 +10,11 @@ CURRENT="$(git tag | tail -n1)"
 
 echo "Creating release $1..."
 go test -v -cover ./lib
+rm -rf ./bin/
+rm -rf ./*.tar.gz
 gox \
   -output="./bin/{{.Dir}}_{{.OS}}_{{.Arch}}" \
-  -osarch="linux/amd64 darwin/amd64" \
+  -os="linux darwin freebsd openbsd netbsd" \
   ./...
 git tag "$RELEASE"
 git push origin "$RELEASE"
@@ -28,13 +30,13 @@ github-release release \
 if [ "$(uname -s)" = "Darwin" ]; then
   PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 fi
-for platform in Darwin Linux; do
-  filename="antibody-$RELEASE-$platform.tar.gz"
-  platform_lower="$(echo $platform | tr '[:upper:]' '[:lower:]')"
+# shellcheck disable=SC2012
+ls ./bin | while read file; do
+  filename="$file.tar.gz"
   tar \
-    --transform="s/_${platform_lower}_amd64//" \
+    --transform="s/${file}/antibody/" \
     -cvzf "$filename" \
-    "bin/antibody_${platform_lower}_amd64" antibody.zsh
+    "bin/${file}" antibody.zsh
   github-release upload \
     --user caarlos0 \
     --repo antibody \
@@ -42,3 +44,4 @@ for platform in Darwin Linux; do
     --name "$filename" \
     --file "$filename"
 done
+rm -rf ./*.tar.gz
