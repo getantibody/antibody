@@ -13,6 +13,7 @@ gox -osarch="linux/amd64 darwin/amd64" ./...
 git tag "$RELEASE"
 git push origin "$RELEASE"
 
+sed -i'' "s/HEAD/$RELEASE/g" antibody.zsh
 LOG="$(git log --pretty=oneline --abbrev-commit "$CURRENT"..HEAD)"
 
 # go get github.com/aktau/github-release
