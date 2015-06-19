@@ -6,7 +6,7 @@ A faster and simpler version of antigen.
 > (zsh) plugins, called bundles. The concept is pretty much the same as
 > bundles in a typical vim+pathogen setup. Antigen is to zsh, what Vundle
 > is to vim."
-> 
+>
 > Read more: [Antigen](https://github.com/zsh-users/antigen).
 
 ### Why?
@@ -49,6 +49,9 @@ Running `antibody bundle` will already apply the bundle given bundle.
 - Download the [last release](https://github.com/caarlos0/antibody/releases/);
 - Uncompress it somewhere;
 - `source antibody.zsh`.
+
+> **Attention**: the `antibody` binary file should not be in your `$PATH`.
+> You only need to source the `antibody.zsh` file!
 
 Now, you can just `antibody bundle` stuff, e.g.,
 `antibody bundle Tarrasch/zsh-autoenv`. The repository will be cloned at
