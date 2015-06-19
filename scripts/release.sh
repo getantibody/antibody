@@ -16,6 +16,7 @@ gox \
   ./...
 git tag "$RELEASE"
 git push origin "$RELEASE"
+sed -i'' "s/HEAD/$RELEASE/g" antibody.zsh
 LOG="$(git log --pretty=oneline --abbrev-commit "$CURRENT"..HEAD)"
 github-release release \
   --user caarlos0 \
