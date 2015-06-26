@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 ANTIBODY_BINARIES="$(dirname $0)"
 [[ -n "${ANTIBODY_HOME}" ]] && mkdir -p "${ANTIBODY_HOME}" || mkdir -p "${HOME}/.antibody"
 
