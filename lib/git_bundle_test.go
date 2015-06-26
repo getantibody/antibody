@@ -1,8 +1,9 @@
 package antibody
 
 import (
-	"github.com/caarlos0/antibody/lib/doubles"
 	"testing"
+
+	"github.com/caarlos0/antibody/lib/doubles"
 )
 
 func TestClonesValidRepo(t *testing.T) {
@@ -49,5 +50,25 @@ func TestPullsRepo(t *testing.T) {
 	err := bundle.Update()
 	if err != nil {
 		t.Error("No errors expected")
+	}
+}
+
+func TestSourceablesDotPluginZsh(t *testing.T) {
+	home := doubles.TempHome()
+	bundle := NewGitBundle("caarlos0/zsh-pg", home)
+	bundle.Download()
+	srcs := bundle.Sourceables()
+	if len(srcs) != 1 {
+		t.Error("Expected 1 sourceable file")
+	}
+}
+
+func TestSourceablesDotSh(t *testing.T) {
+	home := doubles.TempHome()
+	bundle := NewGitBundle("rupa/z", home)
+	bundle.Download()
+	srcs := bundle.Sourceables()
+	if len(srcs) != 1 {
+		t.Error("Expected 1 sourceable file")
 	}
 }

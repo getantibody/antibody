@@ -8,19 +8,21 @@ import (
 type antibody struct {
 	bundles []Bundle
 }
-type bundleAction func(bundle Bundle)
+type bundleFn func(bundle Bundle)
 
 func NewAntibody(bundles []Bundle) antibody {
 	return antibody{bundles}
 }
 
-func (a antibody) forEach(fn bundleAction) {
+func (a antibody) forEach(fn bundleFn) {
 	var wg sync.WaitGroup
 	for _, bundle := range a.bundles {
 		wg.Add(1)
-		go func(bundle Bundle, fn bundleAction, wg *sync.WaitGroup) {
+		go func(bundle Bundle, fn bundleFn, wg *sync.WaitGroup) {
 			fn(bundle)
-			fmt.Println(bundle.Folder())
+			for _, sourceable := range bundle.Sourceables() {
+				fmt.Println(sourceable)
+			}
 			wg.Done()
 		}(bundle, fn, &wg)
 	}

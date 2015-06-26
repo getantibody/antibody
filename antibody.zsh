@@ -1,6 +1,6 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 ANTIBODY_BINARIES="$(dirname $0)"
-mkdir -p "$HOME/.antibody" || true
+[[ -n "${ANTIBODY_HOME}" ]] && mkdir -p "${ANTIBODY_HOME}" || mkdir -p "${HOME}/.antibody"
 
 antibody() {
   case "$1" in
@@ -9,7 +9,7 @@ antibody() {
     ;;
   *)
     while read bundle; do
-      source "$bundle"/*.plugin.zsh 2&> /tmp/antibody-log
+      source "$bundle" 2&> /tmp/antibody-log
     done < <( ${ANTIBODY_BINARIES}/bin/antibody $@ )
     ;;
   esac
