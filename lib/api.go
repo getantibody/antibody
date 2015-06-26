@@ -25,7 +25,7 @@ func ProcessStdin(stdin io.Reader, home string) {
 
 func Update(home string) {
 	entries, _ := ioutil.ReadDir(home)
-	bundles := make([]Bundle, 0)
+	var bundles []Bundle
 	for _, bundle := range entries {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
 			bundles = append(bundles, NewGitBundle(bundle.Name(), home))
