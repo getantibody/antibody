@@ -2,11 +2,12 @@ package antibody
 
 import (
 	"bytes"
-	"github.com/caarlos0/antibody/lib/doubles"
 	"io/ioutil"
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/caarlos0/antibody/lib/doubles"
 )
 
 func expectError(t *testing.T) {

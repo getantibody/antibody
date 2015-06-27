@@ -9,7 +9,7 @@ antibody() {
     ;;
   *)
     while read bundle; do
-      source "$bundle"/*.plugin.zsh 2&> /tmp/antibody-log
+      source "$bundle" 2&> /tmp/antibody-log
     done < <( ${ANTIBODY_BINARIES}/bin/antibody $@ )
     ;;
   esac

@@ -3,14 +3,9 @@ package antibody
 import (
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
-
-const GH = "https://github.com/"
-
-func folder(bundle string, home string) string {
-	return home + strings.Replace(bundle, "/", "-", -1)
-}
 
 func (b gitBundle) Download() error {
 	if _, err := os.Stat(b.folder); os.IsNotExist(err) {
@@ -29,10 +24,24 @@ func (b gitBundle) Folder() string {
 	return b.folder
 }
 
+func (b gitBundle) Sourceables() []string {
+	globs := [...]string{"*.plugin.zsh", "*.zsh", "*.sh"}
+	for _, glob := range globs {
+		files, _ := filepath.Glob(filepath.Join(b.Folder(), glob))
+		if files != nil {
+			return files
+		}
+	}
+	return nil
+}
+
 type gitBundle struct {
 	url, folder string
 }
 
 func NewGitBundle(bundle, home string) Bundle {
-	return gitBundle{GH + bundle, folder(bundle, home)}
+	return gitBundle{
+		url:    "https://github.com/" + bundle,
+		folder: home + strings.Replace(bundle, "/", "-", -1),
+	}
 }
