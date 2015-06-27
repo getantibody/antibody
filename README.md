@@ -39,7 +39,6 @@ Running `antibody bundle` will already apply the bundle given bundle.
 
 ### What doesn't work
 
-- Modules without a `*.plugin.zsh` file;
 - Modules that are not in GitHub (you can open a PR if you wish);
 - The `theme` command (although some themes might just work with bundle);
 - oh-my-zsh support: it looks very ugly to me and I won't do it;
