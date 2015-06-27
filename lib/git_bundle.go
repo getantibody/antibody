@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-func folder(bundle string, home string) string {
-	return home + strings.Replace(bundle, "/", "-", -1)
-}
-
 func (b gitBundle) Download() error {
 	if _, err := os.Stat(b.folder); os.IsNotExist(err) {
 		clone := exec.Command("git", "clone", "--depth", "1", b.url, b.folder)
@@ -46,6 +42,6 @@ type gitBundle struct {
 func NewGitBundle(bundle, home string) Bundle {
 	return gitBundle{
 		url:    "https://github.com/" + bundle,
-		folder: folder(bundle, home),
+		folder: home + strings.Replace(bundle, "/", "-", -1),
 	}
 }

@@ -12,7 +12,7 @@ func TestClonesValidRepo(t *testing.T) {
 	err := bundle.Download()
 	expected := home + "caarlos0-zsh-pg"
 	if bundle.Folder() != expected {
-		t.Error("Got", folder, "expected", expected)
+		t.Error("Got", bundle.Folder(), "expected", expected)
 	}
 	if err != nil {
 		t.Error("No errors expected")
@@ -27,7 +27,7 @@ func TestClonesValidRepoTwoTimes(t *testing.T) {
 	err := bundle.Download()
 	expected := home + "caarlos0-zsh-pg"
 	if bundle.Folder() != expected {
-		t.Error("Got", folder, "expected", expected)
+		t.Error("Got", bundle.Folder(), "expected", expected)
 	}
 	if err != nil {
 		t.Error("No errors expected")
