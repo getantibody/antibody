@@ -42,6 +42,6 @@ type gitBundle struct {
 func NewGitBundle(bundle, home string) Bundle {
 	return gitBundle{
 		url:    "https://github.com/" + bundle,
-		folder: home + strings.Replace(bundle, "/", "-", -1),
+		folder: filepath.Join(home, strings.Replace(bundle, "/", "-", -1)),
 	}
 }
