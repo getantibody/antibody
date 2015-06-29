@@ -4,6 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -53,11 +54,7 @@ func ReadStdin() bool {
 func Home() string {
 	home := os.Getenv("ANTIBODY_HOME")
 	if home == "" {
-		home = os.Getenv("HOME") + "/.antibody/"
-	} else {
-		if !strings.HasSuffix(home, "/") {
-			home += "/"
-		}
+		home = filepath.Join(os.Getenv("HOME"), ".antibody")
 	}
 	return home
 }

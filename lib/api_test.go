@@ -52,7 +52,7 @@ func TestBundlesSinglePlugin(t *testing.T) {
 
 func TestLoadsDefaultHome(t *testing.T) {
 	os.Unsetenv("ANTIBODY_HOME")
-	if !strings.HasSuffix(Home(), "/.antibody/") {
+	if !strings.HasSuffix(Home(), "/.antibody") {
 		t.Error("Expected default ANTIBODY_HOME")
 	}
 }
@@ -61,14 +61,6 @@ func TestLoadsCustomHome(t *testing.T) {
 	home := doubles.TempHome()
 	if home != Home() {
 		t.Error("Expected custom ANTIBODY_HOME")
-	}
-}
-
-func TestAddsTrailingSlashToHome(t *testing.T) {
-	home := "/tmp/whatever"
-	os.Setenv("ANTIBODY_HOME", home)
-	if Home() != home+"/" {
-		t.Error("Expected a trailing slash in", Home())
 	}
 }
 
