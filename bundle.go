@@ -1,4 +1,4 @@
-package antibody
+package main
 
 type Bundle interface {
 	Folder() string
