@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/caarlos0/antibody/lib/doubles"
+	"github.com/caarlos0/antibody/doubles"
 )
 
 func expectError(t *testing.T) {

@@ -9,7 +9,7 @@ CURRENT="$(git tag | tail -n1)"
 # go get golang.org/x/tools/cmd/cover
 
 echo "Creating release $1..."
-go test -v -cover ./lib
+go test -v -cover
 rm -rf ./bin/
 rm -rf ./*.tar.gz
 gox \

@@ -3,7 +3,7 @@ package antibody
 import (
 	"testing"
 
-	"github.com/caarlos0/antibody/lib/doubles"
+	"github.com/caarlos0/antibody/doubles"
 )
 
 func TestClonesValidRepo(t *testing.T) {

@@ -1,14 +1,11 @@
-package main
+package antibody
 
-import (
-	"github.com/caarlos0/antibody/lib"
-	"os"
-)
+import "os"
 
 func main() {
-	if antibody.ReadStdin() {
-		antibody.ProcessStdin(os.Stdin, antibody.Home())
+	if ReadStdin() {
+		ProcessStdin(os.Stdin, Home())
 	} else {
-		antibody.ProcessArgs(os.Args[1:], antibody.Home())
+		ProcessArgs(os.Args[1:], Home())
 	}
 }
