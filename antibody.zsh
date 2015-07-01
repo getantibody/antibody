@@ -5,7 +5,7 @@ ANTIBODY_BINARIES="$(dirname $0)"
 antibody() {
   case "$1" in
   version)
-    echo "HEAD"
+    ${ANTIBODY_BINARIES}/bin/antibody $@
     ;;
   *)
     while read bundle; do

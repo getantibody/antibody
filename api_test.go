@@ -37,6 +37,12 @@ func TestUpdateWithNoPlugins(t *testing.T) {
 	assertBundledPlugins(t, 0, home)
 }
 
+func TestVersion(t *testing.T) {
+	home := doubles.TempHome()
+	ProcessArgs([]string{"version"}, home)
+	assertBundledPlugins(t, 0, home)
+}
+
 func TestUpdateWithPlugins(t *testing.T) {
 	home := doubles.TempHome()
 	DoBundle("caarlos0/zsh-pg", home)
