@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
+
+var version = "master"
 
 func DoBundle(bundle string, home string) {
 	NewAntibody([]Bundle{NewGitBundle(bundle, home)}).Download()
@@ -41,6 +44,8 @@ func ProcessArgs(args []string, home string) {
 		Update(home)
 	} else if cmd == "bundle" {
 		DoBundle(args[1], home)
+	} else if cmd == "version" {
+		fmt.Println(version)
 	} else {
 		panic("Invalid command: " + cmd)
 	}
