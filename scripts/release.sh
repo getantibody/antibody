@@ -36,7 +36,7 @@ ls ./bin | while read file; do
   tar \
     --transform="s/${file}/antibody/" \
     -cvzf "$filename" \
-    "bin/${file}" antibody.zsh
+    "bin/${file}" antibody.zsh README.md LICENSE
   github-release upload \
     --user caarlos0 \
     --repo antibody \
