@@ -1,4 +1,4 @@
-package main
+package antibody
 
 import (
 	"bytes"

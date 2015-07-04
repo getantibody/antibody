@@ -16,7 +16,7 @@ gox \
   -output="./bin/{{.Dir}}_{{.OS}}_{{.Arch}}" \
   -os="linux darwin freebsd openbsd netbsd" \
   -ldflags="-X main.version $RELEASE" \
-  ./...
+  ./cmd/antibody/
 git tag "$RELEASE"
 git push origin "$RELEASE"
 LOG="$(git log --pretty=oneline --abbrev-commit "$CURRENT"..HEAD)"
