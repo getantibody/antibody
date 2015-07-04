@@ -45,14 +45,14 @@ func TestVersion(t *testing.T) {
 
 func TestUpdateWithPlugins(t *testing.T) {
 	home := doubles.TempHome()
-	DoBundle("caarlos0/zsh-pg", home)
+	bundle("caarlos0/zsh-pg", home)
 	ProcessArgs([]string{"update"}, home)
 	assertBundledPlugins(t, 1, home)
 }
 
 func TestBundlesSinglePlugin(t *testing.T) {
 	home := doubles.TempHome()
-	DoBundle("caarlos0/zsh-pg", home)
+	bundle("caarlos0/zsh-pg", home)
 	assertBundledPlugins(t, 1, home)
 }
 
@@ -74,7 +74,7 @@ func TestFailsToBundleInvalidRepos(t *testing.T) {
 	home := doubles.TempHome()
 	// TODO return an error here
 	// defer expectError(t)
-	DoBundle("csadsadp", home)
+	bundle("csadsadp", home)
 	assertBundledPlugins(t, 0, home)
 }
 
@@ -119,7 +119,7 @@ func TestUpdatesListOfRepos(t *testing.T) {
 	NewGitBundle(bundle1, home).Download()
 	NewGitBundle(bundle2, home).Download()
 	// TODO check amount of updated repos
-	Update(home)
+	update(home)
 }
 
 func TestUpdatesBrokenRepo(t *testing.T) {
@@ -128,5 +128,5 @@ func TestUpdatesBrokenRepo(t *testing.T) {
 	bundle.Download()
 	os.RemoveAll(bundle.Folder() + "/.git")
 	// TODO check amount of updated repos
-	Update(home)
+	update(home)
 }

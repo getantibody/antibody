@@ -11,13 +11,14 @@ import (
 
 var version = "master"
 
-func DoBundle(bundle string, home string) {
+func bundle(bundle string, home string) {
 	NewAntibody([]Bundle{NewGitBundle(bundle, home)}).Download()
 }
 
+// ProcessStdin processes the OS SDTDIN.
 func ProcessStdin(stdin io.Reader, home string) {
 	entries, _ := ioutil.ReadAll(stdin)
-	bundles := make([]Bundle, 0)
+	var bundles []Bundle
 	for _, bundle := range strings.Split(string(entries), "\n") {
 		if bundle == "" {
 			continue
@@ -27,7 +28,7 @@ func ProcessStdin(stdin io.Reader, home string) {
 	NewAntibody(bundles).Download()
 }
 
-func Update(home string) {
+func update(home string) {
 	entries, _ := ioutil.ReadDir(home)
 	var bundles []Bundle
 	for _, bundle := range entries {
@@ -38,12 +39,13 @@ func Update(home string) {
 	NewAntibody(bundles).Update()
 }
 
+// ProcessArgs processes arguments passed to the executable.
 func ProcessArgs(args []string, home string) {
 	cmd := args[0]
 	if cmd == "update" {
-		Update(home)
+		update(home)
 	} else if cmd == "bundle" {
-		DoBundle(args[1], home)
+		bundle(args[1], home)
 	} else if cmd == "version" {
 		fmt.Println(version)
 	} else {
@@ -51,11 +53,14 @@ func ProcessArgs(args []string, home string) {
 	}
 }
 
+// ReadStdin checks if there is something being passed to the STDIN
 func ReadStdin() bool {
 	stat, _ := os.Stdin.Stat()
 	return (stat.Mode() & os.ModeCharDevice) == 0
 }
 
+// Home returns the ANTIBODY_HOME to use, wether it is the default or another
+// one.
 func Home() string {
 	home := os.Getenv("ANTIBODY_HOME")
 	if home == "" {

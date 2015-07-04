@@ -39,6 +39,7 @@ type gitBundle struct {
 	url, folder string
 }
 
+// NewGitBundle creates a new Bundle using Github as its source.
 func NewGitBundle(bundle, home string) Bundle {
 	return gitBundle{
 		url:    "https://github.com/" + bundle,
