@@ -11,7 +11,7 @@ import (
 
 var version = "master"
 
-func DoBundle(bundle string, home string) {
+func doBundle(bundle string, home string) {
 	NewAntibody([]Bundle{NewGitBundle(bundle, home)}).Download()
 }
 
@@ -43,7 +43,7 @@ func ProcessArgs(args []string, home string) {
 	if cmd == "update" {
 		Update(home)
 	} else if cmd == "bundle" {
-		DoBundle(args[1], home)
+		doBundle(args[1], home)
 	} else if cmd == "version" {
 		fmt.Println(version)
 	} else {

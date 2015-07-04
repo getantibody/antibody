@@ -45,14 +45,14 @@ func TestVersion(t *testing.T) {
 
 func TestUpdateWithPlugins(t *testing.T) {
 	home := doubles.TempHome()
-	DoBundle("caarlos0/zsh-pg", home)
+	doBundle("caarlos0/zsh-pg", home)
 	ProcessArgs([]string{"update"}, home)
 	assertBundledPlugins(t, 1, home)
 }
 
 func TestBundlesSinglePlugin(t *testing.T) {
 	home := doubles.TempHome()
-	DoBundle("caarlos0/zsh-pg", home)
+	doBundle("caarlos0/zsh-pg", home)
 	assertBundledPlugins(t, 1, home)
 }
 
@@ -74,7 +74,7 @@ func TestFailsToBundleInvalidRepos(t *testing.T) {
 	home := doubles.TempHome()
 	// TODO return an error here
 	// defer expectError(t)
-	DoBundle("csadsadp", home)
+	doBundle("csadsadp", home)
 	assertBundledPlugins(t, 0, home)
 }
 
