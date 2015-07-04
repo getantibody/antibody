@@ -5,16 +5,20 @@ import (
 	"sync"
 )
 
-type antibody struct {
+// Antibody wraps a list of bundles to be processed.
+type Antibody struct {
 	bundles []Bundle
 }
 type bundleFn func(bundle Bundle)
 
-func NewAntibody(bundles []Bundle) antibody {
-	return antibody{bundles}
+// NewAntibody creates an instance of antibody with the given bundles.
+func NewAntibody(bundles []Bundle) Antibody {
+	return Antibody{
+		bundles: bundles,
+	}
 }
 
-func (a antibody) forEach(fn bundleFn) {
+func (a Antibody) forEach(fn bundleFn) {
 	var wg sync.WaitGroup
 	for _, bundle := range a.bundles {
 		wg.Add(1)
@@ -29,13 +33,15 @@ func (a antibody) forEach(fn bundleFn) {
 	wg.Wait()
 }
 
-func (a antibody) Download() {
+// Download the needed bundles.
+func (a Antibody) Download() {
 	a.forEach(func(b Bundle) {
 		b.Download()
 	})
 }
 
-func (a antibody) Update() {
+// Update all bundles.
+func (a Antibody) Update() {
 	a.forEach(func(b Bundle) {
 		b.Update()
 	})
