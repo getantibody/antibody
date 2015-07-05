@@ -25,7 +25,7 @@ func (b gitBundle) Folder() string {
 }
 
 func (b gitBundle) Sourceables() []string {
-	globs := [...]string{"*.plugin.zsh", "*.zsh", "*.sh"}
+	globs := []string{"*.plugin.zsh", "*.zsh", "*.sh"}
 	for _, glob := range globs {
 		files, _ := filepath.Glob(filepath.Join(b.Folder(), glob))
 		if files != nil {

@@ -22,13 +22,13 @@ func (a Antibody) forEach(fn bundleFn) {
 	var wg sync.WaitGroup
 	for _, bundle := range a.bundles {
 		wg.Add(1)
-		go func(bundle Bundle, fn bundleFn, wg *sync.WaitGroup) {
+		go func(bundle Bundle, fn bundleFn) {
 			fn(bundle)
 			for _, sourceable := range bundle.Sourceables() {
 				fmt.Println(sourceable)
 			}
 			wg.Done()
-		}(bundle, fn, &wg)
+		}(bundle, fn)
 	}
 	wg.Wait()
 }
