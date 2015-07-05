@@ -29,7 +29,10 @@ func ProcessStdin(stdin io.Reader, home string) {
 }
 
 func update(home string) {
-	entries, _ := ioutil.ReadDir(home)
+	entries, err := ioutil.ReadDir(home)
+	if err != nil {
+		panic(err.Error())
+	}
 	var bundles []Bundle
 	for _, bundle := range entries {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
