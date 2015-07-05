@@ -41,15 +41,15 @@ func update(home string) {
 
 // ProcessArgs processes arguments passed to the executable.
 func ProcessArgs(args []string, home string) {
-	cmd := args[0]
-	if cmd == "update" {
+	switch args[0] {
+	case "update":
 		update(home)
-	} else if cmd == "bundle" {
+	case "bundle":
 		bundle(args[1], home)
-	} else if cmd == "version" {
+	case "version":
 		fmt.Println(version)
-	} else {
-		panic("Invalid command: " + cmd)
+	default:
+		panic("Invalid command: " + args[0])
 	}
 }
 
