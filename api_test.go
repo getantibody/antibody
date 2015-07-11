@@ -58,7 +58,7 @@ func TestBundlesSinglePlugin(t *testing.T) {
 
 func TestLoadsDefaultHome(t *testing.T) {
 	os.Unsetenv("ANTIBODY_HOME")
-	if !strings.HasSuffix(Home(), "/.antibody") {
+	if !strings.HasSuffix(Home(), "/antibody") {
 		t.Error("Expected default ANTIBODY_HOME")
 	}
 }

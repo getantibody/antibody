@@ -5,8 +5,9 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 	"strings"
+
+	"github.com/caarlos0/gohome"
 )
 
 var version = "master"
@@ -64,7 +65,7 @@ func ReadStdin() bool {
 func Home() string {
 	home := os.Getenv("ANTIBODY_HOME")
 	if home == "" {
-		home = filepath.Join(os.Getenv("HOME"), ".antibody")
+		return gohome.Cache("antibody")
 	}
 	return home
 }
