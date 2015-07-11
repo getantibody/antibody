@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -41,6 +42,13 @@ func TestVersion(t *testing.T) {
 	home := doubles.TempHome()
 	ProcessArgs([]string{"version"}, home)
 	assertBundledPlugins(t, 0, home)
+}
+
+func TestBundleMkdirs(t *testing.T) {
+	home := filepath.Join(doubles.TempHome(), "long/folder/which/dont/exist")
+	bundle("caarlos0/zsh-pg", home)
+	ProcessArgs([]string{"update"}, home)
+	assertBundledPlugins(t, 1, home)
 }
 
 func TestUpdateWithPlugins(t *testing.T) {
