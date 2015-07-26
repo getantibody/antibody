@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/caarlos0/antibody/doubles"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestClonesValidRepo(t *testing.T) {
@@ -11,12 +12,9 @@ func TestClonesValidRepo(t *testing.T) {
 	bundle := NewGitBundle("caarlos0/zsh-pg", home)
 	err := bundle.Download()
 	expected := home + "caarlos0-zsh-pg"
-	if bundle.Folder() != expected {
-		t.Error("Got", bundle.Folder(), "expected", expected)
-	}
-	if err != nil {
-		t.Error("No errors expected")
-	}
+
+	assert.Equal(t, expected, bundle.Folder())
+	assert.NoError(t, err)
 	assertBundledPlugins(t, 1, home)
 }
 
@@ -26,21 +24,15 @@ func TestClonesValidRepoTwoTimes(t *testing.T) {
 	bundle.Download()
 	err := bundle.Download()
 	expected := home + "caarlos0-zsh-pg"
-	if bundle.Folder() != expected {
-		t.Error("Got", bundle.Folder(), "expected", expected)
-	}
-	if err != nil {
-		t.Error("No errors expected")
-	}
+	assert.Equal(t, expected, bundle.Folder())
+	assert.NoError(t, err)
 	assertBundledPlugins(t, 1, home)
 }
 
 func TestClonesInvalidRepo(t *testing.T) {
 	home := doubles.TempHome()
 	err := NewGitBundle("this-doesnt-exist", home).Download()
-	if err == nil {
-		t.Error("Expected an error because this repo doesn't exist")
-	}
+	assert.Error(t, err)
 }
 
 func TestPullsRepo(t *testing.T) {
@@ -48,9 +40,7 @@ func TestPullsRepo(t *testing.T) {
 	bundle := NewGitBundle("caarlos0/zsh-pg", home)
 	bundle.Download()
 	err := bundle.Update()
-	if err != nil {
-		t.Error("No errors expected")
-	}
+	assert.NoError(t, err)
 }
 
 func TestSourceablesDotPluginZsh(t *testing.T) {
@@ -58,9 +48,7 @@ func TestSourceablesDotPluginZsh(t *testing.T) {
 	bundle := NewGitBundle("caarlos0/zsh-pg", home)
 	bundle.Download()
 	srcs := bundle.Sourceables()
-	if len(srcs) != 1 {
-		t.Error("Expected 1 sourceable file")
-	}
+	assert.Len(t, srcs, 1)
 }
 
 func TestSourceablesDotSh(t *testing.T) {
@@ -68,7 +56,5 @@ func TestSourceablesDotSh(t *testing.T) {
 	bundle := NewGitBundle("rupa/z", home)
 	bundle.Download()
 	srcs := bundle.Sourceables()
-	if len(srcs) != 1 {
-		t.Error("Expected 1 sourceable file")
-	}
+	assert.Len(t, srcs, 1)
 }

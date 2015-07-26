@@ -5,25 +5,19 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/caarlos0/antibody/doubles"
+	"github.com/stretchr/testify/assert"
 )
 
 func expectError(t *testing.T) {
-	if err := recover(); err != nil {
-		t.Log("Recovered from expected error")
-	} else {
-		t.Error("Expected an error here!")
-	}
+	assert.NotNil(t, recover())
 }
 
 func assertBundledPlugins(t *testing.T, total int, home string) {
 	plugins, _ := ioutil.ReadDir(home)
-	if len(plugins) != total {
-		t.Error("Expected to bundle", total, "plugins, but was", len(plugins))
-	}
+	assert.Len(t, plugins, total)
 }
 
 func TestProcessesArgsDoBundle(t *testing.T) {
@@ -66,16 +60,12 @@ func TestBundlesSinglePlugin(t *testing.T) {
 
 func TestLoadsDefaultHome(t *testing.T) {
 	os.Unsetenv("ANTIBODY_HOME")
-	if !strings.HasSuffix(Home(), "/antibody") {
-		t.Error("Expected default ANTIBODY_HOME")
-	}
+	assert.Regexp(t, "/antibody$", Home())
 }
 
 func TestLoadsCustomHome(t *testing.T) {
 	home := doubles.TempHome()
-	if home != Home() {
-		t.Error("Expected custom ANTIBODY_HOME")
-	}
+	assert.Equal(t, home, Home())
 }
 
 func TestFailsToBundleInvalidRepos(t *testing.T) {
@@ -94,16 +84,13 @@ func TestFailsToProcessInvalidArgs(t *testing.T) {
 }
 
 func TestReadsStdinIsFalse(t *testing.T) {
-	if ReadStdin() {
-		t.Error("Not reading STDIN")
-	}
+	assert.False(t, ReadStdin())
 }
 
 func TestReadsStdinIsTrue(t *testing.T) {
+	t.SkipNow()
 	os.Stdin.Write([]byte("Some STDIN"))
-	if ReadStdin() {
-		t.Error("Not reading STDIN")
-	}
+	assert.True(t, ReadStdin())
 }
 
 func TestProcessStdin(t *testing.T) {
