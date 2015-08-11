@@ -6,7 +6,7 @@ import (
 )
 
 // Antibody wraps a list of bundles to be processed.
-type Antibody struct {
+type Antibody      struct {
 	bundles []Bundle
 }
 type bundleFn func(bundle Bundle)
