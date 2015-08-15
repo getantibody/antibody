@@ -10,8 +10,6 @@ import (
 	"github.com/caarlos0/gohome"
 )
 
-var version = "master"
-
 func bundle(bundle string, home string) {
 	NewAntibody([]Bundle{NewGitBundle(bundle, home)}).Download()
 }
@@ -41,7 +39,7 @@ func update(home string) {
 }
 
 // ProcessArgs processes arguments passed to the executable.
-func ProcessArgs(args []string, home string) {
+func ProcessArgs(args []string, home, version string) {
 	switch args[0] {
 	case "update":
 		update(home)
