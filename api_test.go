@@ -26,6 +26,13 @@ func TestProcessesArgsDoBundle(t *testing.T) {
 	assertBundledPlugins(t, 1, home)
 }
 
+func TestBundleWithNoBundles(t *testing.T) {
+	home := doubles.TempHome()
+	ProcessArgs([]string{"bundle", ""}, home)
+	ProcessArgs([]string{"bundle"}, home)
+	assertBundledPlugins(t, 0, home)
+}
+
 func TestUpdateWithNoPlugins(t *testing.T) {
 	home := doubles.TempHome()
 	ProcessArgs([]string{"update"}, home)

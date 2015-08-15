@@ -46,7 +46,11 @@ func ProcessArgs(args []string, home string) {
 	case "update":
 		update(home)
 	case "bundle":
-		bundle(args[1], home)
+		if len(args) < 2 {
+			fmt.Println("bundle needs to receive an argument in 'user/repo' format")
+		} else {
+			bundle(args[1], home)
+		}
 	case "version":
 		fmt.Println(version)
 	default:

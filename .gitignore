@@ -24,3 +24,5 @@ _testmain.go
 *.prof
 bin/
 *.tar.gz
+
+coverage.out
