@@ -11,6 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var version = "test"
+
 func expectError(t *testing.T) {
 	assert.NotNil(t, recover())
 }
@@ -22,40 +24,40 @@ func assertBundledPlugins(t *testing.T, total int, home string) {
 
 func TestProcessesArgsDoBundle(t *testing.T) {
 	home := doubles.TempHome()
-	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home)
+	ProcessArgs([]string{"bundle", "caarlos0/zsh-pg"}, home, version)
 	assertBundledPlugins(t, 1, home)
 }
 
 func TestBundleWithNoBundles(t *testing.T) {
 	home := doubles.TempHome()
-	ProcessArgs([]string{"bundle", ""}, home)
-	ProcessArgs([]string{"bundle"}, home)
+	ProcessArgs([]string{"bundle", ""}, home, version)
+	ProcessArgs([]string{"bundle"}, home, version)
 	assertBundledPlugins(t, 0, home)
 }
 
 func TestUpdateWithNoPlugins(t *testing.T) {
 	home := doubles.TempHome()
-	ProcessArgs([]string{"update"}, home)
+	ProcessArgs([]string{"update"}, home, version)
 	assertBundledPlugins(t, 0, home)
 }
 
 func TestVersion(t *testing.T) {
 	home := doubles.TempHome()
-	ProcessArgs([]string{"version"}, home)
+	ProcessArgs([]string{"version"}, home, version)
 	assertBundledPlugins(t, 0, home)
 }
 
 func TestBundleMkdirs(t *testing.T) {
 	home := filepath.Join(doubles.TempHome(), "long/folder/which/dont/exist")
 	bundle("caarlos0/zsh-pg", home)
-	ProcessArgs([]string{"update"}, home)
+	ProcessArgs([]string{"update"}, home, version)
 	assertBundledPlugins(t, 1, home)
 }
 
 func TestUpdateWithPlugins(t *testing.T) {
 	home := doubles.TempHome()
 	bundle("caarlos0/zsh-pg", home)
-	ProcessArgs([]string{"update"}, home)
+	ProcessArgs([]string{"update"}, home, version)
 	assertBundledPlugins(t, 1, home)
 }
 
@@ -86,7 +88,7 @@ func TestFailsToBundleInvalidRepos(t *testing.T) {
 func TestFailsToProcessInvalidArgs(t *testing.T) {
 	home := doubles.TempHome()
 	defer expectError(t)
-	ProcessArgs([]string{"nope", "caarlos0/zsh-pg"}, home)
+	ProcessArgs([]string{"nope", "caarlos0/zsh-pg"}, home, version)
 	assertBundledPlugins(t, 0, home)
 }
 
