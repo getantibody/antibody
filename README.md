@@ -45,7 +45,10 @@ Running `antibody bundle` will already apply the bundle given bundle.
 
 ### Usage
 
-- Download the [last release](https://github.com/caarlos0/antibody/releases/);
+- Download the [latest release](https://github.com/caarlos0/antibody/releases/)
+(or, if are using OSX, you can use the
+[homebrew tap](https://github.com/caarlos0/homebrew-antibody)
+for that);
 - Uncompress it somewhere;
 - `source antibody.zsh`.
 
