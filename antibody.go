@@ -5,48 +5,47 @@ import (
 	"os"
 	"sync"
 
+	"github.com/caarlos0/antibody/bundle"
 	"github.com/caarlos0/gohome"
 )
 
 // Antibody wraps a list of bundles to be processed.
 type Antibody struct {
-	bundles []Bundle
+	bundles []bundle.Bundle
 }
 
-type bundleAction func(bundle Bundle)
+type bundleAction func(b bundle.Bundle)
 
 // New creates an instance of antibody with the given bundles.
-func New(bundles []Bundle) Antibody {
-	return Antibody{
-		bundles: bundles,
-	}
+func New(bundles []bundle.Bundle) Antibody {
+	return Antibody{bundles: bundles}
 }
 
 // Download the needed bundles.
 func (a Antibody) Download() {
-	a.forEach(func(b Bundle) {
+	a.forEach(func(b bundle.Bundle) {
 		b.Download()
 	})
 }
 
 // Update all bundles.
 func (a Antibody) Update() {
-	a.forEach(func(b Bundle) {
+	a.forEach(func(b bundle.Bundle) {
 		b.Update()
 	})
 }
 
 func (a Antibody) forEach(action bundleAction) {
 	var wg sync.WaitGroup
-	for _, bundle := range a.bundles {
+	for _, b := range a.bundles {
 		wg.Add(1)
-		go func(bundle Bundle, action bundleAction) {
-			action(bundle)
-			for _, sourceable := range bundle.Sourceables() {
+		go func(b bundle.Bundle, action bundleAction) {
+			action(b)
+			for _, sourceable := range b.Sourceables() {
 				fmt.Println(sourceable)
 			}
 			wg.Done()
-		}(bundle, action)
+		}(b, action)
 	}
 	wg.Wait()
 }

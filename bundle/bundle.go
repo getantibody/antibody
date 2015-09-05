@@ -1,6 +1,7 @@
-package antibody
+package bundle
 
 import (
+	"io/ioutil"
 	"path/filepath"
 
 	"github.com/caarlos0/antibody/git"
@@ -11,10 +12,10 @@ type Bundle struct {
 	git.Repo
 }
 
-// NewBundle creates a new bundle instance
-func NewBundle(bundle, home string) Bundle {
+// New creates a new bundle instance
+func New(fullName, folder string) Bundle {
 	return Bundle{
-		git.NewGithubRepo(bundle, home),
+		git.NewGithubRepo(fullName, folder),
 	}
 }
 
@@ -28,4 +29,16 @@ func (b Bundle) Sourceables() []string {
 		}
 	}
 	return nil
+}
+
+// List all bundles in the given folder
+func List(folder string) []Bundle {
+	entries, _ := ioutil.ReadDir(folder)
+	var bundles []Bundle
+	for _, bundle := range entries {
+		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
+			bundles = append(bundles, New(bundle.Name(), folder))
+		}
+	}
+	return bundles
 }
