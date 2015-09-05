@@ -9,7 +9,7 @@ CURRENT="$(git tag | tail -n1)"
 # go get golang.org/x/tools/cmd/cover
 
 echo "Creating release $1..."
-go test -v -cover
+go test -v -cover ./...
 rm -rf ./bin/
 rm -rf ./*.tar.gz
 gox \
@@ -44,4 +44,4 @@ ls ./bin | while read file; do
     --name "$filename" \
     --file "$filename"
 done
-rm -rf ./*.tar.gz
+rm -rf ./*.tar.gz bin/*

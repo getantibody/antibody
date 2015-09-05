@@ -2,47 +2,59 @@ package antibody
 
 import (
 	"fmt"
+	"os"
 	"sync"
+
+	"github.com/caarlos0/antibody/bundle"
+	"github.com/caarlos0/gohome"
 )
 
 // Antibody wraps a list of bundles to be processed.
 type Antibody struct {
-	bundles []Bundle
-}
-type bundleFn func(bundle Bundle)
-
-// NewAntibody creates an instance of antibody with the given bundles.
-func NewAntibody(bundles []Bundle) Antibody {
-	return Antibody{
-		bundles: bundles,
-	}
+	bundles []bundle.Bundle
 }
 
-func (a Antibody) forEach(fn bundleFn) {
-	var wg sync.WaitGroup
-	for _, bundle := range a.bundles {
-		wg.Add(1)
-		go func(bundle Bundle, fn bundleFn) {
-			fn(bundle)
-			for _, sourceable := range bundle.Sourceables() {
-				fmt.Println(sourceable)
-			}
-			wg.Done()
-		}(bundle, fn)
-	}
-	wg.Wait()
+type bundleAction func(b bundle.Bundle)
+
+// New creates an instance of antibody with the given bundles.
+func New(bundles []bundle.Bundle) Antibody {
+	return Antibody{bundles: bundles}
 }
 
 // Download the needed bundles.
 func (a Antibody) Download() {
-	a.forEach(func(b Bundle) {
+	a.forEach(func(b bundle.Bundle) {
 		b.Download()
 	})
 }
 
 // Update all bundles.
 func (a Antibody) Update() {
-	a.forEach(func(b Bundle) {
+	a.forEach(func(b bundle.Bundle) {
 		b.Update()
 	})
+}
+
+func (a Antibody) forEach(action bundleAction) {
+	var wg sync.WaitGroup
+	for _, b := range a.bundles {
+		wg.Add(1)
+		go func(b bundle.Bundle, action bundleAction) {
+			action(b)
+			for _, sourceable := range b.Sourceables() {
+				fmt.Println(sourceable)
+			}
+			wg.Done()
+		}(b, action)
+	}
+	wg.Wait()
+}
+
+// Home finds the right home folder to use
+func Home() string {
+	home := os.Getenv("ANTIBODY_HOME")
+	if home == "" {
+		return gohome.Cache("antibody")
+	}
+	return home
 }
