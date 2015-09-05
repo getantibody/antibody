@@ -26,6 +26,10 @@ func main() {
 			Name:   "list",
 			Usage:  "list all currently installed bundles",
 			Action: actions.List,
+		}, {
+			Name:   "home",
+			Usage:  "shows the current antibody home folder",
+			Action: actions.Home,
 		},
 	}
 	app.Version = version
