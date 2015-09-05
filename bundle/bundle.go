@@ -3,6 +3,7 @@ package bundle
 import (
 	"io/ioutil"
 	"path/filepath"
+	"strings"
 
 	"github.com/caarlos0/antibody/git"
 )
@@ -39,6 +40,18 @@ func List(folder string) []Bundle {
 		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
 			bundles = append(bundles, New(bundle.Name(), folder))
 		}
+	}
+	return bundles
+}
+
+// Parse a list of bundles, one per line, into a Bundle slice
+func Parse(s, folder string) []Bundle {
+	var bundles []Bundle
+	for _, b := range strings.Split(s, "\n") {
+		if strings.TrimSpace(b) == "" {
+			continue
+		}
+		bundles = append(bundles, New(b, folder))
 	}
 	return bundles
 }

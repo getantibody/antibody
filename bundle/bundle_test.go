@@ -36,3 +36,17 @@ func TestList(t *testing.T) {
 	bundle.New("caarlos0/zsh-pg", home).Download()
 	assert.NotEmpty(t, bundle.List(home))
 }
+
+func TestParse(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	s := "caarlos0/zsh-pg\ncaarlos0/zsh-open-pr"
+	assert.Len(t, bundle.Parse(s, home), 2)
+}
+
+func TestParseWithEmptyLines(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	s := "caarlos0/zsh-pg\n\n  \ncaarlos0/zsh-open-pr"
+	assert.Len(t, bundle.Parse(s, home), 2)
+}
