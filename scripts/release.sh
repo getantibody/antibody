@@ -1,29 +1,24 @@
 #!/bin/bash
-RELEASE="v$1"
-CURRENT="$(git tag | tail -n1)"
+CURRENT="$(git describe --tags --abbrev=0)"
+PREVIOUS=$(git describe --tags --abbrev=0 ${CURRENT}^)
 
-# echo "Installing needed tools..."
-# go get github.com/mitchellh/gox
-# gox -build-toolchain
-# go get github.com/aktau/github-release
-# go get golang.org/x/tools/cmd/cover
+echo "Installing needed tools..."
+go get github.com/mitchellh/gox
+gox -build-toolchain
+go get github.com/aktau/github-release
+go get golang.org/x/tools/cmd/cover
 
-echo "Creating release $1..."
-go test -v -cover ./...
-rm -rf ./bin/
-rm -rf ./*.tar.gz
+echo "Creating release $CURRENT..."
 gox \
   -output="./bin/{{.Dir}}_{{.OS}}_{{.Arch}}" \
   -os="linux darwin freebsd openbsd netbsd" \
-  -ldflags="-X main.version $RELEASE" \
+  -ldflags="-X main.version $CURRENT" \
   ./cmd/antibody/
-git tag "$RELEASE"
-git push origin "$RELEASE"
-LOG="$(git log --pretty=oneline --abbrev-commit "$CURRENT"..HEAD)"
+LOG="$(git log --pretty=oneline --abbrev-commit "$PREVIOUS".."$CURRENT")"
 github-release release \
   --user caarlos0 \
   --repo antibody \
-  --tag "$RELEASE" \
+  --tag "$CURRENT" \
   --name "$2" \
   --description "$LOG" \
   --pre-release
@@ -40,8 +35,7 @@ ls ./bin | while read file; do
   github-release upload \
     --user caarlos0 \
     --repo antibody \
-    --tag "$RELEASE" \
+    --tag "$CURRENT" \
     --name "$filename" \
     --file "$filename"
 done
-rm -rf ./*.tar.gz bin/*
