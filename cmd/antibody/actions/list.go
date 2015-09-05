@@ -9,7 +9,7 @@ import (
 )
 
 // List all installed bundles
-func List(c *cli.Context) {
+func List(ctx *cli.Context) {
 	for _, b := range bundle.List(antibody.Home()) {
 		fmt.Println(b.Name())
 	}

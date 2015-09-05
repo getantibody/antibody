@@ -7,6 +7,6 @@ import (
 )
 
 // Update all installed bundles
-func Update(c *cli.Context) {
+func Update(ctx *cli.Context) {
 	antibody.New(bundle.List(antibody.Home())).Update()
 }

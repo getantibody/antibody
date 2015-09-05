@@ -10,7 +10,7 @@ import (
 )
 
 // Bundle download all given bundles (stdin or args)
-func Bundle(c *cli.Context) {
+func Bundle(ctx *cli.Context) {
 	if readFromStdin() {
 		entries, _ := ioutil.ReadAll(os.Stdin)
 		antibody.New(
@@ -18,7 +18,7 @@ func Bundle(c *cli.Context) {
 		).Download()
 	} else {
 		antibody.New([]bundle.Bundle{
-			bundle.New(c.Args().First(), antibody.Home()),
+			bundle.New(ctx.Args().First(), antibody.Home()),
 		}).Download()
 	}
 }
