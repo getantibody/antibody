@@ -1,0 +1,13 @@
+language: go
+
+go:
+  - 1.5
+  - 1.4
+  - tip
+install:
+  - go version
+  - go get -v -t ./...
+  - go get golang.org/x/tools/cmd/cover
+script:
+  - export POSTGRES_URL="postgres://postgres@localhost:5432?sslmode=disable"
+  - go test -v -cover ./...
