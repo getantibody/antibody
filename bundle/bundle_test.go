@@ -24,6 +24,14 @@ func TestSourceablesWithoutDownload(t *testing.T) {
 	assert.Empty(t, b.Sourceables())
 }
 
+func TestSourceablesDotSh(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	b := bundle.New("rupa/z", home)
+	b.Download()
+	assert.Len(t, b.Sourceables(), 1)
+}
+
 func TestListEmptyFolder(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)

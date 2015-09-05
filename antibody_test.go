@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/caarlos0/antibody"
+	"github.com/caarlos0/antibody/bundle"
 	"github.com/caarlos0/antibody/internal"
 	"github.com/stretchr/testify/assert"
 )
@@ -12,9 +13,9 @@ import (
 func TestBundleAndUpdate(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)
-	a := antibody.New([]antibody.Bundle{
-		antibody.NewBundle("caarlos0/zsh-pg", home),
-		antibody.NewBundle("caarlos0/zsh-open-pr", home),
+	a := antibody.New([]bundle.Bundle{
+		bundle.New("caarlos0/zsh-pg", home),
+		bundle.New("caarlos0/zsh-open-pr", home),
 	})
 	a.Download()
 	a.Update()
