@@ -12,7 +12,7 @@ var version = "master"
 func main() {
 	app := cli.NewApp()
 	app.Name = "antibody"
-	app.Usage = "antibody is a faster and leaner version of antigen"
+	app.Usage = "A faster and simpler version of antigen written in Golang"
 	app.Commands = []cli.Command{
 		{
 			Name:   "bundle",

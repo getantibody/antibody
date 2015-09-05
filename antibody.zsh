@@ -15,6 +15,6 @@ antibody() {
 }
 
 _antibody() {
-  IFS=' ' read -A reply <<< "$(echo "bundle update list version")"
+  IFS=' ' read -A reply <<< "$(echo "bundle update list help")"
 }
 compctl -K _antibody antibody
