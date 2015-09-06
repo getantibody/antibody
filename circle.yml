@@ -3,3 +3,12 @@ deployment:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - ./scripts/release.sh
+test:
+  pre:
+    - go get github.com/pierrre/gotestcover
+    - go get github.com/mattn/goveralls
+    - go get golang.org/x/tools/cmd/cover
+  override:
+    - gotestcover -race -coverprofile=coverage.out ./...
+  post:
+    - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
