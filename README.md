@@ -1,4 +1,4 @@
-# antibody [![Circle CI](https://circleci.com/gh/caarlos0/antibody.svg?style=svg)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://coveralls.io/repos/caarlos0/antibody/badge.svg?branch=master)](https://coveralls.io/r/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
+# antibody [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg)](https://circleci.com/gh/caarlos0/antibody) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
 
 A faster and simpler version of antigen written in Go.
 
