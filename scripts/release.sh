@@ -21,9 +21,6 @@ github-release release \
   --tag "$CURRENT" \
   --description "$LOG" \
   --pre-release
-if [ "$(uname -s)" = "Darwin" ]; then
-  PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-fi
 # shellcheck disable=SC2012
 ls ./bin | while read file; do
   filename="$file.tar.gz"
