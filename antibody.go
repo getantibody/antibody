@@ -54,7 +54,7 @@ func (a Antibody) forEach(action bundleAction) {
 func Home() string {
 	home := os.Getenv("ANTIBODY_HOME")
 	if home == "" {
-		return gohome.Cache("antibody")
+		home = gohome.Cache("antibody")
 	}
 	return home
 }

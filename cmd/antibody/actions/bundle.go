@@ -17,9 +17,9 @@ func Bundle(ctx *cli.Context) {
 			bundle.Parse(string(entries), antibody.Home()),
 		).Download()
 	} else {
-		antibody.New([]bundle.Bundle{
-			bundle.New(ctx.Args().First(), antibody.Home()),
-		}).Download()
+		antibody.New(
+			[]bundle.Bundle{bundle.New(ctx.Args().First(), antibody.Home())},
+		).Download()
 	}
 }
 
