@@ -34,14 +34,14 @@ func (r Repo) Name() string {
 // Download clones a repository
 func (r Repo) Download() error {
 	if _, err := os.Stat(r.folder); os.IsNotExist(err) {
-		clone := exec.Command("git", "clone", "--depth", "1", r.url, r.folder)
-		return clone.Run()
+		return exec.Command(
+			"git", "clone", "--depth", "1", r.url, r.folder,
+		).Run()
 	}
 	return nil
 }
 
 // Update updates a repository
 func (r Repo) Update() error {
-	pull := exec.Command("git", "-C", r.folder, "pull", "origin", "master")
-	return pull.Run()
+	return exec.Command("git", "-C", r.folder, "pull", "origin", "master").Run()
 }
