@@ -19,7 +19,6 @@ github-release release \
   --user caarlos0 \
   --repo antibody \
   --tag "$CURRENT" \
-  --name "$2" \
   --description "$LOG" \
   --pre-release
 if [ "$(uname -s)" = "Darwin" ]; then
