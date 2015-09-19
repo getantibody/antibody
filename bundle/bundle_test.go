@@ -32,6 +32,14 @@ func TestSourceablesDotSh(t *testing.T) {
 	assert.Len(t, b.Sourceables(), 1)
 }
 
+func TestSourceablesZshTheme(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	b := bundle.New("caiogondim/bullet-train-oh-my-zsh-theme", home)
+	b.Download()
+	assert.Len(t, b.Sourceables(), 1)
+}
+
 func TestListEmptyFolder(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)

@@ -8,7 +8,7 @@ import (
 	"github.com/caarlos0/antibody/git"
 )
 
-var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh"}
+var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
 // Bundle is a git-based bundle/plugin
 type Bundle struct {
