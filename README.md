@@ -1,4 +1,4 @@
-<img src="logo.png" align="right" width="192px" height="192px"/>
+<img src="logo.png" align="right" width="192px"/>
 
 A faster and simpler version of antigen written in Go.
 
