@@ -85,6 +85,27 @@ This way antibody can concurrently clone the bundles, so it may be faster!
 - I did this mostly for myself, so, my
 [dotfiles](https://github.com/caarlos0/dotfiles/pull/78);
 
+### Hacking
+
+#### Static loading
+
+In [#67](https://github.com/caarlos0/antibody/issues/67) I was asked if there
+is some sort of static loading.
+
+Short answer: no, there isn'. But you can hack arount it.
+
+If you want to use antibody just to download and/or update your dependencies,
+you can run it like this:
+
+```sh
+$ ANTIBODY_FOLDER/bin/antibody bundle < bundles.txt | xargs -I {} echo "source {}" >> sourceables.sh
+# In your zshrc (or whatever):
+$ source sourceables.sh
+```
+
+With this approach you don' even need to source `antibody.zsh` if you don't
+want to, and, yes, your shell will probably be even faster. It comes with
+the cost of additional work though.
 
 ### Throughput Graph
 
