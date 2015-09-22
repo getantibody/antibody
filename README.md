@@ -2,7 +2,7 @@
 
 A faster and simpler version of antigen written in Go.
 
-[![License](https://img.shields.io/github/license/caarlos0/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg?style=flat-square)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://coveralls.io/repos/caarlos0/antibody/badge.svg?branch=master&service=github)](https://coveralls.io/github/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
+[![License](https://img.shields.io/github/license/caarlos0/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg?style=flat-square)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://img.shields.io/coveralls/caarlos0/antibody.svg?style=flat-square)](https://coveralls.io/github/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
 
 > "Antigen is a small set of functions that help you easily manage your shell
 > (zsh) plugins, called bundles. The concept is pretty much the same as
