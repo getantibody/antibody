@@ -1,5 +1,6 @@
-<img src="logo.png" align="left" width="192px" height="192px"/>
-<img src="" align="left" width="0" height="192px" hspace="10"/>
+<img src="logo.png" align="right" width="192px" height="192px"/>
+
+# antibody
 
 A faster and simpler version of antigen written in Go.
 
@@ -12,7 +13,6 @@ A faster and simpler version of antigen written in Go.
 >
 > Read more: [Antigen](https://github.com/zsh-users/antigen).
 
-<br><br>
 
 ### Why?
 
