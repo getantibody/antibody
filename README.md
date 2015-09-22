@@ -11,55 +11,59 @@ A faster and simpler version of antigen written in Go.
 
 ### Why?
 
-Antigen is really nice. But it is bloated and it is slow - 5+ seconds to load
+Antigen is really nice, but it is bloated and it is slow - 5+ seconds to load
 on my Mac... that's way too much to wait for a prompt to load!
 
 I'm aware that there is other attempts, like
-[antigen-hs](https://github.com/Tarrasch/antigen-hs), but I'm don't want to
+[antigen-hs](https://github.com/Tarrasch/antigen-hs), but I don't want to
 install a lot of stuff for this to work.
 
-So, why Go, you might ask.
-
-Well, the compiled Go program runs anywhere and doesn't depend on any shared
-libraries. I also don't need to source it as it would be necessary with
-plain simple shell. I also can do stuff in parallel with Go routines.
-The little amount of shell written is needed because I can't source
-something from inside a Go program (or at least don't yet know how to do it).
+So, why Go, you might ask: Well, the compiled Go program runs anywhere
+and doesn't depend on any shared libraries. I also don't need to source it as
+it would be necessary with plain simple shell. I also can do stuff in
+parallel with Go routines. The little amount of shell written is needed
+because I can't source something from inside a Go program (or at least
+don't yet know how to do it).
 
 ### What works
 
-These are only antigen commands I ever used:
+These are the only antigen commands I ever used:
 
 - `bundle`
 - `update`
 - `apply`
 
 Antibody does just those three things, but you don't even need to `apply`.
-Running `antibody bundle` will already apply the bundle given bundle.
+Running `antibody bundle` will already download and apply the given bundle.
 
 ### What doesn't work
 
 - Modules that are not in GitHub (you can open a PR if you wish);
-- The `theme` command (although some themes might just work with bundle);
+- The `theme` command (although some themes might just work with `bundle`);
 - oh-my-zsh support: it looks very ugly to me and I won't do it;
 
 ### Usage
 
-- Download the [latest release](https://github.com/caarlos0/antibody/releases/)
-(or, if are using OSX, you can use the
-[homebrew tap](https://github.com/caarlos0/homebrew-antibody)
-for that);
-- Uncompress it somewhere;
-- `source antibody.zsh`.
+- Download the [latest release](https://github.com/caarlos0/antibody/releases/).
+If are using OSX and homebrew, you can use the
+[`homebrew tap`](https://github.com/caarlos0/homebrew-antibody) for that;
+- Uncompress it somewhere (uneeded with `homebrew`);
+- [`source antibody.zsh`](https://github.com/caarlos0/dotfiles/blob/master/antibody/path.zsh).
 
-> **Attention**: the `antibody` binary file should not be in your `$PATH`.
-> You only need to source the `antibody.zsh` file!
+Pay attention to not put the `antibody` binary in your `PATH`. This will cause
+antibody to malfunction. You just need to source the `antibody.zsh` for it
+to work.
 
 Now, you can just `antibody bundle` stuff, e.g.,
 `antibody bundle Tarrasch/zsh-autoenv`. The repository will be cloned at
-`~/.antibody` and all `.zsh.plugin` files will be loaded.
+your `XDG_CACHE` folder and antibody will try to load some files that match:
 
-If you ever need to update your bundles, just run `antibody update`.
+- `*.plugin.zsh`
+- `*.zsh`
+- `*.sh`
+- `*.zsh-theme`
+
+When you decide to update your bundles, just run `antibody update`.
 
 ### Protips
 
@@ -78,13 +82,21 @@ zsh-users/zsh-history-substring-search
 $ antibody bundle < plugins.txt
 ```
 
-This way antibody can concurrently clone the bundles, so it may be faster!
+This way antibody can concurrently clone the bundles and find their sourceable
+files, so it will probably be faster than call each one separately.
 
 ### In the wild
 
 - I did this mostly for myself, so, my
 [dotfiles](https://github.com/caarlos0/dotfiles/pull/78);
-
+- @mkwmms' [dotfiles](https://github.com/mkwmms/dotfiles);
+- @oieduardorabelo's [dotfiles](https://github.com/oieduardorabelo/dotfiles);
+- @nisaacson's [dotfiles](https://github.com/nisaacson/dotfiles);
+- @pragmaticivan's [dotfiles](https://github.com/pragmaticivan/dotfiles);
+- @wkentaro's [dotfiles](https://github.com/wkentaro/dotfiles);
+- @marceldias' [dotfiles](https://github.com/marceldiass/dotfiles);
+- @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
+- and probably [some more](https://github.com/search?q=antibody&type=Code);
 
 ### Throughput Graph
 
