@@ -1,6 +1,8 @@
-# antibody [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://coveralls.io/repos/caarlos0/antibody/badge.svg?branch=master&service=github)](https://coveralls.io/github/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
+<img src="logo.png" align="right" width="192px"/>
 
-A faster and simpler version of antigen written in Go.
+A faster and simpler antigen written in Golang.
+
+[![License](https://img.shields.io/github/license/caarlos0/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg?style=flat-square)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://img.shields.io/coveralls/caarlos0/antibody.svg?style=flat-square)](https://coveralls.io/github/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
 
 > "Antigen is a small set of functions that help you easily manage your shell
 > (zsh) plugins, called bundles. The concept is pretty much the same as
@@ -8,6 +10,7 @@ A faster and simpler version of antigen written in Go.
 > is to vim."
 >
 > Read more: [Antigen](https://github.com/zsh-users/antigen).
+
 
 ### Why?
 
@@ -119,6 +122,11 @@ $ source sourceables.sh
 With this approach you don' even need to source `antibody.zsh` if you don't
 want to, and, yes, your shell will probably be even faster. It comes with
 the cost of additional work though.
+
 ### Throughput Graph
 
 [![Throughput Graph](https://graphs.waffle.io/caarlos0/antibody/throughput.svg)](https://waffle.io/caarlos0/antibody/metrics)
+
+### Thanks
+
+- [@pragmaticivan](https://github.com/pragmaticivan), for the logo design.
