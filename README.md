@@ -44,16 +44,13 @@ Running `antibody bundle` will already download and apply the given bundle.
 ### What doesn't work
 
 - Modules that are not in GitHub (you can open a PR if you wish);
-- The `theme` command (although some themes might just work with `bundle`);
+- The `theme` command (although most themes might just work with `bundle`);
 - oh-my-zsh support: it looks very ugly to me and I won't do it;
 
 ### Usage
 
-- Download the [latest release](https://github.com/caarlos0/antibody/releases/).
-If are using OSX and homebrew, you can use the
-[`homebrew tap`](https://github.com/caarlos0/homebrew-antibody) for that;
-- Uncompress it somewhere (uneeded with `homebrew`);
-- [`source antibody.zsh`](https://github.com/caarlos0/dotfiles/blob/master/antibody/path.zsh).
+First of all, download and install the
+[latest release](https://antibody.elasticbeanstalk.com).
 
 Pay attention to not put the `antibody` binary in your `PATH`. This will cause
 antibody to malfunction. You just need to source the `antibody.zsh` for it
@@ -93,7 +90,7 @@ files, so it will probably be faster than call each one separately.
 ### In the wild
 
 - I did this mostly for myself, so, my
-[dotfiles](https://github.com/caarlos0/dotfiles/pull/78);
+[dotfiles](https://github.com/caarlos0/dotfiles);
 - @mkwmms' [dotfiles](https://github.com/mkwmms/dotfiles);
 - @oieduardorabelo's [dotfiles](https://github.com/oieduardorabelo/dotfiles);
 - @nisaacson's [dotfiles](https://github.com/nisaacson/dotfiles);
@@ -101,7 +98,7 @@ files, so it will probably be faster than call each one separately.
 - @wkentaro's [dotfiles](https://github.com/wkentaro/dotfiles);
 - @marceldias' [dotfiles](https://github.com/marceldiass/dotfiles);
 - @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
-- and probably [some more](https://github.com/search?q=antibody&type=Code);
+- and probably [many others](https://github.com/search?q=antibody&type=Code);
 
 ### Hacking
 
