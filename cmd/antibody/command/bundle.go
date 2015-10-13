@@ -1,4 +1,4 @@
-package actions
+package command
 
 import (
 	"io/ioutil"
@@ -9,8 +9,13 @@ import (
 	"github.com/codegangsta/cli"
 )
 
-// Bundle download all given bundles (stdin or args)
-func Bundle(ctx *cli.Context) {
+var Bundle = cli.Command{
+	Name:   "bundle",
+	Usage:  "bundle one or more bundles",
+	Action: doBundle,
+}
+
+func doBundle(ctx *cli.Context) {
 	if readFromStdin() {
 		entries, _ := ioutil.ReadAll(os.Stdin)
 		antibody.New(
