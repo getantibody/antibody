@@ -9,9 +9,10 @@ import (
 	"github.com/codegangsta/cli"
 )
 
+// Bundle downloads (if needed) and then sources a given repo
 var Bundle = cli.Command{
 	Name:   "bundle",
-	Usage:  "bundle one or more bundles",
+	Usage:  "downloads (if needed) and then sources a given repo",
 	Action: doBundle,
 }
 
