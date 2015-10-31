@@ -26,3 +26,5 @@ bin/
 *.tar.gz
 
 coverage.out
+*.pdf
+*.pprof
