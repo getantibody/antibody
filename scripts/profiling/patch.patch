@@ -1,0 +1,36 @@
+From 5d8e4591e3b7c1361b632ed8e8b55bce99169662 Mon Sep 17 00:00:00 2001
+From: Carlos Alexandro Becker <caarlos0@gmail.com>
+Date: Sat, 31 Oct 2015 14:37:32 -0200
+Subject: [PATCH] profiling
+
+---
+ cmd/antibody/main.go | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/cmd/antibody/main.go b/cmd/antibody/main.go
+index 7bac889..8e5b773 100644
+--- a/cmd/antibody/main.go
++++ b/cmd/antibody/main.go
+@@ -5,11 +5,20 @@ import (
+
+ 	"github.com/caarlos0/antibody/cmd/antibody/command"
+ 	"github.com/codegangsta/cli"
++	"github.com/davecheney/profile"
+ )
+
+ var version = "master"
+
+ func main() {
++	cfg := profile.Config{
++		MemProfile:     true,
++		CPUProfile:     true,
++		BlockProfile:   true,
++		ProfilePath:    ".",  // store profiles in current directory
++		NoShutdownHook: true, // do not hook SIGINT
++	}
++	defer profile.Start(&cfg).Stop()
+ 	app := cli.NewApp()
+ 	app.Name = "antibody"
+ 	app.Usage = "A faster and simpler antigen written in Golang"
+--
+2.6.2
