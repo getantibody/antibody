@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/caarlos0/antibody"
-	"github.com/caarlos0/antibody/bundle"
-	"github.com/caarlos0/antibody/internal"
+	"github.com/getantibody/antibody"
+	"github.com/getantibody/antibody/bundle"
+	"github.com/getantibody/antibody/internal"
 	"github.com/stretchr/testify/assert"
 )
 
