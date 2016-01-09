@@ -2,7 +2,7 @@
 
 A faster and simpler antigen written in Golang.
 
-[![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/getantibody/antibody/master.svg?style=flat-square)](https://circleci.com/gh/getantibody/antibody) [![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/getantibody/antibody.png?label=ready&title=Ready)](https://waffle.io/getantibody/antibody)
+[![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/getantibody/antibody/master.svg?style=flat-square)](https://circleci.com/gh/getantibody/antibody) [![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master)
 
 > "Antigen is a small set of functions that help you easily manage your shell
 > (zsh) plugins, called bundles. The concept is pretty much the same as
@@ -50,7 +50,7 @@ Running `antibody bundle` will already download and apply the given bundle.
 ### Usage
 
 First of all, download and install the
-[latest release](https://antibody.elasticbeanstalk.com).
+[latest release](http://getantibody.github.io).
 
 Pay attention to not put the `antibody` binary in your `PATH`. This will cause
 antibody to malfunction. You just need to source the `antibody.zsh` for it
@@ -107,7 +107,7 @@ files, so it will probably be faster than call each one separately.
 In [#67](https://github.com/getantibody/antibody/issues/67) I was asked if there
 is some sort of static loading.
 
-Short answer: no, there isn'. But you can hack arount it.
+Short answer: no, there isn't. But you can hack arount it.
 
 If you want to use antibody just to download and/or update your dependencies,
 you can run it like this:
@@ -124,7 +124,7 @@ the cost of additional work though.
 
 ### Throughput Graph
 
-[![Throughput Graph](https://graphs.waffle.io/getantibody/antibody/throughput.svg)](https://waffle.io/getantibody/antibody/metrics)
+[![Throughput Graph](https://graphs.waffle.io/caarlos0/antibody/throughput.svg)](https://waffle.io/caarlos0/antibody/metrics)
 
 ### Thanks
 
