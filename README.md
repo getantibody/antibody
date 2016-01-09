@@ -122,10 +122,6 @@ With this approach you don' even need to source `antibody.zsh` if you don't
 want to, and, yes, your shell will probably be even faster. It comes with
 the cost of additional work though.
 
-### Throughput Graph
-
-[![Throughput Graph](https://graphs.waffle.io/caarlos0/antibody/throughput.svg)](https://waffle.io/caarlos0/antibody/metrics)
-
 ### Thanks
 
 - [@pragmaticivan](https://github.com/pragmaticivan), for the logo design.
