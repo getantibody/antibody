@@ -2,7 +2,7 @@
 
 A faster and simpler antigen written in Golang.
 
-[![License](https://img.shields.io/github/license/caarlos0/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg?style=flat-square)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://img.shields.io/coveralls/caarlos0/antibody.svg?style=flat-square)](https://coveralls.io/github/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
+[![License](https://img.shields.io/github/license/caarlos0/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg?style=flat-square)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://img.shields.io/coveralls/caarlos0/antibody.svg?style=flat-square)](https://coveralls.io/github/caarlos0/antibody?branch=master)
 
 > "Antigen is a small set of functions that help you easily manage your shell
 > (zsh) plugins, called bundles. The concept is pretty much the same as
@@ -50,7 +50,7 @@ Running `antibody bundle` will already download and apply the given bundle.
 ### Usage
 
 First of all, download and install the
-[latest release](https://antibody.elasticbeanstalk.com).
+[latest release](http://getantibody.github.io).
 
 Pay attention to not put the `antibody` binary in your `PATH`. This will cause
 antibody to malfunction. You just need to source the `antibody.zsh` for it
@@ -104,10 +104,10 @@ files, so it will probably be faster than call each one separately.
 
 #### Static loading
 
-In [#67](https://github.com/caarlos0/antibody/issues/67) I was asked if there
+In [#67](https://github.com/getantibody/antibody/issues/67) I was asked if there
 is some sort of static loading.
 
-Short answer: no, there isn'. But you can hack arount it.
+Short answer: no, there isn't. But you can hack arount it.
 
 If you want to use antibody just to download and/or update your dependencies,
 you can run it like this:
@@ -121,10 +121,6 @@ $ source sourceables.sh
 With this approach you don' even need to source `antibody.zsh` if you don't
 want to, and, yes, your shell will probably be even faster. It comes with
 the cost of additional work though.
-
-### Throughput Graph
-
-[![Throughput Graph](https://graphs.waffle.io/caarlos0/antibody/throughput.svg)](https://waffle.io/caarlos0/antibody/metrics)
 
 ### Thanks
 
