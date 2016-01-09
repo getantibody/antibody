@@ -16,7 +16,7 @@ gox \
   ./cmd/antibody/
 LOG="$(git log --pretty=oneline --abbrev-commit "$PREVIOUS".."$CURRENT")"
 github-release release \
-  --user caarlos0 \
+  --user getantibody \
   --repo antibody \
   --tag "$CURRENT" \
   --description "$LOG" \
@@ -29,7 +29,7 @@ ls ./bin | while read file; do
     -cvzf "$filename" \
     "bin/${file}" antibody.zsh README.md LICENSE
   github-release upload \
-    --user caarlos0 \
+    --user getantibody \
     --repo antibody \
     --tag "$CURRENT" \
     --name "$filename" \

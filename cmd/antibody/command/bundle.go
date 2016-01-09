@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/caarlos0/antibody"
-	"github.com/caarlos0/antibody/bundle"
+	"github.com/getantibody/antibody"
+	"github.com/getantibody/antibody/bundle"
 	"github.com/codegangsta/cli"
 )
 

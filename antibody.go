@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/caarlos0/antibody/bundle"
+	"github.com/getantibody/antibody/bundle"
 	"github.com/caarlos0/gohome"
 )
 

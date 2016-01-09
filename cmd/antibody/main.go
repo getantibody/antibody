@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/caarlos0/antibody/cmd/antibody/command"
+	"github.com/getantibody/antibody/cmd/antibody/command"
 	"github.com/codegangsta/cli"
 )
 
