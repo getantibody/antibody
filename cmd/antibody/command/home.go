@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 
-	"github.com/caarlos0/antibody"
+	"github.com/getantibody/antibody"
 	"github.com/codegangsta/cli"
 )
 

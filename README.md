@@ -2,7 +2,7 @@
 
 A faster and simpler antigen written in Golang.
 
-[![License](https://img.shields.io/github/license/caarlos0/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/caarlos0/antibody/master.svg?style=flat-square)](https://circleci.com/gh/caarlos0/antibody) [![Coverage Status](https://img.shields.io/coveralls/caarlos0/antibody.svg?style=flat-square)](https://coveralls.io/github/caarlos0/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/caarlos0/antibody.png?label=ready&title=Ready)](https://waffle.io/caarlos0/antibody)
+[![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/getantibody/antibody/master.svg?style=flat-square)](https://circleci.com/gh/getantibody/antibody) [![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master) [![Stories in Ready](https://badge.waffle.io/getantibody/antibody.png?label=ready&title=Ready)](https://waffle.io/getantibody/antibody)
 
 > "Antigen is a small set of functions that help you easily manage your shell
 > (zsh) plugins, called bundles. The concept is pretty much the same as
@@ -104,7 +104,7 @@ files, so it will probably be faster than call each one separately.
 
 #### Static loading
 
-In [#67](https://github.com/caarlos0/antibody/issues/67) I was asked if there
+In [#67](https://github.com/getantibody/antibody/issues/67) I was asked if there
 is some sort of static loading.
 
 Short answer: no, there isn'. But you can hack arount it.
@@ -124,7 +124,7 @@ the cost of additional work though.
 
 ### Throughput Graph
 
-[![Throughput Graph](https://graphs.waffle.io/caarlos0/antibody/throughput.svg)](https://waffle.io/caarlos0/antibody/metrics)
+[![Throughput Graph](https://graphs.waffle.io/getantibody/antibody/throughput.svg)](https://waffle.io/getantibody/antibody/metrics)
 
 ### Thanks
 
