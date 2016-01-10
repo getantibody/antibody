@@ -15,11 +15,12 @@ gox \
   -ldflags="-X main.version $CURRENT" \
   ./cmd/antibody/
 LOG="$(git log --pretty=oneline --abbrev-commit "$PREVIOUS".."$CURRENT")"
+DESCRIPTION="$LOG\n\nCompiled with: $(go version)"
 github-release release \
   --user getantibody \
   --repo antibody \
   --tag "$CURRENT" \
-  --description "$LOG" \
+  --description "$DESCRIPTION" \
   --pre-release
 # shellcheck disable=SC2012
 ls ./bin | while read file; do
