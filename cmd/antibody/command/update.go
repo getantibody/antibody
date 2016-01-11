@@ -1,9 +1,9 @@
 package command
 
 import (
+	"github.com/codegangsta/cli"
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
-	"github.com/codegangsta/cli"
 )
 
 // Update all previously bundled bundles

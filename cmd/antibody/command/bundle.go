@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/codegangsta/cli"
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
-	"github.com/codegangsta/cli"
 )
 
 // Bundle downloads (if needed) and then sources a given repo

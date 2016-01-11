@@ -3,9 +3,9 @@ package command
 import (
 	"fmt"
 
+	"github.com/codegangsta/cli"
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
-	"github.com/codegangsta/cli"
 )
 
 // List all downloaded bundles
