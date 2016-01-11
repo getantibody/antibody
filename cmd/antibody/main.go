@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/getantibody/antibody/cmd/antibody/command"
 	"github.com/codegangsta/cli"
+	"github.com/getantibody/antibody/cmd/antibody/command"
 )
 
 var version = "master"

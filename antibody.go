@@ -5,8 +5,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/getantibody/antibody/bundle"
 	"github.com/caarlos0/gohome"
+	"github.com/getantibody/antibody/bundle"
 )
 
 // Antibody wraps a list of bundles to be processed.
