@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
+	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/cmd/antibody/command"
 )
 
@@ -14,7 +15,7 @@ func main() {
 	app.Name = "antibody"
 	app.Usage = "A faster and simpler antigen written in Golang"
 	app.Commands = []cli.Command{
-		command.Bundle, command.Update, command.List, command.Home,
+		command.Bundle, command.Update, command.List, command.Shell, command.Home,
 	}
 	app.Version = version
 	app.Author = "Carlos Alexandro Becker (caarlos0@gmail.com)"

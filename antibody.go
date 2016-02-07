@@ -1,5 +1,7 @@
 package antibody
 
+//go:generate go-bindata -o ./internal/antibody/bindata.go -pkg $GOPACKAGE -prefix data/ ./
+
 import (
 	"fmt"
 	"os"
