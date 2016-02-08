@@ -6,23 +6,7 @@ import (
 	"text/template"
 
 	"github.com/codegangsta/cli"
-	//"github.com/getantibody/antibody"
-	//"github.com/getantibody/antibody/antibody_data"
-	//"./bindata"
-	//"./bindata.go"
-	//"github.com/getantibody/antibody"
-	//"github.com/getantibody/antibody/cmd"
-	"github.com/getantibody/antibody/internal/antibody"
-	//"github.com/getantibody/antibody/bindata"
-	//"github.com/getantibody/antibody/cmd"
-	//"github.com/getantibody/antibody/internal/antibody"
-	//"antibody/internal/antibody"
-	//"internal/antibody"
-	//"cmd/antibody/bindata.go"
-	//"antibody/bindata"
-	//"github.com/getantibody/antibody/cmd/antibody/main/bindata"
-	//"antibody/internal/bindata"
-	//"antibody/bindata"
+	"github.com/getantibody/antibody"
 )
 
 // Init outputs hooks meant to integrate with your shell.

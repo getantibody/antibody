@@ -1,6 +1,8 @@
 package antibody
 
-//go:generate go-bindata -o ./internal/antibody/bindata.go -pkg $GOPACKAGE -prefix data/ ./
+// Go will execute this to create the necessary bindata as a part of 'go generate ./...'
+//XX go:generate go-bindata -o ./internal/antibody/bindata.go -pkg $GOPACKAGE -prefix data/ data/
+//go:generate go-bindata -o ./bindata.go -pkg $GOPACKAGE -prefix data/ data/
 
 import (
 	"fmt"
