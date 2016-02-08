@@ -12,36 +12,34 @@ function -antibody-shell-hook() {
 		# Currently we just emulate that.
 		# These return a newline separated list of files to source.
 		bundle|update)
-			#while read bundle; do
-			#	source "$bundle"
-			#done < <(--antibody-wrapper "$@")
-
-			which -s "parallel" && p=parallel || p=xargs
-			--antibody-wrapper "$@" | $p --verbose --verbose ls -l
-
-			//source < <(--antibody-wrapper "$@"| xargs --verbose cat)
+            while read bundle; do
+                echo "bundle: $bundle"
+                source "$bundle"
+            done < <(--antibody-wrapper "$@")
 			;;
 
 		# Perfom a simple health check on the current env this hook
 		# is running on. Check if we should replace ourselves with the
 		# latest version from the main binary
-		check_hook|update_hook)
-			local antibody_version="$(--antibody-wrapper version)"
+        check_hook|update_hook)
+			local antibody_version="$(--antibody-wrapper -v | sed -e 's/^.* version //')"
             echo "Antibody version: $antibody_version"
 			echo "Shell hook version: $version"
 
-			if [[ "$antibody_version" != "$version" ]]; then
+			if [[ "$antibody_version" != "$version" \
+                  || "$1" == "update_hook" ]]; then
 				echo "--"
 				echo "Versions are not out of sync."
 				echo "Replacing myself with the latest copy via:"
-                echo "  antibody shell_init"
-				-antibody-shell-hook shell_init
+                echo "  antibody shell"
+				-antibody-shell-hook shell
+                return
 			fi
 			;;
 
 		# These actually return what should be executed in the shell
-		apply|shell_init)
-			source < <(--antibody-wrapper "$@")
+		apply|shell)
+			source <(--antibody-wrapper "$@")
 			;;
 
 		# Anything else just send it on up as is.
