@@ -1,12 +1,16 @@
 package antibody
 
+// Go will execute this to create the necessary bindata as a part of 'go generate ./...'
+//XX go:generate go-bindata -o ./internal/antibody/bindata.go -pkg $GOPACKAGE -prefix data/ data/
+//go:generate go-bindata -o ./bindata.go -pkg $GOPACKAGE -prefix data/ data/
+
 import (
 	"fmt"
 	"os"
 	"sync"
 
 	"github.com/caarlos0/gohome"
-	"github.com/getantibody/antibody/bundle"
+	"github.com/akatrevorjay/antibody/bundle"
 )
 
 // Antibody wraps a list of bundles to be processed.

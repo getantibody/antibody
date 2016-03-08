@@ -28,3 +28,8 @@ bin/
 coverage.out
 *.pdf
 *.pprof
+
+# Glide
+vendor
+glide.lock
+

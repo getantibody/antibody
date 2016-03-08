@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/codegangsta/cli"
-	"github.com/getantibody/antibody"
+	"github.com/akatrevorjay/antibody"
 )
 
 // Home shows current antibody home folder

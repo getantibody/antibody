@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/getantibody/antibody/git"
+	"github.com/akatrevorjay/antibody/git"
 )
 
 var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
