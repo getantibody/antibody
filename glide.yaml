@@ -1,0 +1,12 @@
+package: .
+import:
+- package: github.com/akatrevorjay/antibody
+  subpackages:
+  - antibody/command
+  - bundle
+  - git
+- package: github.com/caarlos0/gohome
+- package: github.com/codegangsta/cli
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert
