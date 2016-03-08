@@ -4,14 +4,22 @@ OPERATING_SYSTEM="$(uname -s)"
 ARCHITECTURE="$(uname -m)"
 
 antibody() {
+  antibody_os_arch=${ANTIBODY_BINARIES}/bin/antibody-${OPERATING_SYSTEM}-${ARCHITECTURE}
+
+  if [[ -x "$antibody_os_arch" ]]; then
+    antibody="$antibody_os_arch"
+  else
+    antibody="${ANTIBODY_BINARIES}/bin/antibody"
+  fi
+
   case "$1" in
   bundle|update)
     while read bundle; do
       source "$bundle" 2&> /tmp/antibody-log
-    done < <( "${ANTIBODY_BINARIES}/bin/antibody-${OPERATING_SYSTEM}-${ARCHITECTURE}" $@ )
+    done < <( "$antibody" $@ )
     ;;
   *)
-    "${ANTIBODY_BINARIES}/bin/antibody-${OPERATING_SYSTEM}-${ARCHITECTURE}" $@
+    "$antibody" $@
     ;;
   esac
 }
