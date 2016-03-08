@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/getantibody/antibody/antibody/command"
+	"github.com/akatrevorjay/antibody/antibody/command"
 )
 
 var version = "master"

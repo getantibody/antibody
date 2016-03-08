@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"github.com/codegangsta/cli"
-	"github.com/getantibody/antibody"
+	"github.com/akatrevorjay/antibody"
 )
 
 // Init outputs hooks meant to integrate with your shell.

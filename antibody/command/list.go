@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/codegangsta/cli"
-	"github.com/getantibody/antibody"
-	"github.com/getantibody/antibody/bundle"
+	"github.com/akatrevorjay/antibody"
+	"github.com/akatrevorjay/antibody/bundle"
 )
 
 // List all downloaded bundles
