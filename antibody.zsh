@@ -6,7 +6,7 @@ ARCHITECTURE="$(uname -m)"
 antibody() {
   antibody_os_arch=${ANTIBODY_DIRECTORY}/bin/antibody-${OPERATING_SYSTEM}-${ARCHITECTURE}
 
-  if [[ -x "$antibody_os_arch" ]]; then
+  if [[ -a "$antibody_os_arch" ]]; then
     antibody="$antibody_os_arch"
   else
     antibody="${ANTIBODY_DIRECTORY}/bin/antibody"
