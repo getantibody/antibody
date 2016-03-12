@@ -14,6 +14,6 @@ test:
     - go get github.com/Masterminds/glide
   override:
     - glide install
-    - gotestcover -race -coverprofile=coverage.out ./...
+    - gotestcover -race -coverprofile=coverage.out $(glide novendor)
   post:
     - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="WLAYK3gAdR0ZB4XlaLrhWoxoyGqY8M8eX"
