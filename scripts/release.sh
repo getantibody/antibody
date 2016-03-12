@@ -22,7 +22,8 @@ github-release release \
   --tag "$CURRENT" \
   --description "$DESCRIPTION" \
   --pre-release
-find ./bin -type f | while read -r file; do
+
+for file in ./bin/*; do
   filename="$(grep "$file" ./scripts/version_map | cut -f2 -d'=').tar.gz"
   tar \
     --transform="s/${file}/antibody/" \
