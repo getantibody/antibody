@@ -1,3 +1,6 @@
+machine:
+  environment:
+    GO15VENDOREXPERIMENT: 1
 deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
@@ -8,7 +11,9 @@ test:
     - go get github.com/pierrre/gotestcover
     - go get github.com/mattn/goveralls
     - go get golang.org/x/tools/cmd/cover
+    - go get github.com/Masterminds/glide
   override:
-    - gotestcover -race -coverprofile=coverage.out ./...
+    - glide install
+    - gotestcover -race -coverprofile=coverage.out $(glide novendor)
   post:
     - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="WLAYK3gAdR0ZB4XlaLrhWoxoyGqY8M8eX"

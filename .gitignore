@@ -28,3 +28,4 @@ bin/
 coverage.out
 *.pdf
 *.pprof
+vendor

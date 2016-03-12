@@ -1,4 +1,5 @@
 #!/bin/bash
+export GO15VENDOREXPERIMENT=1
 
 CURRENT="$(git describe --tags --abbrev=0)"
 PREVIOUS=$(git describe --tags --abbrev=0 ${CURRENT}^)
