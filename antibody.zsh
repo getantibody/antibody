@@ -1,15 +1,25 @@
 #!/usr/bin/env zsh
-ANTIBODY_BINARIES="$(dirname $0)"
+ANTIBODY_DIRECTORY="$(dirname $0)"
+OPERATING_SYSTEM="$(uname -s)"
+ARCHITECTURE="$(uname -m)"
 
 antibody() {
+  antibody_os_arch=${ANTIBODY_DIRECTORY}/bin/antibody-${OPERATING_SYSTEM}-${ARCHITECTURE}
+
+  if [[ -a "$antibody_os_arch" ]]; then
+    antibody="$antibody_os_arch"
+  else
+    antibody="${ANTIBODY_DIRECTORY}/bin/antibody"
+  fi
+
   case "$1" in
   bundle|update)
     while read bundle; do
       source "$bundle" 2&> /tmp/antibody-log
-    done < <( ${ANTIBODY_BINARIES}/bin/antibody $@ )
+    done < <( "$antibody" $@ )
     ;;
   *)
-    ${ANTIBODY_BINARIES}/bin/antibody $@
+    "$antibody" $@
     ;;
   esac
 }
