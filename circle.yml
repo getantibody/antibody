@@ -5,7 +5,7 @@ deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
-      - ./scripts/release.sh
+      - curl -s https://raw.githubusercontent.com/caarlos0/go-releaser/master/release | bash -s -- -u getantibody -r antibody -b antibody -m ./cmd/antibody/ -e antibody.zsh
 test:
   pre:
     - go get github.com/pierrre/gotestcover
