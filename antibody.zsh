@@ -6,10 +6,10 @@ antibody() {
   bundle|update)
     while read bundle; do
       source "$bundle" 2&> /tmp/antibody-log
-    done < <( ${ANTIBODY_BINARIES}/bin/antibody $@ )
+    done < <( ${ANTIBODY_BINARIES}/antibody $@ )
     ;;
   *)
-    ${ANTIBODY_BINARIES}/bin/antibody $@
+    ${ANTIBODY_BINARIES}/antibody $@
     ;;
   esac
 }
