@@ -29,3 +29,4 @@ coverage.out
 *.pdf
 *.pprof
 vendor
+dist
