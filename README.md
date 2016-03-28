@@ -14,6 +14,8 @@ A faster and simpler antigen written in Golang.
 
 ### Why?
 
+[![Join the chat at https://gitter.im/getantibody/antibody](https://badges.gitter.im/getantibody/antibody.svg)](https://gitter.im/getantibody/antibody?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Antigen is really nice, but it is bloated and it is slow - 5+ seconds to load
 on my Mac... that's way too much to wait for a prompt to load!
 
