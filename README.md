@@ -52,9 +52,10 @@ Running `antibody bundle` will already download and apply the given bundle.
 First of all, download and install the
 [latest release](http://getantibody.github.io).
 
-Pay attention to not put the `antibody` binary in your `PATH`. This will cause
-antibody to malfunction. You just need to source the `antibody.zsh` for it
-to work.
+```console
+$ source <(antibody init)
+$ antibody bundle caarlos0/jvm (or any plugin you want)
+```
 
 Now, you can just `antibody bundle` stuff, e.g.,
 `antibody bundle Tarrasch/zsh-autoenv`. The repository will be cloned at
