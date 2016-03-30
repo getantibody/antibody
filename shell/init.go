@@ -28,10 +28,7 @@ compctl -K _antibody antibody
 `
 
 // Init returns the shell that should be loaded to antibody to work correctly.
-func Init() (string, error) {
-	executable, err := osext.Executable()
-	if err != nil {
-		return "", err
-	}
-	return fmt.Sprintf(template, executable), nil
+func Init() string {
+	executable, _ := osext.Executable()
+	return fmt.Sprintf(template, executable)
 }

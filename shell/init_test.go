@@ -8,8 +8,7 @@ import (
 )
 
 func TestGeneratesInit(t *testing.T) {
-	shell, err := shell.Init()
-	assert.Nil(t, err)
+	shell := shell.Init()
 	assert.NotNil(t, shell)
 	assert.NotEmpty(t, shell)
 }
