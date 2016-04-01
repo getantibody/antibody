@@ -51,26 +51,20 @@ Running `antibody bundle` will already download and apply the given bundle.
 
 ### Install
 
-You can download the latest release [here](http://getantibody.github.io) or,
-if you use Homebrew, you can:
+The simplest way to install Antibody is to run:
 
 ```console
-$ brew tap getantibody/homebrew-antibody
-$ brew install antibody
-```
-
-And, finally, you have to add the init script to your `~/.zshrc`:
-
-```console
+$ curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
 $ echo 'source <(antibody init)' >> ~/.zshrc
-$ antibody
-# Will show the help
 ```
+
+This will put the binary in `/usr/local/bin/antibody` and setup your `~/.zshrc` to
+load what is needed on startup.
 
 ### Usage
 
 Now, you can just `antibody bundle` stuff, e.g.,
-`antibody bundle Tarrasch/zsh-autoenv`. The repository will be cloned at
+`antibody bundle caarlos0/jvm`. The repository will be cloned at
 your `XDG_CACHE` folder and antibody will try to load files that match:
 
 - `*.plugin.zsh`
