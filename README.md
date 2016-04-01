@@ -41,24 +41,37 @@ These are the only antigen commands I ever used:
 Antibody does just those three things, but you don't even need to `apply`.
 Running `antibody bundle` will already download and apply the given bundle.
 
+`antibody home` also shows where the repositories are being downloaded.
+
 ### What doesn't work
 
 - Modules that are not in GitHub (you can open a PR if you wish);
 - The `theme` command (although most themes might just work with `bundle`);
 - oh-my-zsh support: it looks very ugly to me and I won't do it;
 
+### Install
+
+You can download the latest release [here](http://getantibody.github.io) or,
+if you use Homebrew, you can:
+
+```console
+$ brew tap getantibody/homebrew-antibody
+$ brew install antibody
+```
+
+And, finally, you have to add the init script to your `~/.zshrc`:
+
+```console
+$ echo 'source <(antibody init)' >> ~/.zshrc
+$ antibody
+# Will show the help
+```
+
 ### Usage
-
-First of all, download and install the
-[latest release](http://getantibody.github.io).
-
-Pay attention to not put the `antibody` binary in your `PATH`. This will cause
-antibody to malfunction. You just need to source the `antibody.zsh` for it
-to work.
 
 Now, you can just `antibody bundle` stuff, e.g.,
 `antibody bundle Tarrasch/zsh-autoenv`. The repository will be cloned at
-your `XDG_CACHE` folder and antibody will try to load some files that match:
+your `XDG_CACHE` folder and antibody will try to load files that match:
 
 - `*.plugin.zsh`
 - `*.zsh`
@@ -107,13 +120,13 @@ files, so it will probably be faster than call each one separately.
 In [#67](https://github.com/getantibody/antibody/issues/67) I was asked if there
 is some sort of static loading.
 
-Short answer: no, there isn't. But you can hack arount it.
+Short answer: no, there isn't. But you can hack around it.
 
 If you want to use antibody just to download and/or update your dependencies,
 you can run it like this:
 
 ```sh
-$ ANTIBODY_FOLDER/bin/antibody bundle < bundles.txt | xargs -I {} echo "source {}" >> sourceables.sh
+$ antibody bundle < bundles.txt | xargs -I {} echo "source {}" >> sourceables.sh
 # In your zshrc (or whatever):
 $ source sourceables.sh
 ```
@@ -124,4 +137,5 @@ the cost of additional work though.
 
 ### Thanks
 
-- [@pragmaticivan](https://github.com/pragmaticivan), for the logo design.
+- [@pragmaticivan](https://github.com/pragmaticivan), for the logo design;
+- All the amazing [contributors](https://github.com/getantibody/antibody/graphs/contributors).
