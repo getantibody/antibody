@@ -16,4 +16,4 @@ test:
     - glide install
     - gotestcover -race -coverprofile=coverage.out $(glide novendor)
   post:
-    - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="WLAYK3gAdR0ZB4XlaLrhWoxoyGqY8M8eX"
+    - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="$COVERALLS_TOKEN"
