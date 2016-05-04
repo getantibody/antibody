@@ -17,7 +17,7 @@ A faster and simpler antigen written in Golang.
 Antigen is really nice, but it is bloated and it is slow - 5+ seconds to load
 on my Mac... that's way too much to wait for a prompt to load!
 
-[![asciicast](https://asciinema.org/a/33962.png)](https://asciinema.org/a/33962)
+[![asciicast](https://asciinema.org/a/3ltopcz7dsid3iqgsg58o2sr8.png)](https://asciinema.org/a/3ltopcz7dsid3iqgsg58o2sr8)
 
 I'm aware that there is other attempts, like
 [antigen-hs](https://github.com/Tarrasch/antigen-hs), but I don't want to
