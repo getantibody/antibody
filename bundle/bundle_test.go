@@ -66,3 +66,10 @@ func TestParseWithEmptyLines(t *testing.T) {
 	s := "caarlos0/zsh-pg\n\n  \ncaarlos0/zsh-open-pr"
 	assert.Len(t, bundle.Parse(s, home), 2)
 }
+
+func TestParseWithComment(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	s := "caarlos0/zsh-pg      # this is a comment"
+	assert.Len(t, bundle.Parse(s, home), 1)
+}

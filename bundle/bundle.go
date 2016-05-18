@@ -46,8 +46,10 @@ func List(folder string) []Bundle {
 // Parse a list of bundles, one per line, into a Bundle slice
 func Parse(s, folder string) []Bundle {
 	var bundles []Bundle
-	for _, b := range strings.Split(s, "\n") {
-		if strings.TrimSpace(b) != "" {
+	for _, decl := range strings.Split(s, "\n") {
+		b := strings.Split(decl, "#")[0]
+		b = strings.TrimSpace(b)
+		if b != "" {
 			bundles = append(bundles, New(b, folder))
 		}
 	}
