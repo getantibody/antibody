@@ -12,7 +12,7 @@ import (
 
 var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
-// BundleType is an interface for different types of bundles
+// Type is an interface for different types of bundles
 type Type interface {
 	Folder() string
 	Name() string
