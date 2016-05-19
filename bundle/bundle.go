@@ -13,7 +13,7 @@ import (
 var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
 // BundleType is an interface for different types of bundles
-type BundleType interface {
+type Type interface {
 	Folder() string
 	Name() string
 	Download() error
@@ -22,7 +22,7 @@ type BundleType interface {
 
 // Bundle is a plugin to install
 type Bundle struct {
-	BundleType
+	Type
 }
 
 // DirBundle is a bundle for local plugins
