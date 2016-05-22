@@ -14,14 +14,14 @@ func TestBundleSourceables(t *testing.T) {
 	defer os.RemoveAll(home)
 	b := bundle.New("caarlos0/zsh-pg", home)
 	b.Download()
-	assert.NotEmpty(t, b.Sourceables())
+	assert.NotEmpty(t, bundle.Sourceables(b))
 }
 
 func TestSourceablesWithoutDownload(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)
 	b := bundle.New("caarlos0/zsh-pg", home)
-	assert.Empty(t, b.Sourceables())
+	assert.Empty(t, bundle.Sourceables(b))
 }
 
 func TestSourceablesDotSh(t *testing.T) {
@@ -29,7 +29,7 @@ func TestSourceablesDotSh(t *testing.T) {
 	defer os.RemoveAll(home)
 	b := bundle.New("rupa/z", home)
 	b.Download()
-	assert.Len(t, b.Sourceables(), 1)
+	assert.Len(t, bundle.Sourceables(b), 1)
 }
 
 func TestSourceablesZshTheme(t *testing.T) {
@@ -37,7 +37,7 @@ func TestSourceablesZshTheme(t *testing.T) {
 	defer os.RemoveAll(home)
 	b := bundle.New("caiogondim/bullet-train-oh-my-zsh-theme", home)
 	b.Download()
-	assert.Len(t, b.Sourceables(), 1)
+	assert.Len(t, bundle.Sourceables(b), 1)
 }
 
 func TestListEmptyFolder(t *testing.T) {
@@ -71,5 +71,19 @@ func TestParseWithComment(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)
 	s := "caarlos0/zsh-pg      # this is a comment"
+	assert.Len(t, bundle.Parse(s, home), 1)
+}
+
+func TestParseCommentedLine(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	s := "# this is a comment"
+	assert.Len(t, bundle.Parse(s, home), 0)
+}
+
+func TestParseDirBundle(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	s := home + "/caarlos0/zsh-pg"
 	assert.Len(t, bundle.Parse(s, home), 1)
 }

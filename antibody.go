@@ -41,7 +41,7 @@ func (a Antibody) forEach(action bundleAction) {
 		wg.Add(1)
 		go func(b bundle.Bundle, action bundleAction) {
 			action(b)
-			for _, sourceable := range b.Sourceables() {
+			for _, sourceable := range bundle.Sourceables(b) {
 				fmt.Println(sourceable)
 			}
 			wg.Done()
