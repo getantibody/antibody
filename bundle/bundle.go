@@ -2,7 +2,6 @@ package bundle
 
 import (
 	"io/ioutil"
-	"os"
 	"path"
 	"path/filepath"
 	"strings"
@@ -12,55 +11,24 @@ import (
 
 var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
-// Type is an interface for different types of bundles
-type Type interface {
+// Bundle is an interface for different types of bundles
+type Bundle interface {
 	Folder() string
 	Name() string
 	Download() error
 	Update() error
 }
 
-// Bundle is a plugin to install
-type Bundle struct {
-	Type
-}
-
-// DirBundle is a bundle for local plugins
-type DirBundle struct {
-	name, folder string
-}
-
-// Folder where the local bundle exists
-func (d DirBundle) Folder() string {
-	return d.folder
-}
-
-// Name of the local bundle
-func (d DirBundle) Name() string {
-	return d.name
-}
-
-// Download simply checks the local bundle exists
-func (d DirBundle) Download() error {
-	_, err := os.Stat(d.folder)
-	return err
-}
-
-// Update is a no-op
-func (d DirBundle) Update() error {
-	return nil
-}
-
 // New creates a new bundle instance
 func New(fullName, folder string) Bundle {
 	if strings.HasPrefix(fullName, "/") {
-		return Bundle{DirBundle{path.Base(fullName), fullName}}
+		return DirBundle{path.Base(fullName), fullName}
 	}
-	return Bundle{git.NewGitRepo(fullName, folder)}
+	return git.NewGitRepo(fullName, folder)
 }
 
 // Sourceables returns the list of files that could be sourced
-func (b Bundle) Sourceables() []string {
+func Sourceables(b Bundle) []string {
 	for _, glob := range globs {
 		files, _ := filepath.Glob(filepath.Join(b.Folder(), glob))
 		if files != nil {
