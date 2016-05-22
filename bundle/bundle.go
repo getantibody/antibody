@@ -2,6 +2,8 @@ package bundle
 
 import (
 	"io/ioutil"
+	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -10,14 +12,51 @@ import (
 
 var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
-// Bundle is a git-based bundle/plugin
+// Type is an interface for different types of bundles
+type Type interface {
+	Folder() string
+	Name() string
+	Download() error
+	Update() error
+}
+
+// Bundle is a plugin to install
 type Bundle struct {
-	git.Repo
+	Type
+}
+
+// DirBundle is a bundle for local plugins
+type DirBundle struct {
+	name, folder string
+}
+
+// Folder where the local bundle exists
+func (d DirBundle) Folder() string {
+	return d.folder
+}
+
+// Name of the local bundle
+func (d DirBundle) Name() string {
+	return d.name
+}
+
+// Download simply checks the local bundle exists
+func (d DirBundle) Download() error {
+	_, err := os.Stat(d.folder)
+	return err
+}
+
+// Update is a no-op
+func (d DirBundle) Update() error {
+	return nil
 }
 
 // New creates a new bundle instance
 func New(fullName, folder string) Bundle {
-	return Bundle{git.NewGithubRepo(fullName, folder)}
+	if strings.HasPrefix(fullName, "/") {
+		return Bundle{DirBundle{path.Base(fullName), fullName}}
+	}
+	return Bundle{git.NewGitRepo(fullName, folder)}
 }
 
 // Sourceables returns the list of files that could be sourced

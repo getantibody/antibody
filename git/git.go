@@ -12,13 +12,29 @@ type Repo struct {
 	url, name, folder string
 }
 
-// NewGithubRepo creates a new Github Repo with the fullName and local folder.
-func NewGithubRepo(fullName, folder string) Repo {
-	return Repo{
-		url:    "https://github.com/" + fullName,
-		name:   fullName,
-		folder: filepath.Join(folder, strings.Replace(fullName, "/", "-", -1)),
+// NewGitRepo creates a new Github Repo with the fullName and local folder.
+func NewGitRepo(fullName, folder string) Repo {
+	repo := Repo{
+		name: fullName,
 	}
+	switch {
+	case strings.HasPrefix(fullName, "http://"):
+		fallthrough
+	case strings.HasPrefix(fullName, "https://"):
+		fallthrough
+	case strings.HasPrefix(fullName, "git://"):
+		fallthrough
+	case strings.HasPrefix(fullName, "ssh://"):
+		fallthrough
+	case strings.HasPrefix(fullName, "git@github.com:"):
+		repo.url = fullName
+	default:
+		repo.url = "https://github.com/" + fullName
+	}
+	f := strings.Replace(repo.url, ":", "-COLON-", -1)
+	f = strings.Replace(f, "/", "-SLASH-", -1)
+	repo.folder = filepath.Join(folder, f)
+	return repo
 }
 
 // Folder where the repo was cloned
