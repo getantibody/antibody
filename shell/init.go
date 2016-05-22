@@ -11,9 +11,9 @@ ANTIBODY_BINARY="%s"
 antibody() {
 	case "$1" in
 	bundle|update)
-		while read bundle; do
+		while read -u 3 bundle; do
 			source "$bundle" 2&> /tmp/antibody-log
-		done < <( $ANTIBODY_BINARY $@ )
+		done 3< <( $ANTIBODY_BINARY $@ )
 		;;
 	*)
 		$ANTIBODY_BINARY $@
