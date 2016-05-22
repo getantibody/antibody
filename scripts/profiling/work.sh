@@ -14,7 +14,7 @@ export ANTIBODY_HOME="$(mktemp -d)"
 ./antibody bundle < ./scripts/profiling/bundles.txt
 open_pdfs bundle
 ./antibody update
-open_pdfs updated
+open_pdfs update
 ./antibody list
 open_pdfs list
 ./antibody home
