@@ -14,27 +14,39 @@ type Repo struct {
 
 // NewGitRepo creates a new Github Repo with the fullName and local folder.
 func NewGitRepo(fullName, folder string) Repo {
-	repo := Repo{
-		name: fullName,
+	url := urlFor(fullName)
+	return Repo{
+		name:   fullName,
+		url:    url,
+		folder: filepath.Join(folder, urlToFolderName(url)),
 	}
+}
+
+func urlToFolderName(url string) string {
+	return strings.Replace(
+		strings.Replace(
+			url, ":", "-COLON-", -1,
+		), "/", "-SLASH-", -1,
+	)
+}
+
+func urlFor(s string) string {
+	var url string
 	switch {
-	case strings.HasPrefix(fullName, "http://"):
+	case strings.HasPrefix(s, "http://"):
 		fallthrough
-	case strings.HasPrefix(fullName, "https://"):
+	case strings.HasPrefix(s, "https://"):
 		fallthrough
-	case strings.HasPrefix(fullName, "git://"):
+	case strings.HasPrefix(s, "git://"):
 		fallthrough
-	case strings.HasPrefix(fullName, "ssh://"):
+	case strings.HasPrefix(s, "ssh://"):
 		fallthrough
-	case strings.HasPrefix(fullName, "git@github.com:"):
-		repo.url = fullName
+	case strings.HasPrefix(s, "git@github.com:"):
+		url = s
 	default:
-		repo.url = "https://github.com/" + fullName
+		url = "https://github.com/" + s
 	}
-	f := strings.Replace(repo.url, ":", "-COLON-", -1)
-	f = strings.Replace(f, "/", "-SLASH-", -1)
-	repo.folder = filepath.Join(folder, f)
-	return repo
+	return url
 }
 
 // Folder where the repo was cloned
