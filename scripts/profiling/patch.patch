@@ -1,21 +1,22 @@
-From 5d8e4591e3b7c1361b632ed8e8b55bce99169662 Mon Sep 17 00:00:00 2001
+From 1c787c67b95b2c93d651fec56ea53fde12c23d0c Mon Sep 17 00:00:00 2001
 From: Carlos Alexandro Becker <caarlos0@gmail.com>
-Date: Sat, 31 Oct 2015 14:37:32 -0200
-Subject: [PATCH] profiling
+Date: Sun, 22 May 2016 12:24:20 -0300
+Subject: [PATCH] enable profiling
 
 ---
  cmd/antibody/main.go | 9 +++++++++
  1 file changed, 9 insertions(+)
 
 diff --git a/cmd/antibody/main.go b/cmd/antibody/main.go
-index 7bac889..8e5b773 100644
+index 493aefa..3c2f20c 100644
 --- a/cmd/antibody/main.go
 +++ b/cmd/antibody/main.go
-@@ -5,11 +5,20 @@ import (
+@@ -4,12 +4,21 @@ import (
+ 	"os"
 
- 	"github.com/getantibody/antibody/cmd/antibody/command"
  	"github.com/codegangsta/cli"
 +	"github.com/davecheney/profile"
+ 	"github.com/getantibody/antibody/cmd/antibody/command"
  )
 
  var version = "master"
@@ -33,4 +34,4 @@ index 7bac889..8e5b773 100644
  	app.Name = "antibody"
  	app.Usage = "A faster and simpler antigen written in Golang"
 --
-2.6.2
+2.8.2

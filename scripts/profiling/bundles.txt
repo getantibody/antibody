@@ -23,7 +23,7 @@ Vifon/deer
 jgrowl/depot_tools
 gusaiani/elixir-oh-my-zsh
 b4b4r07/enhancd
-junegunn/fzf).
+junegunn/fzf
 voronkovich/get-jquery.plugin.zsh
 fontno/ghost_zeus
 peterhurford/git-aliases.zsh
@@ -99,7 +99,6 @@ zsh-users/zsh-history-substring-search
 horosgrisa/zsh-konsole-theme-changer
 knu/zsh-manydots-magic
 psprint/zsh-navigation-tools
-poying/zsh-nodejs-plugin
 marzocchi/zsh-notify
 caarlos0/zsh-open-pr
 mkwmms/zsh-osx
@@ -114,3 +113,8 @@ TBSliver/zsh-plugin-tmux-simple
 ascii-soup/zsh-url-highlighter
 sharat87/zsh-vim-mode
 jocelynmallon/zshmarks
+# comments should be ignored
+# URLs:
+git@github.com:caarlos0/jvm.git
+https://github.com/caarlos0/zsh-open-pr
+caarlos0/zsh-git-fetch-merge
