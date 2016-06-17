@@ -30,6 +30,14 @@ func urlToFolderName(url string) string {
 	)
 }
 
+func folderNameToURL(name string) string {
+	return strings.Replace(
+		strings.Replace(
+			name, "-COLON-", ":", -1,
+		), "-SLASH-", "/", -1,
+	)
+}
+
 func urlFor(s string) string {
 	var url string
 	switch {
@@ -40,6 +48,10 @@ func urlFor(s string) string {
 	case strings.HasPrefix(s, "git://"):
 		fallthrough
 	case strings.HasPrefix(s, "ssh://"):
+		fallthrough
+	case strings.Contains(s, "-SLASH-"):
+		fallthrough
+	case strings.Contains(s, "-COLON-"):
 		fallthrough
 	case strings.HasPrefix(s, "git@github.com:"):
 		url = s
@@ -56,7 +68,7 @@ func (r Repo) Folder() string {
 
 // Name of the repo
 func (r Repo) Name() string {
-	return r.name
+	return folderNameToURL(r.name)
 }
 
 // Download clones a repository

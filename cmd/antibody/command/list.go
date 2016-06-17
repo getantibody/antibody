@@ -14,7 +14,7 @@ var List = cli.Command{
 	Usage: "list all currently downloaded bundles",
 	Action: func(ctx *cli.Context) {
 		for _, b := range bundle.List(antibody.Home()) {
-			fmt.Println(b.Name())
+			fmt.Printf("%s\t%s\n", b.Name(), b.Folder())
 		}
 	},
 }
