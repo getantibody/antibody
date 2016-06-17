@@ -49,12 +49,10 @@ func urlFor(s string) string {
 		fallthrough
 	case strings.HasPrefix(s, "ssh://"):
 		fallthrough
-	case strings.Contains(s, "-SLASH-"):
-		fallthrough
-	case strings.Contains(s, "-COLON-"):
-		fallthrough
 	case strings.HasPrefix(s, "git@github.com:"):
 		url = s
+	case strings.Contains(s, "-SLASH-") || strings.Contains(s, "-COLON-"):
+		url = folderNameToURL(s)
 	default:
 		url = "https://github.com/" + s
 	}
