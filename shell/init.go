@@ -12,6 +12,7 @@ antibody() {
 	case "$1" in
 	bundle|update)
 		while read -u 3 bundle; do
+			touch /tmp/antibody-log && chmod 777 /tmp/antibody-log
 			source "$bundle" 2&> /tmp/antibody-log
 		done 3< <( $ANTIBODY_BINARY $@ )
 		;;
