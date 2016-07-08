@@ -11,9 +11,9 @@ ANTIBODY_BINARY="%s"
 antibody() {
 	case "$1" in
 	bundle|update)
+		tmp_dir=$(mktemp -d)
 		while read -u 3 bundle; do
-			touch /tmp/antibody-log && chmod 777 /tmp/antibody-log
-			source "$bundle" 2&> /tmp/antibody-log
+			source "$bundle" 2&> ${temp_dir}/antibody-log
 		done 3< <( $ANTIBODY_BINARY $@ )
 		;;
 	*)
