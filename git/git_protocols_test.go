@@ -56,3 +56,12 @@ func TestClonesSsh(t *testing.T) {
 	assert.NoError(t, repo.Download())
 	internal.AssertFileCount(t, 1, home)
 }
+
+func TestUpdateAlreadyClonedURL(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	git.NewGitRepo("https://github.com/caarlos0/jvm", home).Download()
+	repo := git.NewGitRepo("https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm", home)
+	assert.NoError(t, repo.Update())
+	internal.AssertFileCount(t, 1, home)
+}
