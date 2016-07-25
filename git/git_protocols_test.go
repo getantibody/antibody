@@ -44,7 +44,7 @@ func TestClonesGitProtocol(t *testing.T) {
 func TestClonesSshProtocol(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)
-	repo := git.NewGitRepo("ssh://github.com/caarlos0/jvm.git", home)
+	repo := git.NewGitRepo("ssh://git@github.com/caarlos0/jvm.git", home)
 	assert.NoError(t, repo.Download())
 	internal.AssertFileCount(t, 1, home)
 }
