@@ -2,6 +2,7 @@ package git_test
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/getantibody/antibody/git"
@@ -57,4 +58,23 @@ func TestGetsRepoInfo(t *testing.T) {
 	repo := git.NewGitRepo("caarlos0/zsh-pg", home)
 	assert.Equal(t, "caarlos0/zsh-pg", repo.Name())
 	assert.Equal(t, home+"https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-pg", repo.Folder())
+}
+
+func TestUpdatesAlreadyClonedURL(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	repo := git.NewGitRepo("https://github.com/caarlos0/jvm", home)
+	repo.Download()
+	repo2 := git.NewGitRepo(strings.Replace(repo.Folder(), home, "", -1), home)
+	assert.NoError(t, repo.Update())
+	assert.Equal(t, repo.Folder(), repo2.Folder())
+}
+
+func TestGetsRepoNameFromFolder(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	repo := git.NewGitRepo("caarlos0/jvm", home)
+	repo.Download()
+	repo2 := git.NewGitRepo(strings.Replace(repo.Folder(), home, "", -1), home)
+	assert.Equal(t, repo.Name(), repo2.Name())
 }
