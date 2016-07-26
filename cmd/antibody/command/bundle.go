@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/urfave/cli"
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
+	"github.com/urfave/cli"
 )
 
 // Bundle downloads (if needed) and then sources a given repo
@@ -16,9 +16,12 @@ var Bundle = cli.Command{
 	Action: doBundle,
 }
 
-func doBundle(ctx *cli.Context) {
+func doBundle(ctx *cli.Context) error {
 	if readFromStdin() {
-		entries, _ := ioutil.ReadAll(os.Stdin)
+		entries, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			return err
+		}
 		antibody.New(
 			bundle.Parse(string(entries), antibody.Home()),
 		).Download()
@@ -27,6 +30,7 @@ func doBundle(ctx *cli.Context) {
 			[]bundle.Bundle{bundle.New(ctx.Args().First(), antibody.Home())},
 		).Download()
 	}
+	return nil
 }
 
 func readFromStdin() bool {
