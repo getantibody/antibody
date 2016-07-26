@@ -22,7 +22,7 @@ antibody() {
 }
 
 _antibody() {
-	IFS=' ' read -A reply <<< "$(echo "bundle update list help")"
+	IFS=' ' read -A reply <<< "$(echo "bundle update list home init help")"
 }
 compctl -K _antibody antibody
 `
