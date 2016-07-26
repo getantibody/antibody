@@ -1,7 +1,7 @@
 package: github.com/getantibody/antibody
 import:
 - package: github.com/caarlos0/gohome
-- package: github.com/codegangsta/cli
+- package: github.com/urfave/cli
 - package: github.com/stretchr/testify
   subpackages:
   - assert

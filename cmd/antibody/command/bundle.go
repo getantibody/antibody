@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
 )
