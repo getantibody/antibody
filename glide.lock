@@ -1,10 +1,8 @@
-hash: ce866b1f0e98912bcc1e0ed0f648ab42b2dc0a6fa9886140cd8d961d4f10fb22
-updated: 2016-03-30T18:51:19.014817084-03:00
+hash: bcc6019487ef3169134b4f686b7354480fffd260900e16891e624c2cd0e065fd
+updated: 2016-07-26T19:13:29.06847184-03:00
 imports:
 - name: github.com/caarlos0/gohome
   version: cbed4b26b0bb75922678d7892fde12dccc05a8b3
-- name: github.com/codegangsta/cli
-  version: bc465becccd1d527002fda095fc3c19d9c115029
 - name: github.com/davecgh/go-spew
   version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
   subpackages:
@@ -19,4 +17,6 @@ imports:
   version: 6fe211e493929a8aac0469b93f28b1d0688a9a3a
   subpackages:
   - assert
-devImports: []
+- name: github.com/urfave/cli
+  version: d9021faab69f92295ef7061bd39e4a76dcbdef32
+testImports: []
