@@ -1,19 +1,25 @@
 machine:
   environment:
-    GO15VENDOREXPERIMENT: 1
+    IMPORT_PATH: "/home/ubuntu/.go_workspace/src/github.com/getantibody"
 deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - curl -s https://raw.githubusercontent.com/caarlos0/go-releaser/master/release | bash -s -- -u getantibody -r antibody -b antibody -m ./cmd/antibody/
-test:
-  pre:
+dependencies:
+  override:
+    - sudo add-apt-repository ppa:masterminds/glide -y
+    - sudo apt-get update
+    - sudo apt-get install glide -y
     - go get github.com/pierrre/gotestcover
     - go get github.com/mattn/goveralls
     - go get golang.org/x/tools/cmd/cover
-    - go get github.com/Masterminds/glide
+test:
+  pre:
+    - mkdir -p "$IMPORT_PATH"
+    - ln -sf "$(pwd)" "$IMPORT_PATH/antibody"
+    - cd "$IMPORT_PATH/antibody" &&  glide install
   override:
-    - glide install
-    - gotestcover -race -coverprofile=coverage.out $(glide novendor)
+    - cd "$IMPORT_PATH/antibody" && gotestcover -race -coverprofile=coverage.out $(glide novendor)
   post:
-    - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="$COVERALLS_TOKEN"
+    - cd "$IMPORT_PATH/antibody" && goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="$COVERALLS_TOKEN"
