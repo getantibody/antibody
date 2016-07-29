@@ -1,11 +1,14 @@
 machine:
   environment:
     IMPORT_PATH: "/home/ubuntu/.go_workspace/src/github.com/getantibody"
+    APP_PATH: "$IMPORT_PATH/antibody"
 deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
-      - curl -s https://raw.githubusercontent.com/caarlos0/go-releaser/master/release | bash -s -- -u getantibody -r antibody -b antibody -m ./cmd/antibody/
+      - curl -o /tmp/release https://raw.githubusercontent.com/caarlos0/go-releaser/master/release
+      - chmod +x /tmp/release
+      - cd "$APP_PATH" && /tmp/release -u getantibody -r antibody -b antibody -m ./cmd/antibody/
 dependencies:
   override:
     - sudo add-apt-repository ppa:masterminds/glide -y
@@ -18,8 +21,8 @@ test:
   pre:
     - mkdir -p "$IMPORT_PATH"
     - ln -sf "$(pwd)" "$IMPORT_PATH/antibody"
-    - cd "$IMPORT_PATH/antibody" &&  glide install
+    - cd "$APP_PATH" &&  glide install
   override:
-    - cd "$IMPORT_PATH/antibody" && gotestcover -race -coverprofile=coverage.out $(glide novendor)
+    - cd "$APP_PATH" && gotestcover -race -coverprofile=coverage.out $(glide novendor)
   post:
-    - cd "$IMPORT_PATH/antibody" && goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="$COVERALLS_TOKEN"
+    - cd "$APP_PATH" && goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="$COVERALLS_TOKEN"
