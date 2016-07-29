@@ -1,17 +1,17 @@
-machine:
-  environment:
-    GO15VENDOREXPERIMENT: 1
 deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
       - curl -s https://raw.githubusercontent.com/caarlos0/go-releaser/master/release | bash -s -- -u getantibody -r antibody -b antibody -m ./cmd/antibody/
-test:
-  pre:
+dependencies:
+  override:
+    - sudo add-apt-repository ppa:masterminds/glide -y
+    - sudo apt-get update
+    - sudo apt-get install glide -y
     - go get github.com/pierrre/gotestcover
     - go get github.com/mattn/goveralls
     - go get golang.org/x/tools/cmd/cover
-    - go get github.com/Masterminds/glide
+test:
   override:
     - glide install
     - gotestcover -race -coverprofile=coverage.out $(glide novendor)
