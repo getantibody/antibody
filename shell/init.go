@@ -10,7 +10,7 @@ const template = `#!/usr/bin/env zsh
 ANTIBODY_BINARY="%s"
 antibody() {
 	case "$1" in
-	bundle|update)
+	bundle)
 		while read -u 3 bundle; do
 			source "$bundle" 2&> /tmp/${USER}-antibody-log
 		done 3< <( $ANTIBODY_BINARY $@ )
