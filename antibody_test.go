@@ -1,6 +1,7 @@
 package antibody_test
 
 import (
+	"io/ioutil"
 	"os"
 	"testing"
 
@@ -19,7 +20,8 @@ func TestBundleAndUpdate(t *testing.T) {
 	})
 	a.Download()
 	a.Update()
-	internal.AssertFileCount(t, 2, home)
+	files, _ := ioutil.ReadDir(home)
+	assert.Len(t, files, 2)
 }
 
 func TestCustomHome(t *testing.T) {

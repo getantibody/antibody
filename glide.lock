@@ -1,5 +1,5 @@
-hash: 7e97e8a18a5072e8496e030c0841f254bf1e5e8fb0f93c8a5adbaf2d77f74eec
-updated: 2016-07-28T22:06:29.755085706-03:00
+hash: 59496e904f4b0a1685007a25b220233d0819e265345ac17f24cc85ac52694ddb
+updated: 2016-08-02T19:35:21.809937394-03:00
 imports:
 - name: github.com/caarlos0/gohome
   version: cbed4b26b0bb75922678d7892fde12dccc05a8b3
@@ -15,6 +15,10 @@ imports:
   - difflib
 - name: github.com/urfave/cli
   version: d9021faab69f92295ef7061bd39e4a76dcbdef32
+- name: golang.org/x/crypto
+  version: bc89c496413265e715159bdc8478ee9a92fdc265
+  subpackages:
+  - ssh/terminal
 testImports:
 - name: github.com/stretchr/testify
   version: f390dcf405f7b83c997eac1b06768bb9f44dec18
