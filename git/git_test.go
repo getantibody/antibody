@@ -15,7 +15,7 @@ func TestClonesRepo(t *testing.T) {
 	defer os.RemoveAll(home)
 	repo := git.NewGitRepo("caarlos0/env", home)
 	assert.NoError(t, repo.Download())
-	internal.AssertFileCount(t, 1, home)
+	assertFileCount(t, 1, home)
 }
 
 func TestUpdatesRepo(t *testing.T) {
@@ -24,7 +24,7 @@ func TestUpdatesRepo(t *testing.T) {
 	repo := git.NewGitRepo("caarlos0/zsh-pg", home)
 	assert.NoError(t, repo.Download())
 	assert.NoError(t, repo.Update())
-	internal.AssertFileCount(t, 1, home)
+	assertFileCount(t, 1, home)
 }
 
 func TestCloneDoesNothingIfFolderAlreadyExists(t *testing.T) {
@@ -33,7 +33,7 @@ func TestCloneDoesNothingIfFolderAlreadyExists(t *testing.T) {
 	repo := git.NewGitRepo("caarlos0/zsh-add-upstream", home)
 	assert.NoError(t, repo.Download())
 	assert.NoError(t, repo.Download())
-	internal.AssertFileCount(t, 1, home)
+	assertFileCount(t, 1, home)
 }
 
 func TestClonesUnexistentRepo(t *testing.T) {
@@ -41,7 +41,7 @@ func TestClonesUnexistentRepo(t *testing.T) {
 	defer os.RemoveAll(home)
 	repo := git.NewGitRepo("doesn-not-exist-really", home)
 	assert.Error(t, repo.Download())
-	internal.AssertFileCount(t, 0, home)
+	assertFileCount(t, 0, home)
 }
 
 func TestUpdatesUnexistentRepo(t *testing.T) {
@@ -49,7 +49,7 @@ func TestUpdatesUnexistentRepo(t *testing.T) {
 	defer os.RemoveAll(home)
 	repo := git.NewGitRepo("doesn-not-exist-really", home)
 	assert.Error(t, repo.Update())
-	internal.AssertFileCount(t, 0, home)
+	assertFileCount(t, 0, home)
 }
 
 func TestGetsRepoInfo(t *testing.T) {
