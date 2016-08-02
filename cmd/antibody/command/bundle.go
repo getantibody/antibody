@@ -7,6 +7,7 @@ import (
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
 	"github.com/urfave/cli"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 // Bundle downloads (if needed) and then sources a given repo
@@ -17,9 +18,9 @@ var Bundle = cli.Command{
 }
 
 func doBundle(ctx *cli.Context) error {
-	if readFromStdin() {
+	if !terminal.IsTerminal(int(os.Stdin.Fd())) && len(ctx.Args()) == 0 {
 		entries, err := ioutil.ReadAll(os.Stdin)
-		if err != nil {
+		if err != nil || len(entries) == 0 {
 			return err
 		}
 		antibody.New(
@@ -31,9 +32,4 @@ func doBundle(ctx *cli.Context) error {
 		).Download()
 	}
 	return nil
-}
-
-func readFromStdin() bool {
-	stat, _ := os.Stdin.Stat()
-	return (stat.Mode() & os.ModeCharDevice) == 0
 }
