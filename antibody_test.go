@@ -24,6 +24,19 @@ func TestBundleAndUpdate(t *testing.T) {
 	assert.Len(t, files, 2)
 }
 
+func TestBundleAndUpdateStatic(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	a := antibody.NewStatic([]bundle.Bundle{
+		bundle.New("caarlos0/zsh-pg", home),
+		bundle.New("caarlos0/zsh-open-pr", home),
+	})
+	a.Download()
+	a.Update()
+	files, _ := ioutil.ReadDir(home)
+	assert.Len(t, files, 2)
+}
+
 func TestCustomHome(t *testing.T) {
 	home := internal.TempHome()
 	defer os.RemoveAll(home)

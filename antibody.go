@@ -16,8 +16,14 @@ type Antibody struct {
 }
 
 // New creates an instance of antibody with the given bundles.
-func New(bundles []bundle.Bundle, static bool) Antibody {
-	return Antibody{bundles: bundles, static: static}
+func New(bundles []bundle.Bundle) Antibody {
+	return Antibody{bundles: bundles, static: false}
+}
+
+// NewStatic creates an instance of antibody with the given bundles in
+// static-loading mode.
+func NewStatic(bundles []bundle.Bundle) Antibody {
+	return Antibody{bundles: bundles, static: true}
 }
 
 // Download the needed bundles.
