@@ -11,7 +11,7 @@ var Update = cli.Command{
 	Name:  "update",
 	Usage: "updates all previously bundled commands",
 	Action: func(ctx *cli.Context) error {
-		antibody.New(bundle.List(antibody.Home())).Update()
+		antibody.New(bundle.List(antibody.Home()), false).Update()
 		return nil
 	},
 }

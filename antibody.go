@@ -12,11 +12,12 @@ import (
 // Antibody wraps a list of bundles to be processed.
 type Antibody struct {
 	bundles []bundle.Bundle
+	static  bool
 }
 
 // New creates an instance of antibody with the given bundles.
-func New(bundles []bundle.Bundle) Antibody {
-	return Antibody{bundles: bundles}
+func New(bundles []bundle.Bundle, static bool) Antibody {
+	return Antibody{bundles: bundles, static: static}
 }
 
 // Download the needed bundles.
@@ -27,7 +28,11 @@ func (a Antibody) Download() {
 		go func(b bundle.Bundle) {
 			b.Download()
 			for _, sourceable := range bundle.Sourceables(b) {
-				fmt.Println(sourceable)
+				if a.static {
+					fmt.Println("source", sourceable)
+				} else {
+					fmt.Println(sourceable)
+				}
 			}
 			wg.Done()
 		}(b)
