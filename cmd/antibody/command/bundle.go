@@ -24,23 +24,20 @@ var Bundle = cli.Command{
 }
 
 func doBundle(ctx *cli.Context) error {
-	static := ctx.Bool("static")
-	var bundles []bundle.Bundle
+	var input string
 	if !terminal.IsTerminal(int(os.Stdin.Fd())) && len(ctx.Args()) == 0 {
 		entries, err := ioutil.ReadAll(os.Stdin)
 		if err != nil || len(entries) == 0 {
 			return err
 		}
-		bundles = bundle.Parse(string(entries), antibody.Home())
+		input = string(entries)
 	} else {
-		bundles = []bundle.Bundle{
-			bundle.New(ctx.Args().First(), antibody.Home()),
-		}
+		input = ctx.Args().First()
 	}
-	if static {
-		antibody.NewStatic(bundles).Download()
+	if ctx.Bool("static") {
+		antibody.NewStatic(bundle.Parse(input, antibody.Home())).Download()
 	} else {
-		antibody.New(bundles).Download()
+		antibody.New(bundle.Parse(input, antibody.Home())).Download()
 	}
 	return nil
 }
