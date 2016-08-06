@@ -9,21 +9,31 @@ import (
 	"github.com/getantibody/antibody/bundle"
 )
 
+type print func(s string)
+
+func sourcedPrint(s string) {
+	fmt.Println(s)
+}
+
+func staticPrint(s string) {
+	fmt.Println("source", s)
+}
+
 // Antibody wraps a list of bundles to be processed.
 type Antibody struct {
 	bundles []bundle.Bundle
-	static  bool
+	print
 }
 
 // New creates an instance of antibody with the given bundles.
 func New(bundles []bundle.Bundle) Antibody {
-	return Antibody{bundles: bundles, static: false}
+	return Antibody{bundles, sourcedPrint}
 }
 
 // NewStatic creates an instance of antibody with the given bundles in
 // static-loading mode.
 func NewStatic(bundles []bundle.Bundle) Antibody {
-	return Antibody{bundles: bundles, static: true}
+	return Antibody{bundles, staticPrint}
 }
 
 // Download the needed bundles.
@@ -34,11 +44,7 @@ func (a Antibody) Download() {
 		go func(b bundle.Bundle) {
 			b.Download()
 			for _, sourceable := range bundle.Sourceables(b) {
-				if a.static {
-					fmt.Println("source", sourceable)
-				} else {
-					fmt.Println(sourceable)
-				}
+				a.print(sourceable)
 			}
 			wg.Done()
 		}(b)
