@@ -72,7 +72,12 @@ your `XDG_CACHE` folder and antibody will try to load files that match:
 - `*.sh`
 - `*.zsh-theme`
 
-When you decide to update your bundles, just run `antibody update`.
+You can also specify a branch to download, for example,
+`antibody bundle caarlos0/jvm v2` will download the `v2` branch of that
+repository.
+
+When you decide to update your bundles, just run `antibody update`: it will
+update all bundles inside the `antibody home` folder.
 
 ### Protips
 

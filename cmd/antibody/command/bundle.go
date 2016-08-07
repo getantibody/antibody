@@ -3,6 +3,7 @@ package command
 import (
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
@@ -28,7 +29,9 @@ func doBundle(ctx *cli.Context) error {
 		).Download()
 	} else {
 		antibody.New(
-			[]bundle.Bundle{bundle.New(ctx.Args().First(), antibody.Home())},
+			[]bundle.Bundle{
+				bundle.New(strings.Join(ctx.Args(), " "), antibody.Home()),
+			},
 		).Download()
 	}
 	return nil
