@@ -3,6 +3,7 @@ package command
 import (
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/bundle"
@@ -32,7 +33,7 @@ func doBundle(ctx *cli.Context) error {
 		}
 		input = string(entries)
 	} else {
-		input = ctx.Args().First()
+		input = strings.Join(ctx.Args(), " ")
 	}
 	if ctx.Bool("static") {
 		antibody.NewStatic(bundle.Parse(input, antibody.Home())).Download()

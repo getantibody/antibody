@@ -9,15 +9,22 @@ import (
 
 // Repo represents a git repository
 type Repo struct {
-	url, name, folder string
+	url, name, folder, branch string
 }
 
-// NewGitRepo creates a new Github Repo with the fullName and local folder.
-func NewGitRepo(fullName, folder string) Repo {
-	url := urlFor(folderNameToURL(fullName))
+// NewGitRepo creates a new Github Repo with the line that defines it and
+// the local antibody folder.
+func NewGitRepo(line, folder string) Repo {
+	parts := strings.Split(line, " ")
+	branch := "master"
+	if len(parts) > 1 {
+		branch = parts[1]
+	}
+	url := urlFor(folderNameToURL(parts[0]))
 	return Repo{
 		name:   repoNameFor(url),
 		url:    url,
+		branch: branch,
 		folder: filepath.Join(folder, urlToFolderName(url)),
 	}
 }
@@ -77,7 +84,7 @@ func (r Repo) Name() string {
 func (r Repo) Download() error {
 	if _, err := os.Stat(r.folder); os.IsNotExist(err) {
 		return exec.Command(
-			"git", "clone", "--depth", "1", r.url, r.folder,
+			"git", "clone", "--depth", "1", "-b", r.branch, r.url, r.folder,
 		).Run()
 	}
 	return nil
@@ -85,5 +92,17 @@ func (r Repo) Download() error {
 
 // Update updates a repository
 func (r Repo) Update() error {
-	return exec.Command("git", "-C", r.folder, "pull", "origin", "master").Run()
+	branch, err := r.Branch()
+	if err != nil {
+		return err
+	}
+	return exec.Command("git", "-C", r.folder, "pull", "origin", branch).Run()
+}
+
+// Branch gets the current repo branch name
+func (r Repo) Branch() (string, error) {
+	branch, err := exec.Command(
+		"git", "-C", r.folder, "rev-parse", "--abbrev-ref", "HEAD",
+	).Output()
+	return strings.Replace(string(branch), "\n", "", -1), err
 }
