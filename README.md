@@ -112,27 +112,18 @@ files, so it will probably be faster than call each one separately.
 - @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
 - and probably [many others](https://github.com/search?q=antibody&type=Code);
 
-### Hacking
+### Static loading
 
-#### Static loading
-
-In [#67](https://github.com/getantibody/antibody/issues/67) I was asked if there
-is some sort of static loading.
-
-Short answer: no, there isn't. But you can hack around it.
-
-If you want to use antibody just to download and/or update your dependencies,
-you can run it like this:
+You can use antibody in a static-loading manner (so you don't need to exec
+antibody every time you open a shell).
 
 ```sh
-$ antibody bundle < bundles.txt | xargs -I {} echo "source {}" >> sourceables.sh
+$ antibody bundle --static < bundles.txt >> sourceables.sh
 # In your zshrc (or whatever):
 $ source sourceables.sh
 ```
 
-With this approach you don' even need to source `antibody.zsh` if you don't
-want to, and, yes, your shell will probably be even faster. It comes with
-the cost of additional work though.
+Beware that antibody does stuff in parallel, so bundle order is not guaranteed.
 
 ### Thanks
 

@@ -16,23 +16,29 @@ var Bundle = cli.Command{
 	Name:   "bundle",
 	Usage:  "downloads (if needed) and then sources a given repo",
 	Action: doBundle,
+	Flags: []cli.Flag{
+		cli.BoolFlag{
+			Name:  "static",
+			Usage: "Generates the output in a static-loading compatible way",
+		},
+	},
 }
 
 func doBundle(ctx *cli.Context) error {
+	var input string
 	if !terminal.IsTerminal(int(os.Stdin.Fd())) && len(ctx.Args()) == 0 {
 		entries, err := ioutil.ReadAll(os.Stdin)
 		if err != nil || len(entries) == 0 {
 			return err
 		}
-		antibody.New(
-			bundle.Parse(string(entries), antibody.Home()),
-		).Download()
+		input = string(entries)
 	} else {
-		antibody.New(
-			[]bundle.Bundle{
-				bundle.New(strings.Join(ctx.Args(), " "), antibody.Home()),
-			},
-		).Download()
+		input = strings.Join(ctx.Args(), " ")
+	}
+	if ctx.Bool("static") {
+		antibody.NewStatic(bundle.Parse(input, antibody.Home())).Download()
+	} else {
+		antibody.New(bundle.Parse(input, antibody.Home())).Download()
 	}
 	return nil
 }

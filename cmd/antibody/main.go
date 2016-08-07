@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/urfave/cli"
 	"github.com/getantibody/antibody/cmd/antibody/command"
+	"github.com/urfave/cli"
 )
 
 var version = "master"
