@@ -78,3 +78,24 @@ func TestGetsRepoNameFromFolder(t *testing.T) {
 	repo2 := git.NewGitRepo(strings.Replace(repo.Folder(), home, "", -1), home)
 	assert.Equal(t, repo.Name(), repo2.Name())
 }
+
+func TestDownloadsGivenBranch(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	repo := git.NewGitRepo("caarlos0/jvm gh-pages", home)
+	assert.NoError(t, repo.Download())
+	branch, err := repo.Branch()
+	assert.NoError(t, err)
+	assert.Equal(t, "gh-pages", branch)
+}
+
+func TestUpdateDoesntChageBranches(t *testing.T) {
+	home := internal.TempHome()
+	defer os.RemoveAll(home)
+	repo := git.NewGitRepo("caarlos0/jvm gh-pages", home)
+	assert.NoError(t, repo.Download())
+	assert.NoError(t, repo.Update())
+	branch, err := repo.Branch()
+	assert.NoError(t, err)
+	assert.Equal(t, "gh-pages", branch)
+}
