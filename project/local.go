@@ -1,5 +1,6 @@
 package project
 
+// NewLocal Returns a local project, which can be any folder you want to
 func NewLocal(folder string) Project {
 	return localProject{folder}
 }

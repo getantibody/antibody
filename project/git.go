@@ -13,7 +13,9 @@ type gitProject struct {
 	folder  string
 }
 
-func NewGit(targetFolder, repo, version string) Project {
+// NewGit A git project can be any repository in any given branch. It will
+// be downloaded to the provided cwd
+func NewGit(cwd, repo, version string) Project {
 	var url string
 	switch {
 	case strings.HasPrefix(repo, "http://"):
@@ -29,7 +31,7 @@ func NewGit(targetFolder, repo, version string) Project {
 	default:
 		url = "https://github.com/" + repo
 	}
-	folder := targetFolder + strings.Replace(
+	folder := cwd + strings.Replace(
 		strings.Replace(
 			url, ":", "-COLON-", -1,
 		), "/", "-SLASH-", -1,
