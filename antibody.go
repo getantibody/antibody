@@ -1,13 +1,10 @@
 package antibody
 
 import (
-	"log"
-	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 
-	"github.com/caarlos0/gohome"
+	"github.com/getantibody/antibody/project"
 )
 
 type Antibody struct {
@@ -16,10 +13,11 @@ type Antibody struct {
 	Home    string
 }
 
-func New(bundles []string) *Antibody {
+func New(home string, bundles []string) *Antibody {
 	return &Antibody{
 		Bundles: bundles,
 		Events:  make(chan Event, len(bundles)),
+		Home:    home,
 	}
 }
 
@@ -36,7 +34,7 @@ func (a *Antibody) Bundle() (sh string, err error) {
 
 	for _, sh := range a.Bundles {
 		go func(s string) {
-			NewBundle(s).Get(a.Events)
+			NewBundle(a.Home, s).Get(a.Events)
 			done <- true
 		}(sh)
 	}
@@ -74,14 +72,8 @@ type Bundle interface {
 	Get(events chan Event)
 }
 
-type Project interface {
-	Download() error
-	Update() error
-	Folder() string
-}
-
-func NewBundle(sh string) Bundle {
-	var project Project
+func NewBundle(home, sh string) Bundle {
+	var proj project.Project
 	var bundle Bundle
 	var version = "master"
 	var kind = "zsh"
@@ -94,92 +86,20 @@ func NewBundle(sh string) Bundle {
 		}
 	}
 	if sh[0] == '/' {
-		project = LocalProject{
-			folder: parts[0],
-		}
+		proj = project.NewLocal(parts[0])
 	} else {
-		project = NewGitProject(parts[0], version)
+		proj = project.NewGit(home, parts[0], version)
 	}
 	if kind == "zsh" {
-		bundle = ZshBundle{project}
+		bundle = ZshBundle{proj}
 	} else if kind == "path" {
-		bundle = PathBundle{project}
+		bundle = PathBundle{proj}
 	}
 	return bundle
 }
 
-type LocalProject struct {
-	folder string
-}
-
-func (l LocalProject) Download() error {
-	return nil
-}
-
-func (l LocalProject) Update() error {
-	return nil
-}
-
-func (l LocalProject) Folder() string {
-	return l.folder
-}
-
-type GitProject struct {
-	URL     string
-	Version string
-	folder  string
-}
-
-func NewGitProject(repo, version string) GitProject {
-	var url string
-	switch {
-	case strings.HasPrefix(repo, "http://"):
-		fallthrough
-	case strings.HasPrefix(repo, "https://"):
-		fallthrough
-	case strings.HasPrefix(repo, "git://"):
-		fallthrough
-	case strings.HasPrefix(repo, "ssh://"):
-		fallthrough
-	case strings.HasPrefix(repo, "git@github.com:"):
-		url = repo
-	default:
-		url = "https://github.com/" + repo
-	}
-	folder := gohome.Cache("__antibody") + "/" + strings.Replace(
-		strings.Replace(
-			url, ":", "-COLON-", -1,
-		), "/", "-SLASH-", -1,
-	)
-	log.Println(folder)
-	return GitProject{
-		Version: version,
-		URL:     url,
-		folder:  folder,
-	}
-}
-
-func (g GitProject) Download() error {
-	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
-		return exec.Command(
-			"git", "clone", "--depth", "1", "-b", g.Version, g.URL, g.folder,
-		).Run()
-	}
-	return nil
-}
-
-func (g GitProject) Update() error {
-	return exec.Command(
-		"git", "-C", g.folder, "pull", "origin", g.Version,
-	).Run()
-}
-
-func (g GitProject) Folder() string {
-	return g.folder
-}
-
 type ZshBundle struct {
-	Project Project
+	Project project.Project
 }
 
 var zshGlobs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
@@ -206,7 +126,7 @@ func (z ZshBundle) Get(events chan Event) {
 }
 
 type PathBundle struct {
-	Project Project
+	Project project.Project
 }
 
 func (z PathBundle) Get(events chan Event) {
