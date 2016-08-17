@@ -44,5 +44,5 @@ func home() string {
 	if err != nil {
 		panic(err.Error())
 	}
-	return home + "/"
+	return home
 }

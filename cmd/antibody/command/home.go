@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 
-	"github.com/caarlos0/gohome"
+	"github.com/getantibody/antibody"
 	"github.com/urfave/cli"
 )
 
@@ -13,7 +13,7 @@ var Home = cli.Command{
 	Aliases: []string{"prefix", "p"},
 	Usage:   "shows the current antibody home folder",
 	Action: func(ctx *cli.Context) error {
-		fmt.Println(gohome.Cache("antibody") + "/")
+		fmt.Println(antibody.Home())
 		return nil
 	},
 }

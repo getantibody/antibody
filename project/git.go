@@ -1,8 +1,10 @@
 package project
 
 import (
+	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -30,10 +32,13 @@ func NewGit(cwd, repo, version string) Project {
 	default:
 		url = "https://github.com/" + repo
 	}
-	folder := cwd + strings.Replace(
+	folder := filepath.Join(
+		cwd,
 		strings.Replace(
-			url, ":", "-COLON-", -1,
-		), "/", "-SLASH-", -1,
+			strings.Replace(
+				url, ":", "-COLON-", -1,
+			), "/", "-SLASH-", -1,
+		),
 	)
 	return gitProject{
 		Version: version,
@@ -44,9 +49,13 @@ func NewGit(cwd, repo, version string) Project {
 
 func (g gitProject) Download() error {
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
-		return exec.Command(
+		cmd := exec.Command(
 			"git", "clone", "--depth", "1", "-b", g.Version, g.URL, g.folder,
-		).Run()
+		)
+		if bts, err := cmd.CombinedOutput(); err != nil {
+			log.Println("git clone failed for", g.URL, err, string(bts))
+			return err
+		}
 	}
 	return nil
 }

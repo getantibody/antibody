@@ -1,8 +1,10 @@
 package antibody
 
 import (
+	"os"
 	"strings"
 
+	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
 	"github.com/getantibody/antibody/event"
 )
@@ -53,4 +55,13 @@ func (a *Antibody) Bundle() (string, error) {
 			}
 		}
 	}
+}
+
+// Home finds the right home folder to use
+func Home() string {
+	home := os.Getenv("ANTIBODY_HOME")
+	if home == "" {
+		home = gohome.Cache("antibody")
+	}
+	return home
 }

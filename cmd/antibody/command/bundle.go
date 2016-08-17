@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody"
 	"github.com/urfave/cli"
 	"golang.org/x/crypto/ssh/terminal"
@@ -30,7 +29,7 @@ func doBundle(ctx *cli.Context) error {
 	} else {
 		input = ctx.Args()
 	}
-	sh, err := antibody.New(gohome.Cache("antibody")+"/", input).Bundle()
+	sh, err := antibody.New(antibody.Home(), input).Bundle()
 	if err != nil {
 		return err
 	}

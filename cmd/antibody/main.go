@@ -4,12 +4,19 @@ import (
 	"os"
 
 	"github.com/getantibody/antibody/cmd/antibody/command"
+	"github.com/pkg/profile"
 	"github.com/urfave/cli"
 )
 
 var version = "master"
 
 func main() {
+	defer profile.Start(
+		profile.MemProfile,
+		profile.CPUProfile,
+		profile.NoShutdownHook,
+		profile.ProfilePath("."),
+	).Stop()
 	app := cli.NewApp()
 	app.Name = "antibody"
 	app.Usage = "A faster and simpler antigen written in Golang"
