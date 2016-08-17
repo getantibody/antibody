@@ -6,6 +6,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"github.com/getantibody/antibody/naming"
 )
 
 type gitProject struct {
@@ -19,12 +21,7 @@ type gitProject struct {
 func NewClonedGit(home, folder string) Project {
 	version := "master"
 	version, _ = branch(folder)
-	url :=
-		strings.Replace(
-			strings.Replace(
-				folder, "-COLON-", ":", -1,
-			), "-SLASH-", "/", -1,
-		)
+	url := naming.FolderToURL(folder)
 	return gitProject{
 		folder:  filepath.Join(home, folder),
 		Version: version,
@@ -50,14 +47,7 @@ func NewGit(cwd, repo, version string) Project {
 	default:
 		url = "https://github.com/" + repo
 	}
-	folder := filepath.Join(
-		cwd,
-		strings.Replace(
-			strings.Replace(
-				url, ":", "-COLON-", -1,
-			), "/", "-SLASH-", -1,
-		),
-	)
+	folder := filepath.Join(cwd, naming.URLToFolder(url))
 	return gitProject{
 		Version: version,
 		URL:     url,
