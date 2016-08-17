@@ -6,6 +6,13 @@ open_pdfs() {
   done
 }
 
+# TODO fix this
+#  defer profile.Start(
+#  	profile.MemProfile,
+#  	profile.CPUProfile,
+#  	profile.NoShutdownHook,
+#  	profile.ProfilePath("."),
+#  ).Stop()
 # git apply "./scripts/profiling/patch.patch"
 go build -ldflags="-s -w -X main.version=profiling" -o antibody ./cmd/antibody
 export ANTIBODY_HOME="$(mktemp -d)"

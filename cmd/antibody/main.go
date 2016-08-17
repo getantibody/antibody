@@ -10,12 +10,6 @@ import (
 var version = "master"
 
 func main() {
-	// defer profile.Start(
-	// 	profile.MemProfile,
-	// 	profile.CPUProfile,
-	// 	profile.NoShutdownHook,
-	// 	profile.ProfilePath("."),
-	// ).Stop()
 	app := cli.NewApp()
 	app.Name = "antibody"
 	app.Usage = "A faster and simpler antigen written in Golang"
