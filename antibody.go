@@ -25,9 +25,9 @@ func New(home string, lines []string) *Antibody {
 
 // Bundle processes all given lines and returns the shell content to execute
 func (a *Antibody) Bundle() (string, error) {
-	var shs []string
-	var total = len(a.Lines)
 	var count int
+	var total = len(a.Lines)
+	var shs []string
 	done := make(chan bool)
 
 	for _, line := range a.Lines {
@@ -38,6 +38,7 @@ func (a *Antibody) Bundle() (string, error) {
 			done <- true
 		}(line)
 	}
+
 	for {
 		select {
 		case event := <-a.Events:
