@@ -7,31 +7,34 @@ import (
 	"github.com/getantibody/antibody/event"
 )
 
+// Antibody the main thing
 type Antibody struct {
-	Events  chan event.Event
-	Bundles []string
-	Home    string
+	Events chan event.Event
+	Lines  []string
+	Home   string
 }
 
-func New(home string, bundles []string) *Antibody {
+// New creates a new Antibody instance with the given parameters
+func New(home string, lines []string) *Antibody {
 	return &Antibody{
-		Bundles: bundles,
-		Events:  make(chan event.Event, len(bundles)),
-		Home:    home,
+		Lines:  lines,
+		Events: make(chan event.Event),
+		Home:   home,
 	}
 }
 
+// Bundle processes all given lines and returns the shell content to execute
 func (a *Antibody) Bundle() (sh string, err error) {
 	var shs []string
-	var total = len(a.Bundles)
+	var total = len(a.Lines)
 	var count int
 	done := make(chan bool)
 
-	for _, sh := range a.Bundles {
-		go func(s string) {
-			bundle.New(a.Home, s).Get(a.Events)
+	for _, line := range a.Lines {
+		go func(l string) {
+			bundle.New(a.Home, l).Get(a.Events)
 			done <- true
-		}(sh)
+		}(line)
 	}
 	for {
 		select {

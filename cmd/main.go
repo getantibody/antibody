@@ -9,10 +9,11 @@ import (
 
 func main() {
 	sh, err := antibody.New(
-		gohome.Cache("__antibody")+"/",
+		gohome.Cache("__antibodyss")+"/",
 		[]string{
 			"caarlos0/ports kind:path",
-			"caarlos0/jvm version:gh-pages",
+			"caarlos0/jvm branch:gh-pages",
+			"caarlos0/zsh-open-pr kind:zsh",
 		},
 	).Bundle()
 	if err != nil {
