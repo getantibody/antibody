@@ -2,6 +2,7 @@ package project_test
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/getantibody/antibody/project"
@@ -50,4 +51,18 @@ func TestUpdateHome(t *testing.T) {
 	assert.NoError(project.NewGit(home, "caarlos0/jvm", "master").Download())
 	assert.NoError(project.NewGit(home, "caarlos0/ports", "master").Download())
 	assert.NoError(project.Update(home))
+}
+
+func TestUpdateNonExistentHome(t *testing.T) {
+	assert.Error(t, project.Update("/tmp/asdasdasdasksksksksnopeeeee"))
+}
+
+func TestUpdateHomeWithNoGitProjects(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
+	defer os.RemoveAll(home)
+	repo := project.NewGit(home, "caarlos0/jvm", "master")
+	assert.NoError(repo.Download())
+	os.RemoveAll(filepath.Join(repo.Folder(), ".git"))
+	assert.Error(project.Update(home))
 }
