@@ -1,0 +1,37 @@
+From 1c787c67b95b2c93d651fec56ea53fde12c23d0c Mon Sep 17 00:00:00 2001
+From: Carlos Alexandro Becker <caarlos0@gmail.com>
+Date: Sun, 22 May 2016 12:24:20 -0300
+Subject: [PATCH] enable profiling
+
+---
+ cmd/antibody/main.go | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/cmd/antibody/main.go b/cmd/antibody/main.go
+index 493aefa..3c2f20c 100644
+--- a/cmd/antibody/main.go
++++ b/cmd/antibody/main.go
+@@ -4,12 +4,21 @@ import (
+ 	"os"
+
+ 	"github.com/urfave/cli"
++	"github.com/davecheney/profile"
+ 	"github.com/getantibody/antibody/cmd/antibody/command"
+ )
+
+ var version = "master"
+
+ func main() {
++	cfg := profile.Config{
++		MemProfile:     true,
++		CPUProfile:     true,
++		BlockProfile:   true,
++		ProfilePath:    ".",  // store profiles in current directory
++		NoShutdownHook: true, // do not hook SIGINT
++	}
++	defer profile.Start(&cfg).Stop()
+ 	app := cli.NewApp()
+ 	app.Name = "antibody"
+ 	app.Usage = "A faster and simpler antigen written in Golang"
+--
+2.8.2
