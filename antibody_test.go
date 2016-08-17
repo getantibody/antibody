@@ -17,16 +17,21 @@ func TestAntibody(t *testing.T) {
 		"# comments also are allowed",
 		"caarlos0/ports kind:path",
 		"caarlos0/jvm kind:path branch:gh-pages",
-		"caarlos0/zsh-open-pr kind:zsh",
+		"caarlos0/zsh-open-pr     kind:zsh",
 		"",
+		"        ",
+		"  # trick play",
 		"/tmp kind:path",
 	}
 	sh, err := antibody.New(home, bundles).Bundle()
 	assert.NoError(err)
+	files, err := ioutil.ReadDir(home)
+	assert.NoError(err)
+	assert.Len(files, 3)
 	assert.Contains(sh, `export PATH="/tmp:$PATH"`)
-	assert.Contains(sh, `export PATH="`+home+`https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
-	assert.Contains(sh, `export PATH="`+home+`https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
-	assert.Contains(sh, `source `+home+`https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/open-pr.plugin.zsh`)
+	assert.Contains(sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
+	assert.Contains(sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
+	assert.Contains(sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/open-pr.plugin.zsh`)
 }
 
 func TestAntibodyError(t *testing.T) {
@@ -40,7 +45,7 @@ func TestAntibodyError(t *testing.T) {
 }
 
 func TestHome(t *testing.T) {
-	assert.Contains(t, "antibody", antibody.Home())
+	assert.Contains(t, antibody.Home(), "antibody")
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
