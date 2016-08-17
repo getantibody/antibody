@@ -1,7 +1,6 @@
 package project
 
 import (
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -36,7 +35,6 @@ func NewGit(cwd, repo, version string) Project {
 			url, ":", "-COLON-", -1,
 		), "/", "-SLASH-", -1,
 	)
-	log.Println(folder)
 	return gitProject{
 		Version: version,
 		URL:     url,

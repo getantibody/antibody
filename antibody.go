@@ -32,7 +32,9 @@ func (a *Antibody) Bundle() (string, error) {
 
 	for _, line := range a.Lines {
 		go func(l string) {
-			bundle.New(a.Home, l).Get(a.Events)
+			if l != "" && l[0] != '#' {
+				bundle.New(a.Home, l).Get(a.Events)
+			}
 			done <- true
 		}(line)
 	}

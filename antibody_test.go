@@ -14,9 +14,11 @@ func TestAntibody(t *testing.T) {
 	home := home()
 	defer os.RemoveAll(home)
 	bundles := []string{
+		"# comments also are allowed",
 		"caarlos0/ports kind:path",
 		"caarlos0/jvm kind:path branch:gh-pages",
 		"caarlos0/zsh-open-pr kind:zsh",
+		"",
 		"/tmp kind:path",
 	}
 	sh, err := antibody.New(home, bundles).Bundle()

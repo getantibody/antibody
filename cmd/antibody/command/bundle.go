@@ -1,12 +1,13 @@
 package command
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
 
+	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody"
-	"github.com/getantibody/antibody/bundle"
 	"github.com/urfave/cli"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -25,20 +26,20 @@ var Bundle = cli.Command{
 }
 
 func doBundle(ctx *cli.Context) error {
-	var input string
+	var input []string
 	if !terminal.IsTerminal(int(os.Stdin.Fd())) && len(ctx.Args()) == 0 {
 		entries, err := ioutil.ReadAll(os.Stdin)
-		if err != nil || len(entries) == 0 {
+		if err != nil {
 			return err
 		}
-		input = string(entries)
+		input = strings.Split(string(entries), "\n")
 	} else {
-		input = strings.Join(ctx.Args(), " ")
+		input = ctx.Args()
 	}
-	if ctx.Bool("static") {
-		antibody.NewStatic(bundle.Parse(input, antibody.Home())).Download()
-	} else {
-		antibody.New(bundle.Parse(input, antibody.Home())).Download()
+	sh, err := antibody.New(gohome.Cache("antibody")+"/", input).Bundle()
+	if err != nil {
+		return err
 	}
+	fmt.Println(sh)
 	return nil
 }
