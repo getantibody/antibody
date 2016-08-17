@@ -39,6 +39,15 @@ func TestAntibodyError(t *testing.T) {
 	assert.Empty(sh)
 }
 
+func TestHome(t *testing.T) {
+	assert.Contains(t, "antibody", antibody.Home())
+}
+
+func TestHomeFromEnvironmentVariable(t *testing.T) {
+	os.Setenv("ANTIBODY_HOME", "/tmp")
+	assert.Equal(t, "/tmp", antibody.Home())
+}
+
 func home() string {
 	home, err := ioutil.TempDir(os.TempDir(), "antibody")
 	if err != nil {
