@@ -26,5 +26,14 @@ func List(home string) ([]string, error) {
 
 // Update all projects in the given folder
 func Update(home string) error {
+	folders, err := List(home)
+	if err != nil {
+		return err
+	}
+	for _, folder := range folders {
+		if err := NewClonedGit(home, folder).Update(); err != nil {
+			return err
+		}
+	}
 	return nil
 }

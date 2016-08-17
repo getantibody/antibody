@@ -78,7 +78,7 @@ func TestDownloadFolderNaming(t *testing.T) {
 	defer os.RemoveAll(home)
 	repo := project.NewGit(home, "caarlos0/ports", "master")
 	assert.Equal(
-		home+"https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
+		home+"/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
 		repo.Folder(),
 	)
 }

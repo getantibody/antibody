@@ -34,6 +34,20 @@ func TestListNonExistentFolder(t *testing.T) {
 	assert.Len(list, 0)
 }
 
-func TestUpdateUpdate(t *testing.T) {
-	assert.Nil(t, project.Update(""))
+func TestUpdate(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
+	defer os.RemoveAll(home)
+	repo := project.NewGit(home, "caarlos0/jvm", "master")
+	assert.NoError(repo.Download())
+	assert.NoError(repo.Update())
+}
+
+func TestUpdateHome(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
+	defer os.RemoveAll(home)
+	assert.NoError(project.NewGit(home, "caarlos0/jvm", "master").Download())
+	assert.NoError(project.NewGit(home, "caarlos0/ports", "master").Download())
+	assert.NoError(project.Update(home))
 }
