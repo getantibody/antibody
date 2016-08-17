@@ -6,10 +6,12 @@ type Event struct {
 	Error error
 }
 
+// Error returns an error-kind of event
 func Error(err error) Event {
 	return Event{Error: err}
 }
 
+// Shell returns a shell-kind of event
 func Shell(shell string) Event {
 	return Event{Shell: shell}
 }
