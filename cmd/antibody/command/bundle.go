@@ -17,12 +17,6 @@ var Bundle = cli.Command{
 	Name:   "bundle",
 	Usage:  "downloads (if needed) and then sources a given repo",
 	Action: doBundle,
-	Flags: []cli.Flag{
-		cli.BoolFlag{
-			Name:  "static",
-			Usage: "Generates the output in a static-loading compatible way",
-		},
-	},
 }
 
 func doBundle(ctx *cli.Context) error {
