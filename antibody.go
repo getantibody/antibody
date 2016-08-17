@@ -24,7 +24,7 @@ func New(home string, lines []string) *Antibody {
 }
 
 // Bundle processes all given lines and returns the shell content to execute
-func (a *Antibody) Bundle() (sh string, err error) {
+func (a *Antibody) Bundle() (string, error) {
 	var shs []string
 	var total = len(a.Lines)
 	var count int
@@ -40,7 +40,7 @@ func (a *Antibody) Bundle() (sh string, err error) {
 		select {
 		case event := <-a.Events:
 			if event.Error != nil {
-				return "", err
+				return "", event.Error
 			}
 			shs = append(shs, event.Shell)
 		case <-done:
