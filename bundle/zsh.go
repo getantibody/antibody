@@ -19,11 +19,7 @@ func (z zshBundle) Get(events chan event.Event) {
 		return
 	}
 	for _, glob := range zshGlobs {
-		files, err := filepath.Glob(filepath.Join(z.Project.Folder(), glob))
-		if err != nil {
-			events <- event.Error(err)
-			continue
-		}
+		files, _ := filepath.Glob(filepath.Join(z.Project.Folder(), glob))
 		if files == nil {
 			continue
 		}

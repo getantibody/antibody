@@ -1,5 +1,7 @@
 package project
 
+import "os"
+
 // NewLocal Returns a local project, which can be any folder you want to
 func NewLocal(folder string) Project {
 	return localProject{folder}
@@ -10,11 +12,12 @@ type localProject struct {
 }
 
 func (l localProject) Download() error {
-	return nil
+	_, err := os.Stat(l.folder)
+	return err
 }
 
 func (l localProject) Update() error {
-	return nil
+	return l.Download()
 }
 
 func (l localProject) Folder() string {
