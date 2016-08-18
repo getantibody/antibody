@@ -118,7 +118,7 @@ You can use antibody in a static-loading manner (so you don't need to exec
 antibody every time you open a shell).
 
 ```sh
-$ antibody bundle --static < bundles.txt >> sourceables.sh
+$ antibody bundle < bundles.txt >> sourceables.sh
 # In your zshrc (or whatever):
 $ source sourceables.sh
 ```
