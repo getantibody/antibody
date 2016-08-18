@@ -1,6 +1,10 @@
 package project
 
-import "io/ioutil"
+import (
+	"io/ioutil"
+
+	"github.com/getantibody/antibody/event"
+)
 
 // Project is basically any kind of project (git, local, svn, bzr, nfs...)
 type Project interface {
@@ -30,10 +34,25 @@ func Update(home string) error {
 	if err != nil {
 		return err
 	}
+	total := len(folders)
+	var count int
+	events := make(chan event.Event)
 	for _, folder := range folders {
-		if err := NewClonedGit(home, folder).Update(); err != nil {
-			return err
+		go func(folder string) {
+			if err := NewClonedGit(home, folder).Update(); err != nil {
+				events <- event.Error(err)
+			}
+			events <- event.Shell("")
+		}(folder)
+	}
+	for {
+		evt := <-events
+		if evt.Error != nil {
+			return evt.Error
+		}
+		count++
+		if count == total {
+			return nil
 		}
 	}
-	return nil
 }
