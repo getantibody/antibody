@@ -15,7 +15,7 @@ func TestAntibody(t *testing.T) {
 	defer os.RemoveAll(home)
 	bundles := []string{
 		"# comments also are allowed",
-		"caarlos0/ports kind:path",
+		"caarlos0/ports kind:path # comment at the end of the line",
 		"caarlos0/jvm kind:path branch:gh-pages",
 		"caarlos0/zsh-open-pr     kind:zsh",
 		"",
