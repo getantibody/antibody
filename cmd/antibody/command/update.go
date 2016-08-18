@@ -1,7 +1,9 @@
 package command
 
 import (
-	"github.com/caarlos0/gohome"
+	"fmt"
+
+	"github.com/getantibody/antibody"
 	"github.com/getantibody/antibody/project"
 	"github.com/urfave/cli"
 )
@@ -11,6 +13,7 @@ var Update = cli.Command{
 	Name:  "update",
 	Usage: "updates all previously bundled commands",
 	Action: func(ctx *cli.Context) error {
-		return project.Update(gohome.Cache("antibody"))
+		fmt.Println("Updating all bundles in " + antibody.Home() + "...")
+		return project.Update(antibody.Home())
 	},
 }
