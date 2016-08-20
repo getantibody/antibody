@@ -1,69 +1,61 @@
 package antibody
 
 import (
-	"fmt"
 	"os"
-	"sync"
+	"strings"
 
 	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
+	"github.com/getantibody/antibody/event"
 )
 
-type print func(s string)
-
-func sourcedPrint(s string) {
-	fmt.Println(s)
-}
-
-func staticPrint(s string) {
-	fmt.Println("source", s)
-}
-
-// Antibody wraps a list of bundles to be processed.
+// Antibody the main thing
 type Antibody struct {
-	bundles []bundle.Bundle
-	print
+	Events chan event.Event
+	Lines  []string
+	Home   string
 }
 
-// New creates an instance of antibody with the given bundles.
-func New(bundles []bundle.Bundle) Antibody {
-	return Antibody{bundles, sourcedPrint}
+// New creates a new Antibody instance with the given parameters
+func New(home string, lines []string) *Antibody {
+	return &Antibody{
+		Lines:  lines,
+		Events: make(chan event.Event),
+		Home:   home,
+	}
 }
 
-// NewStatic creates an instance of antibody with the given bundles in
-// static-loading mode.
-func NewStatic(bundles []bundle.Bundle) Antibody {
-	return Antibody{bundles, staticPrint}
-}
+// Bundle processes all given lines and returns the shell content to execute
+func (a *Antibody) Bundle() (string, error) {
+	var count int
+	var total = len(a.Lines)
+	var shs []string
+	done := make(chan bool)
 
-// Download the needed bundles.
-func (a Antibody) Download() {
-	var wg sync.WaitGroup
-	for _, b := range a.bundles {
-		wg.Add(1)
-		go func(b bundle.Bundle) {
-			b.Download()
-			for _, sourceable := range bundle.Sourceables(b) {
-				a.print(sourceable)
+	for _, line := range a.Lines {
+		go func(l string) {
+			l = strings.TrimSpace(l)
+			if l != "" && l[0] != '#' {
+				bundle.New(a.Home, l).Get(a.Events)
 			}
-			wg.Done()
-		}(b)
+			done <- true
+		}(line)
 	}
-	wg.Wait()
-}
 
-// Update all bundles.
-func (a Antibody) Update() {
-	var wg sync.WaitGroup
-	fmt.Println("Updating...")
-	for _, b := range a.bundles {
-		wg.Add(1)
-		go func(b bundle.Bundle) {
-			b.Update()
-			wg.Done()
-		}(b)
+	for {
+		select {
+		case event := <-a.Events:
+			if event.Error != nil {
+				return "", event.Error
+			}
+			shs = append(shs, event.Shell)
+		case <-done:
+			count++
+			if count == total {
+				return strings.Join(shs, "\n"), nil
+			}
+		}
 	}
-	wg.Wait()
 }
 
 // Home finds the right home folder to use

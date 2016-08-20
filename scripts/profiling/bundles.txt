@@ -54,7 +54,6 @@ AlexisBRENON/oh-my-zsh-reminder
 tonyseek/oh-my-zsh-virtualenv-prompt
 hchbaw/opp.zsh
 marshallmick007/osx-dev-zsh-plugin
-allanhortle/otter
 deyvisonrocha/pantheon-terminal-notify-zsh-plugin
 benclark/parallels-zsh-plugin
 sharat87/pip-app
@@ -90,17 +89,17 @@ tymm/zsh-directory-history
 oknowton/zsh-dwim
 Tarrasch/zsh-functional
 s7anley/zsh-geeknote
+caarlos0/jvm kind:path
 caarlos0/zsh-git-sync
 clauswitt/zsh-grunt-plugin
-horosgrisa/zsh-gvm
 yerinle/zsh-gvm
 joepvd/zsh-hints
+# empty line:
+
 zsh-users/zsh-history-substring-search
-horosgrisa/zsh-konsole-theme-changer
 knu/zsh-manydots-magic
 psprint/zsh-navigation-tools
 marzocchi/zsh-notify
-caarlos0/zsh-open-pr
 mkwmms/zsh-osx
 caarlos0/zsh-pg
 RudthMael/zsh-plugin-ibtool
@@ -115,6 +114,6 @@ sharat87/zsh-vim-mode
 jocelynmallon/zshmarks
 # comments should be ignored
 # URLs:
-git@github.com:caarlos0/jvm.git
+git@github.com:caarlos0/jvm.git branch:gh-pages
 https://github.com/caarlos0/zsh-open-pr
 caarlos0/zsh-git-fetch-merge

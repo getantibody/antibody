@@ -1,89 +1,93 @@
 package bundle_test
 
 import (
+	"io/ioutil"
 	"os"
 	"testing"
 
 	"github.com/getantibody/antibody/bundle"
-	"github.com/getantibody/antibody/internal"
+	"github.com/getantibody/antibody/event"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBundleSourceables(t *testing.T) {
-	home := internal.TempHome()
+func TestZshGitBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	b := bundle.New("caarlos0/zsh-pg", home)
-	b.Download()
-	assert.NotEmpty(t, bundle.Sourceables(b))
+	events := make(chan event.Event)
+	go bundle.New(home, "caarlos0/jvm").Get(events)
+	assert.Contains((<-events).Shell, "jvm.plugin.zsh")
 }
 
-func TestSourceablesWithoutDownload(t *testing.T) {
-	home := internal.TempHome()
+func TestZshInvalidGitBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	b := bundle.New("caarlos0/zsh-pg", home)
-	assert.Empty(t, bundle.Sourceables(b))
+	events := make(chan event.Event)
+	go bundle.New(home, "doesnt exists").Get(events)
+	assert.Error((<-events).Error)
 }
 
-func TestSourceablesDotSh(t *testing.T) {
-	home := internal.TempHome()
+func TestZshLocalBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	b := bundle.New("rupa/z", home)
-	b.Download()
-	assert.Len(t, bundle.Sourceables(b), 1)
+	assert.NoError(ioutil.WriteFile(home+"/a.sh", []byte("echo 9"), 0644))
+	events := make(chan event.Event)
+	go bundle.New(home, home).Get(events)
+	assert.Contains((<-events).Shell, "a.sh")
 }
 
-func TestSourceablesZshTheme(t *testing.T) {
-	home := internal.TempHome()
+func TestZshInvalidLocalBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	b := bundle.New("caiogondim/bullet-train-oh-my-zsh-theme", home)
-	b.Download()
-	assert.Len(t, bundle.Sourceables(b), 1)
+	events := make(chan event.Event)
+	go bundle.New(home, "/asduhasd/asdasda").Get(events)
+	assert.Error((<-events).Error)
 }
 
-func TestListEmptyFolder(t *testing.T) {
-	home := internal.TempHome()
+func TestPathInvalidLocalBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	assert.Empty(t, bundle.List(home))
+	events := make(chan event.Event)
+	go bundle.New(home, "/asduhasd/asdasda kind:path").Get(events)
+	assert.Error((<-events).Error)
 }
 
-func TestList(t *testing.T) {
-	home := internal.TempHome()
+func TestPathGitBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	bundle.New("caarlos0/zsh-pg", home).Download()
-	assert.NotEmpty(t, bundle.List(home))
+	events := make(chan event.Event)
+	go bundle.New(home, "caarlos0/jvm kind:path").Get(events)
+	assert.Contains((<-events).Shell, "export PATH=\"")
 }
 
-func TestParse(t *testing.T) {
-	home := internal.TempHome()
+func TestPathLocalBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	s := "caarlos0/zsh-pg\ncaarlos0/zsh-open-pr"
-	assert.Len(t, bundle.Parse(s, home), 2)
+	assert.NoError(ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
+	events := make(chan event.Event)
+	go bundle.New(home, home+" kind:path").Get(events)
+	assert.Equal("export PATH=\""+home+":$PATH\"", (<-events).Shell)
 }
 
-func TestParseWithEmptyLines(t *testing.T) {
-	home := internal.TempHome()
+func TestPathGitBundleWithBranch(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	s := "caarlos0/zsh-pg\n\n  \ncaarlos0/zsh-open-pr"
-	assert.Len(t, bundle.Parse(s, home), 2)
+	events := make(chan event.Event)
+	go bundle.New(home, "caarlos0/jvm kind:path branch:gh-pages").Get(events)
+	assert.Contains((<-events).Shell, "export PATH=\"")
 }
 
-func TestParseWithComment(t *testing.T) {
-	home := internal.TempHome()
-	defer os.RemoveAll(home)
-	s := "caarlos0/zsh-pg      # this is a comment"
-	assert.Len(t, bundle.Parse(s, home), 1)
-}
-
-func TestParseCommentedLine(t *testing.T) {
-	home := internal.TempHome()
-	defer os.RemoveAll(home)
-	s := "# this is a comment"
-	assert.Len(t, bundle.Parse(s, home), 0)
-}
-
-func TestParseDirBundle(t *testing.T) {
-	home := internal.TempHome()
-	defer os.RemoveAll(home)
-	s := home + "/caarlos0/zsh-pg"
-	assert.Len(t, bundle.Parse(s, home), 1)
+func home() string {
+	home, err := ioutil.TempDir(os.TempDir(), "antibody")
+	if err != nil {
+		panic(err.Error())
+	}
+	return home
 }

@@ -1,34 +1,33 @@
 <img src="logo.png" align="right" width="192px"/>
 
-A faster and simpler antigen written in Golang.
+A shell plugin manager written in Golang.
 
 [![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://img.shields.io/circleci/project/getantibody/antibody/master.svg?style=flat-square)](https://circleci.com/gh/getantibody/antibody) [![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master) [![Go Report Card](http://goreportcard.com/badge/getantibody/antibody)](http://goreportcard.com/report/getantibody/antibody) [![](https://godoc.org/github.com/getantibody/antibody?status.svg)](http://godoc.org/github.com/getantibody/antibody) [![Join the chat at https://gitter.im/getantibody/antibody](https://badges.gitter.im/getantibody/antibody.svg)](https://gitter.im/getantibody/antibody?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-> "Antigen is a small set of functions that help you easily manage your shell
-> (zsh) plugins, called bundles. The concept is pretty much the same as
-> bundles in a typical vim+pathogen setup. Antigen is to zsh, what Vundle
-> is to vim."
->
-> Read more: [Antigen](https://github.com/zsh-users/antigen).
-
+Antibody can manage plugins for shells (`zsh`, for example), both loading them
+with `source` or `export`-ing them to `PATH`, for example.
 
 ### Why?
 
-Antigen is really nice, but it is bloated and it is slow - 5+ seconds to load
-on my Mac... that's way too much to wait for a prompt to load!
+I was using Antigen before. It is a good plugin manager, but at the same time
+it's bloated and slow - 5+ seconds to load on my Mac... that's way too
+much to wait for a prompt to load!
+
+Antigen is focused in performance, and, since v2.0.0, manage more than just
+ZSH plugins, but also PATH plugins (those project with binaries) and it is easy
+enough to implement it for Fish and others.
 
 [![asciicast](https://asciinema.org/a/3ltopcz7dsid3iqgsg58o2sr8.png)](https://asciinema.org/a/3ltopcz7dsid3iqgsg58o2sr8)
 
-I'm aware that there is other attempts, like
+I'm aware that there are other attempts, like
 [antigen-hs](https://github.com/Tarrasch/antigen-hs), but I don't want to
 install a lot of stuff for this to work.
 
-So, why Go, you might ask: Well, the compiled Go program runs anywhere
-and doesn't depend on any shared libraries. I also don't need to source it as
-it would be necessary with plain simple shell. I also can do stuff in
-parallel with Go routines. The little amount of shell written is needed
-because I can't source something from inside a Go program (or at least
-don't yet know how to do it).
+### Why Go
+
+Well, the compiled Go program runs anywhere and doesn't depend on any shared
+libraries. I also don't need to source it as it would be necessary with
+plain simple shell. I also can do stuff in parallel with Go routines.
 
 ### What works
 
@@ -45,7 +44,6 @@ Running `antibody bundle` will already download and apply the given bundle.
 
 ### What doesn't work
 
-- Modules that are not in GitHub (you can open a PR if you wish);
 - The `theme` command (although most themes might just work with `bundle`);
 - oh-my-zsh support: it looks very ugly to me and I won't do it;
 
@@ -58,22 +56,29 @@ $ curl -s https://raw.githubusercontent.com/getantibody/installer/master/install
 $ echo 'source <(antibody init)' >> ~/.zshrc
 ```
 
-This will put the binary in `/usr/local/bin/antibody` and setup your `~/.zshrc` to
-load what is needed on startup.
+This will put the binary in `/usr/local/bin/antibody` and setup your `~/.zshrc`
+to load what is needed on startup.
 
 ### Usage
 
 Now, you can just `antibody bundle` stuff, e.g.,
 `antibody bundle caarlos0/jvm`. The repository will be cloned at
-your `XDG_CACHE` folder and antibody will try to load files that match:
+your OS cache folder (check `antibody home`) folder.
+
+The ZSH bundle implementation will try to load files that match:
 
 - `*.plugin.zsh`
 - `*.zsh`
 - `*.sh`
 - `*.zsh-theme`
 
+The Path bundle implementation will just add the folder to your `PATH`.
+
+You can change the impl by adding `kind:zsh` or `kind:path` to the argument, as
+in `antibody bundle 'caarlos0/ports kind:path'`
+
 You can also specify a branch to download, for example,
-`antibody bundle caarlos0/jvm v2` will download the `v2` branch of that
+`antibody bundle caarlos0/jvm branch:v2` will download the `v2` branch of that
 repository.
 
 When you decide to update your bundles, just run `antibody update`: it will
@@ -86,6 +91,7 @@ Prefer to use it like this:
 ```sh
 $ cat plugins.txt
 caarlos0/jvm
+caarlos0/ports kind:path
 djui/alias-tips
 caarlos0/zsh-mkc
 zsh-users/zsh-completions
@@ -96,8 +102,8 @@ zsh-users/zsh-history-substring-search
 $ antibody bundle < plugins.txt
 ```
 
-This way antibody can concurrently clone the bundles and find their sourceable
-files, so it will probably be faster than call each one separately.
+This way antibody can concurrently clone the bundles and find return the shell
+line, so it will probably be faster than call each one separately.
 
 ### In the wild
 
@@ -118,12 +124,14 @@ You can use antibody in a static-loading manner (so you don't need to exec
 antibody every time you open a shell).
 
 ```sh
-$ antibody bundle --static < bundles.txt >> sourceables.sh
+$ antibody bundle < bundles.txt >> sourceables.sh
 # In your zshrc (or whatever):
 $ source sourceables.sh
 ```
 
 Beware that antibody does stuff in parallel, so bundle order is not guaranteed.
+
+> PS: since v2.0.0, this is the default behavior.
 
 ### Thanks
 

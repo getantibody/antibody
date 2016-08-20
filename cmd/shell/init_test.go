@@ -3,7 +3,7 @@ package shell_test
 import (
 	"testing"
 
-	"github.com/getantibody/antibody/shell"
+	"github.com/getantibody/antibody/cmd/shell"
 	"github.com/stretchr/testify/assert"
 )
 

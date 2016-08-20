@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/getantibody/antibody"
-	"github.com/getantibody/antibody/bundle"
+	"github.com/getantibody/antibody/project"
 	"github.com/urfave/cli"
 )
 
@@ -13,8 +13,12 @@ var List = cli.Command{
 	Name:  "list",
 	Usage: "list all currently downloaded bundles",
 	Action: func(ctx *cli.Context) error {
-		for _, b := range bundle.List(antibody.Home()) {
-			fmt.Println(b.Name())
+		projects, err := project.List(antibody.Home())
+		if err != nil {
+			return err
+		}
+		for _, b := range projects {
+			fmt.Println(b)
 		}
 		return nil
 	},

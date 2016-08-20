@@ -1,13 +1,20 @@
 #!/bin/bash
 
 open_pdfs() {
-  for i in cpu mem block; do
-    go tool pprof --pdf antibody "$i.pprof" > "$1_$i.pdf" && open "$1_$i.pdf"
+  find . -name '*.pprof' | while read -r i; do
+    go tool pprof --pdf antibody "$i.pprof" > "/tmp/$1_$i.pdf" && open "/tmp/$1_$i.pdf"
   done
 }
 
-git apply "./scripts/profiling/patch.patch"
-go build -o antibody ./cmd/antibody
+# TODO fix this
+#  defer profile.Start(
+#  	profile.MemProfile,
+#  	profile.CPUProfile,
+#  	profile.NoShutdownHook,
+#  	profile.ProfilePath("."),
+#  ).Stop()
+# git apply "./scripts/profiling/patch.patch"
+go build -ldflags="-s -w -X main.version=profiling" -o antibody ./cmd/antibody
 export ANTIBODY_HOME="$(mktemp -d)"
 # bundle all plugins from awesome-zsh-plugins
 /usr/bin/time ./antibody bundle < ./scripts/profiling/bundles.txt > /dev/null
@@ -24,4 +31,4 @@ open_pdfs home
 open_pdfs init
 
 rm -f ./antibody
-git checkout ./cmd/antibody/main.go
+# git checkout ./cmd/antibody/main.go

@@ -6,44 +6,57 @@ import (
 	"testing"
 
 	"github.com/getantibody/antibody"
-	"github.com/getantibody/antibody/bundle"
-	"github.com/getantibody/antibody/internal"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBundleAndUpdate(t *testing.T) {
-	home := internal.TempHome()
+func TestAntibody(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	a := antibody.New([]bundle.Bundle{
-		bundle.New("caarlos0/zsh-pg", home),
-		bundle.New("caarlos0/zsh-open-pr", home),
-	})
-	a.Download()
-	a.Update()
-	files, _ := ioutil.ReadDir(home)
-	assert.Len(t, files, 2)
+	bundles := []string{
+		"# comments also are allowed",
+		"caarlos0/ports kind:path # comment at the end of the line",
+		"caarlos0/jvm kind:path branch:gh-pages",
+		"caarlos0/zsh-open-pr     kind:zsh",
+		"",
+		"        ",
+		"  # trick play",
+		"/tmp kind:path",
+	}
+	sh, err := antibody.New(home, bundles).Bundle()
+	assert.NoError(err)
+	files, err := ioutil.ReadDir(home)
+	assert.NoError(err)
+	assert.Len(files, 3)
+	assert.Contains(sh, `export PATH="/tmp:$PATH"`)
+	assert.Contains(sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
+	assert.Contains(sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
+	assert.Contains(sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/open-pr.plugin.zsh`)
 }
 
-func TestBundleAndUpdateStatic(t *testing.T) {
-	home := internal.TempHome()
+func TestAntibodyError(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
 	defer os.RemoveAll(home)
-	a := antibody.NewStatic([]bundle.Bundle{
-		bundle.New("caarlos0/zsh-pg", home),
-		bundle.New("caarlos0/zsh-open-pr", home),
-	})
-	a.Download()
-	a.Update()
-	files, _ := ioutil.ReadDir(home)
-	assert.Len(t, files, 2)
+	bundles := []string{"invalid-repo"}
+	sh, err := antibody.New(home, bundles).Bundle()
+	assert.Error(err)
+	assert.Empty(sh)
 }
 
-func TestCustomHome(t *testing.T) {
-	home := internal.TempHome()
-	defer os.RemoveAll(home)
-	assert.Equal(t, home, antibody.Home())
+func TestHome(t *testing.T) {
+	assert.Contains(t, antibody.Home(), "antibody")
 }
 
-func TestDefaultHome(t *testing.T) {
-	os.Unsetenv("ANTIBODY_HOME")
-	assert.NotEmpty(t, antibody.Home())
+func TestHomeFromEnvironmentVariable(t *testing.T) {
+	os.Setenv("ANTIBODY_HOME", "/tmp")
+	assert.Equal(t, "/tmp", antibody.Home())
+}
+
+func home() string {
+	home, err := ioutil.TempDir(os.TempDir(), "antibody")
+	if err != nil {
+		panic(err.Error())
+	}
+	return home
 }

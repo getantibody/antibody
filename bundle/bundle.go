@@ -1,64 +1,57 @@
 package bundle
 
 import (
-	"io/ioutil"
-	"path"
-	"path/filepath"
 	"strings"
 
-	"github.com/getantibody/antibody/git"
+	"github.com/getantibody/antibody/event"
+	"github.com/getantibody/antibody/project"
 )
 
-var globs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
-
-// Bundle is an interface for different types of bundles
+// Bundle main interface.
 type Bundle interface {
-	Folder() string
-	Name() string
-	Download() error
-	Update() error
+	Get(events chan event.Event)
 }
 
-// New creates a new bundle instance
-func New(fullName, folder string) Bundle {
-	if strings.HasPrefix(fullName, "/") {
-		return DirBundle{path.Base(fullName), fullName}
+// New bundle with at the given home (when apply) and line.
+//
+// Accepted line formats:
+//
+// - Local bundle (download and update do nothing):
+// 		/home/carlos/Code/my-local-bundle
+// - Github repo in the owner/repo format:
+//		caarlos0/github-repo
+// - Git repo in any valid URL form:
+//		https://github.com/caarlos0/other-github-repo.git
+// - Any type of repo, specifying the kind of resource:
+//		caarlos0/add-to-path-style kind:path
+// - Any git repo, specifying a branch:
+//		caarlos0/versioned-with-branch branch:v1.0 kind:zsh
+func New(home, line string) Bundle {
+	identifier, kind, version := extract(line)
+	proj := projectFor(identifier, version, home)
+	if kind == "path" {
+		return pathBundle{proj}
 	}
-	return git.NewGitRepo(fullName, folder)
+	return zshBundle{proj}
 }
 
-// Sourceables returns the list of files that could be sourced
-func Sourceables(b Bundle) []string {
-	for _, glob := range globs {
-		files, _ := filepath.Glob(filepath.Join(b.Folder(), glob))
-		if files != nil {
-			return files
+func projectFor(identifier, version, home string) project.Project {
+	if identifier[0] == '/' {
+		return project.NewLocal(identifier)
+	}
+	return project.NewGit(home, identifier, version)
+}
+
+func extract(line string) (string, string, string) {
+	var version = "master"
+	var kind = "zsh"
+	parts := strings.Split(line, " ")
+	for _, part := range parts {
+		if strings.HasPrefix(part, "branch:") {
+			version = strings.Replace(part, "branch:", "", -1)
+		} else if strings.HasPrefix(part, "kind:") {
+			kind = strings.Replace(part, "kind:", "", -1)
 		}
 	}
-	return nil
-}
-
-// List all bundles in the given folder
-func List(folder string) []Bundle {
-	entries, _ := ioutil.ReadDir(folder)
-	var bundles []Bundle
-	for _, bundle := range entries {
-		if bundle.Mode().IsDir() && bundle.Name()[0] != '.' {
-			bundles = append(bundles, New(bundle.Name(), folder))
-		}
-	}
-	return bundles
-}
-
-// Parse a list of bundles, one per line, into a Bundle slice
-func Parse(s, folder string) []Bundle {
-	var bundles []Bundle
-	for _, decl := range strings.Split(s, "\n") {
-		b := strings.Split(decl, "#")[0]
-		b = strings.TrimSpace(b)
-		if b != "" {
-			bundles = append(bundles, New(b, folder))
-		}
-	}
-	return bundles
+	return parts[0], kind, version
 }
