@@ -31,7 +31,7 @@ func TestAntibody(t *testing.T) {
 	assert.Contains(sh, `export PATH="/tmp:$PATH"`)
 	assert.Contains(sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
 	assert.Contains(sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
-	assert.Contains(sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/open-pr.plugin.zsh`)
+	assert.Contains(sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/git-open-pr.plugin.zsh`)
 }
 
 func TestAntibodyError(t *testing.T) {

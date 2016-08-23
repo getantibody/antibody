@@ -13,6 +13,7 @@ type Project interface {
 	Folder() string
 }
 
+// New decides what kind of project it is, based on the given line
 func New(home, line string) Project {
 	if line[0] == '/' {
 		return NewLocal(line)
