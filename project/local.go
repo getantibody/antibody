@@ -1,10 +1,13 @@
 package project
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 // NewLocal Returns a local project, which can be any folder you want to
 func NewLocal(folder string) Project {
-	return localProject{folder}
+	return localProject{strings.Split(folder, " ")[0]}
 }
 
 type localProject struct {

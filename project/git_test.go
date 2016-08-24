@@ -25,7 +25,7 @@ func TestDownloadAllKinds(t *testing.T) {
 		home := home()
 		defer os.RemoveAll(home)
 		assert.NoError(
-			project.NewGit(home, url, "master").Download(),
+			project.NewGit(home, url).Download(),
 			"Repo "+url+" failed to download",
 		)
 	}
@@ -35,14 +35,14 @@ func TestDownloadAnotherBranch(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	assert.NoError(project.NewGit(home, "caarlos0/jvm", "gh-pages").Download())
+	assert.NoError(project.NewGit(home, "caarlos0/jvm branch:gh-pages").Download())
 }
 
 func TestDownloadAndUpdate(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	repo := project.NewGit(home, "caarlos0/ports", "master")
+	repo := project.NewGit(home, "caarlos0/ports")
 	assert.NoError(repo.Download())
 	assert.NoError(repo.Update())
 }
@@ -51,7 +51,7 @@ func TestUpdateNonExistentLocalRepo(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	repo := project.NewGit(home, "caarlos0/ports", "master")
+	repo := project.NewGit(home, "caarlos0/ports")
 	assert.Error(repo.Update())
 }
 
@@ -59,7 +59,7 @@ func TestDownloadNonExistenRepo(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	repo := project.NewGit(home, "doesn-not-exist-really", "also-nope")
+	repo := project.NewGit(home, "doesn-not-exist-really branch:also-nope")
 	assert.Error(repo.Download())
 }
 
@@ -67,7 +67,7 @@ func TestDownloadMultipleTimes(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	repo := project.NewGit(home, "caarlos0/ports", "master")
+	repo := project.NewGit(home, "caarlos0/ports")
 	assert.NoError(repo.Download())
 	assert.NoError(repo.Download())
 }
@@ -76,7 +76,7 @@ func TestDownloadFolderNaming(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	repo := project.NewGit(home, "caarlos0/ports", "master")
+	repo := project.NewGit(home, "caarlos0/ports")
 	assert.Equal(
 		home+"/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
 		repo.Folder(),

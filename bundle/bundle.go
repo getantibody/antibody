@@ -27,31 +27,19 @@ type Bundle interface {
 // - Any git repo, specifying a branch:
 //		caarlos0/versioned-with-branch branch:v1.0 kind:zsh
 func New(home, line string) Bundle {
-	identifier, kind, version := extract(line)
-	proj := projectFor(identifier, version, home)
+	kind := extract(line)
+	proj := project.New(home, line)
 	if kind == "path" {
 		return pathBundle{proj}
 	}
 	return zshBundle{proj}
 }
 
-func projectFor(identifier, version, home string) project.Project {
-	if identifier[0] == '/' {
-		return project.NewLocal(identifier)
-	}
-	return project.NewGit(home, identifier, version)
-}
-
-func extract(line string) (string, string, string) {
-	var version = "master"
-	var kind = "zsh"
-	parts := strings.Split(line, " ")
-	for _, part := range parts {
-		if strings.HasPrefix(part, "branch:") {
-			version = strings.Replace(part, "branch:", "", -1)
-		} else if strings.HasPrefix(part, "kind:") {
-			kind = strings.Replace(part, "kind:", "", -1)
+func extract(line string) string {
+	for _, part := range strings.Split(line, " ") {
+		if strings.HasPrefix(part, "kind:") {
+			return strings.Replace(part, "kind:", "", -1)
 		}
 	}
-	return parts[0], kind, version
+	return "zsh"
 }

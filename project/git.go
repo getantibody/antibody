@@ -31,8 +31,17 @@ func NewClonedGit(home, folder string) Project {
 
 // NewGit A git project can be any repository in any given branch. It will
 // be downloaded to the provided cwd
-func NewGit(cwd, repo, version string) Project {
-	var url string
+func NewGit(cwd, line string) Project {
+	version := "master"
+	parts := strings.Split(line, " ")
+	for _, part := range parts {
+		if strings.HasPrefix(part, "branch:") {
+			version = strings.Replace(part, "branch:", "", -1)
+			break
+		}
+	}
+	repo := parts[0]
+	url := "https://github.com/" + repo
 	switch {
 	case strings.HasPrefix(repo, "http://"):
 		fallthrough
@@ -44,8 +53,6 @@ func NewGit(cwd, repo, version string) Project {
 		fallthrough
 	case strings.HasPrefix(repo, "git@github.com:"):
 		url = repo
-	default:
-		url = "https://github.com/" + repo
 	}
 	folder := filepath.Join(cwd, naming.URLToFolder(url))
 	return gitProject{

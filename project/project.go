@@ -13,6 +13,14 @@ type Project interface {
 	Folder() string
 }
 
+// New decides what kind of project it is, based on the given line
+func New(home, line string) Project {
+	if line[0] == '/' {
+		return NewLocal(line)
+	}
+	return NewGit(home, line)
+}
+
 // List all projects in the given folder
 func List(home string) ([]string, error) {
 	var result []string
