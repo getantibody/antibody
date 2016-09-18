@@ -1,6 +1,8 @@
 package antibody
 
 import (
+	"bufio"
+	"io"
 	"os"
 	"strings"
 	"sync"
@@ -13,14 +15,14 @@ import (
 // Antibody the main thing
 type Antibody struct {
 	Events chan event.Event
-	Lines  []string
+	r      io.Reader
 	Home   string
 }
 
 // New creates a new Antibody instance with the given parameters
-func New(home string, lines []string) *Antibody {
+func New(home string, r io.Reader) *Antibody {
 	return &Antibody{
-		Lines:  lines,
+		r:      r,
 		Events: make(chan event.Event),
 		Home:   home,
 	}
@@ -30,8 +32,9 @@ func New(home string, lines []string) *Antibody {
 func (a *Antibody) Bundle() (result string, err error) {
 	var shs []string
 	var wg sync.WaitGroup
-	wg.Add(len(a.Lines))
-	for _, line := range a.Lines {
+	scanner := bufio.NewScanner(a.r)
+	for scanner.Scan() {
+		wg.Add(1)
 		go func(l string) {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
@@ -39,7 +42,10 @@ func (a *Antibody) Bundle() (result string, err error) {
 			} else {
 				wg.Done()
 			}
-		}(line)
+		}(scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		return result, err
 	}
 
 	go func() {
