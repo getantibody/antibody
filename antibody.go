@@ -3,6 +3,7 @@ package antibody
 import (
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
@@ -26,36 +27,34 @@ func New(home string, lines []string) *Antibody {
 }
 
 // Bundle processes all given lines and returns the shell content to execute
-func (a *Antibody) Bundle() (string, error) {
-	var count int
-	var total = len(a.Lines)
+func (a *Antibody) Bundle() (result string, err error) {
 	var shs []string
-	done := make(chan bool)
-
+	var wg sync.WaitGroup
+	wg.Add(len(a.Lines))
 	for _, line := range a.Lines {
 		go func(l string) {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
 				bundle.New(a.Home, l).Get(a.Events)
+			} else {
+				wg.Done()
 			}
-			done <- true
 		}(line)
 	}
 
-	for {
-		select {
-		case event := <-a.Events:
+	go func() {
+		for {
+			event := <-a.Events
 			if event.Error != nil {
-				return "", event.Error
+				err = event.Error
+			} else {
+				shs = append(shs, event.Shell)
 			}
-			shs = append(shs, event.Shell)
-		case <-done:
-			count++
-			if count == total {
-				return strings.Join(shs, "\n"), nil
-			}
+			wg.Done()
 		}
-	}
+	}()
+	wg.Wait()
+	return strings.Join(shs, "\n"), err
 }
 
 // Home finds the right home folder to use
