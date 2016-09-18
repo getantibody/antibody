@@ -36,6 +36,8 @@ func (a *Antibody) Bundle() (result string, err error) {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
 				bundle.New(a.Home, l).Get(a.Events)
+			} else {
+				wg.Done()
 			}
 		}(line)
 	}
