@@ -6,10 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/sync/errgroup"
-
 	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
+	"golang.org/x/sync/errgroup"
 )
 
 // Antibody the main thing
