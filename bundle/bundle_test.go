@@ -22,7 +22,7 @@ func TestZshInvalidGitBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	_, err := bundle.New(home, "doesnt exists").Get()
+	_, err := bundle.New(home, "doesnt exist").Get()
 	assert.Error(err)
 }
 
