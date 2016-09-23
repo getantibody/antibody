@@ -30,6 +30,7 @@ func New(home string, r io.Reader) *Antibody {
 
 // Bundle processes all given lines and returns the shell content to execute
 func (a *Antibody) Bundle() (result string, err error) {
+	defer close(a.Events)
 	var shs []string
 	var wg sync.WaitGroup
 	scanner := bufio.NewScanner(a.r)
