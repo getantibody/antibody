@@ -1,8 +1,9 @@
 package command
 
 import (
+	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
 
@@ -19,15 +20,11 @@ var Bundle = cli.Command{
 }
 
 func doBundle(ctx *cli.Context) error {
-	var input []string
+	var input io.Reader
 	if !terminal.IsTerminal(int(os.Stdin.Fd())) && len(ctx.Args()) == 0 {
-		entries, err := ioutil.ReadAll(os.Stdin)
-		if err != nil {
-			return err
-		}
-		input = strings.Split(string(entries), "\n")
+		input = os.Stdin
 	} else {
-		input = ctx.Args()
+		input = bytes.NewBufferString(strings.Join(ctx.Args(), "\n"))
 	}
 	sh, err := antibody.New(antibody.Home(), input).Bundle()
 	if err != nil {

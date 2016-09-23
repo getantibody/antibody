@@ -1,8 +1,10 @@
 package antibody_test
 
 import (
+	"bytes"
 	"io/ioutil"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/getantibody/antibody"
@@ -23,7 +25,10 @@ func TestAntibody(t *testing.T) {
 		"  # trick play",
 		"/tmp kind:path",
 	}
-	sh, err := antibody.New(home, bundles).Bundle()
+	sh, err := antibody.New(
+		home,
+		bytes.NewBufferString(strings.Join(bundles, "\n")),
+	).Bundle()
 	assert.NoError(err)
 	files, err := ioutil.ReadDir(home)
 	assert.NoError(err)
@@ -38,7 +43,7 @@ func TestAntibodyError(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	bundles := []string{"invalid-repo"}
+	bundles := bytes.NewBufferString("invalid-repo")
 	sh, err := antibody.New(home, bundles).Bundle()
 	assert.Error(err)
 	assert.Empty(sh)
