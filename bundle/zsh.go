@@ -3,7 +3,6 @@ package bundle
 import (
 	"path/filepath"
 
-	"github.com/getantibody/antibody/event"
 	"github.com/getantibody/antibody/project"
 )
 
@@ -13,10 +12,9 @@ type zshBundle struct {
 
 var zshGlobs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
-func (z zshBundle) Get(events chan event.Event) {
+func (z zshBundle) Get() (result string, err error) {
 	if err := z.Project.Download(); err != nil {
-		events <- event.Error(err)
-		return
+		return result, err
 	}
 	for _, glob := range zshGlobs {
 		files, _ := filepath.Glob(filepath.Join(z.Project.Folder(), glob))
@@ -24,8 +22,8 @@ func (z zshBundle) Get(events chan event.Event) {
 			continue
 		}
 		for _, file := range files {
-			events <- event.Shell("source " + file)
-			return
+			return "source " + file, err
 		}
 	}
+	return result, nil
 }

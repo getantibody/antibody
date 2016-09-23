@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/getantibody/antibody/bundle"
-	"github.com/getantibody/antibody/event"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,18 +13,17 @@ func TestZshGitBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	events := make(chan event.Event)
-	go bundle.New(home, "caarlos0/jvm").Get(events)
-	assert.Contains((<-events).Shell, "jvm.plugin.zsh")
+	result, err := bundle.New(home, "caarlos0/jvm").Get()
+	assert.Contains(result, "jvm.plugin.zsh")
+	assert.NoError(err)
 }
 
 func TestZshInvalidGitBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	events := make(chan event.Event)
-	go bundle.New(home, "doesnt exists").Get(events)
-	assert.Error((<-events).Error)
+	_, err := bundle.New(home, "doesnt exists").Get()
+	assert.Error(err)
 }
 
 func TestZshLocalBundle(t *testing.T) {
@@ -33,36 +31,34 @@ func TestZshLocalBundle(t *testing.T) {
 	home := home()
 	defer os.RemoveAll(home)
 	assert.NoError(ioutil.WriteFile(home+"/a.sh", []byte("echo 9"), 0644))
-	events := make(chan event.Event)
-	go bundle.New(home, home).Get(events)
-	assert.Contains((<-events).Shell, "a.sh")
+	result, err := bundle.New(home, home).Get()
+	assert.Contains(result, "a.sh")
+	assert.NoError(err)
 }
 
 func TestZshInvalidLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	events := make(chan event.Event)
-	go bundle.New(home, "/asduhasd/asdasda").Get(events)
-	assert.Error((<-events).Error)
+	_, err := bundle.New(home, "/asduhasd/asdasda").Get()
+	assert.Error(err)
 }
 
 func TestPathInvalidLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	events := make(chan event.Event)
-	go bundle.New(home, "/asduhasd/asdasda kind:path").Get(events)
-	assert.Error((<-events).Error)
+	_, err := bundle.New(home, "/asduhasd/asdasda kind:path").Get()
+	assert.Error(err)
 }
 
 func TestPathGitBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	events := make(chan event.Event)
-	go bundle.New(home, "caarlos0/jvm kind:path").Get(events)
-	assert.Contains((<-events).Shell, "export PATH=\"")
+	result, err := bundle.New(home, "caarlos0/jvm kind:path").Get()
+	assert.Contains(result, "export PATH=\"")
+	assert.NoError(err)
 }
 
 func TestPathLocalBundle(t *testing.T) {
@@ -70,18 +66,18 @@ func TestPathLocalBundle(t *testing.T) {
 	home := home()
 	defer os.RemoveAll(home)
 	assert.NoError(ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
-	events := make(chan event.Event)
-	go bundle.New(home, home+" kind:path").Get(events)
-	assert.Equal("export PATH=\""+home+":$PATH\"", (<-events).Shell)
+	result, err := bundle.New(home, home+" kind:path").Get()
+	assert.Equal("export PATH=\""+home+":$PATH\"", result)
+	assert.NoError(err)
 }
 
 func TestPathGitBundleWithBranch(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	events := make(chan event.Event)
-	go bundle.New(home, "caarlos0/jvm kind:path branch:gh-pages").Get(events)
-	assert.Contains((<-events).Shell, "export PATH=\"")
+	result, err := bundle.New(home, "caarlos0/jvm kind:path branch:gh-pages").Get()
+	assert.Contains(result, "export PATH=\"")
+	assert.NoError(err)
 }
 
 func home() string {

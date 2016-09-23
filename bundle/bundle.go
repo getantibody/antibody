@@ -3,13 +3,12 @@ package bundle
 import (
 	"strings"
 
-	"github.com/getantibody/antibody/event"
 	"github.com/getantibody/antibody/project"
 )
 
 // Bundle main interface.
 type Bundle interface {
-	Get(events chan event.Event)
+	Get() (result string, err error)
 }
 
 // New bundle with at the given home (when apply) and line.

@@ -3,7 +3,7 @@ package project
 import (
 	"io/ioutil"
 
-	"github.com/getantibody/antibody/event"
+	"golang.org/x/sync/errgroup"
 )
 
 // Project is basically any kind of project (git, local, svn, bzr, nfs...)
@@ -22,8 +22,7 @@ func New(home, line string) Project {
 }
 
 // List all projects in the given folder
-func List(home string) ([]string, error) {
-	var result []string
+func List(home string) (result []string, err error) {
 	entries, err := ioutil.ReadDir(home)
 	if err != nil {
 		return result, err
@@ -42,25 +41,12 @@ func Update(home string) error {
 	if err != nil {
 		return err
 	}
-	total := len(folders)
-	var count int
-	events := make(chan event.Event)
+	var g errgroup.Group
 	for _, folder := range folders {
-		go func(folder string) {
-			if err := NewClonedGit(home, folder).Update(); err != nil {
-				events <- event.Error(err)
-			}
-			events <- event.Shell("")
-		}(folder)
+		folder := folder
+		g.Go(func() error {
+			return NewClonedGit(home, folder).Update()
+		})
 	}
-	for {
-		evt := <-events
-		if evt.Error != nil {
-			return evt.Error
-		}
-		count++
-		if count == total {
-			return nil
-		}
-	}
+	return g.Wait()
 }
