@@ -1,5 +1,5 @@
-hash: 687fdc62a47124eab8192e76aed7bad6290c4c6dc39a542adfe1a97861d05c8e
-updated: 2016-09-23T16:49:13.757862712-03:00
+hash: 1c6a6eb16687818ff55ad94be799683512a4cca758abf420f0a71be76743aa89
+updated: 2016-09-23T18:18:28.798100652-03:00
 imports:
 - name: github.com/caarlos0/gohome
   version: cbed4b26b0bb75922678d7892fde12dccc05a8b3
@@ -11,6 +11,10 @@ imports:
   version: 8e06e8ddd9629eb88639aba897641bff8031f1d3
   subpackages:
   - ssh/terminal
+- name: golang.org/x/net
+  version: 6d3beaea10370160dea67f5c9327ed791afd5389
+  subpackages:
+  - context
 - name: golang.org/x/sync
   version: 316e794f7b5e3df4e95175a45a5fb8b12f85cb4f
   subpackages:
