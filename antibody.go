@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
@@ -28,6 +29,7 @@ func New(home string, r io.Reader) *Antibody {
 // Bundle processes all given lines and returns the shell content to execute
 func (a *Antibody) Bundle() (result string, err error) {
 	var g errgroup.Group
+	var lock sync.Mutex
 	var shs []string
 	scanner := bufio.NewScanner(a.r)
 	for scanner.Scan() {
@@ -36,6 +38,8 @@ func (a *Antibody) Bundle() (result string, err error) {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
 				s, err := bundle.New(a.Home, l).Get()
+				lock.Lock()
+				defer lock.Unlock()
 				shs = append(shs, s)
 				return err
 			}
@@ -45,9 +49,7 @@ func (a *Antibody) Bundle() (result string, err error) {
 	if err := scanner.Err(); err != nil {
 		return result, err
 	}
-	if err := g.Wait(); err != nil {
-		return result, err
-	}
+	err = g.Wait()
 	return strings.Join(shs, "\n"), err
 }
 
