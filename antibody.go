@@ -9,57 +9,47 @@ import (
 
 	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
-	"github.com/getantibody/antibody/event"
+	"golang.org/x/sync/errgroup"
 )
 
 // Antibody the main thing
 type Antibody struct {
-	Events chan event.Event
-	r      io.Reader
-	Home   string
+	r    io.Reader
+	Home string
 }
 
 // New creates a new Antibody instance with the given parameters
 func New(home string, r io.Reader) *Antibody {
 	return &Antibody{
-		r:      r,
-		Events: make(chan event.Event),
-		Home:   home,
+		r:    r,
+		Home: home,
 	}
 }
 
 // Bundle processes all given lines and returns the shell content to execute
 func (a *Antibody) Bundle() (result string, err error) {
+	var g errgroup.Group
+	var lock sync.Mutex
 	var shs []string
-	var wg sync.WaitGroup
 	scanner := bufio.NewScanner(a.r)
 	for scanner.Scan() {
-		wg.Add(1)
-		go func(l string) {
+		l := scanner.Text()
+		g.Go(func() error {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
-				bundle.New(a.Home, l).Get(a.Events)
-			} else {
-				wg.Done()
+				s, err := bundle.New(a.Home, l).Get()
+				lock.Lock()
+				defer lock.Unlock()
+				shs = append(shs, s)
+				return err
 			}
-		}(scanner.Text())
+			return nil
+		})
 	}
 	if err := scanner.Err(); err != nil {
 		return result, err
 	}
-
-	go func() {
-		for {
-			event := <-a.Events
-			if event.Error != nil {
-				err = event.Error
-			} else {
-				shs = append(shs, event.Shell)
-			}
-			wg.Done()
-		}
-	}()
-	wg.Wait()
+	err = g.Wait()
 	return strings.Join(shs, "\n"), err
 }
 
