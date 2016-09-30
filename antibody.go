@@ -39,8 +39,8 @@ func (a *Antibody) Bundle() (result string, err error) {
 			if l != "" && l[0] != '#' {
 				s, err := bundle.New(a.Home, l).Get()
 				lock.Lock()
-				defer lock.Unlock()
 				shs = append(shs, s)
+				lock.Unlock()
 				return err
 			}
 			return nil
