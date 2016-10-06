@@ -11,7 +11,7 @@ type zshBundle struct {
 	Project project.Project
 }
 
-var zshGlobs = []string{"*.zsh", "*.plugin.zsh", "*.sh", "*.zsh-theme"}
+var zshGlobs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
 func (bundle zshBundle) Get() (result string, err error) {
 	if err := bundle.Project.Download(); err != nil {
