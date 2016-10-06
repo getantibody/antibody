@@ -6,9 +6,9 @@ type pathBundle struct {
 	Project project.Project
 }
 
-func (z pathBundle) Get() (result string, err error) {
-	if err := z.Project.Download(); err != nil {
+func (bundle pathBundle) Get() (result string, err error) {
+	if err := bundle.Project.Download(); err != nil {
 		return result, err
 	}
-	return "export PATH=\"" + z.Project.Folder() + ":$PATH\"", err
+	return "export PATH=\"" + bundle.Project.Folder() + ":$PATH\"", err
 }

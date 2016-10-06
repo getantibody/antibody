@@ -31,6 +31,9 @@ func New(home, line string) Bundle {
 	if kind == "path" {
 		return pathBundle{proj}
 	}
+	if kind == "dummy" {
+		return dummyBundle{proj}
+	}
 	return zshBundle{proj}
 }
 
