@@ -84,7 +84,7 @@ func TestPathDummyBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	result, err := bundle.New(home, "caarlos0/jvm kind:none").Get()
+	result, err := bundle.New(home, "caarlos0/jvm kind:dummy").Get()
 	assert.Empty(result)
 	assert.NoError(err)
 }
