@@ -80,6 +80,15 @@ func TestPathGitBundleWithBranch(t *testing.T) {
 	assert.NoError(err)
 }
 
+func TestPathDummyBundle(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
+	defer os.RemoveAll(home)
+	result, err := bundle.New(home, "caarlos0/jvm kind:dummy").Get()
+	assert.Empty(result)
+	assert.NoError(err)
+}
+
 func home() string {
 	home, err := ioutil.TempDir(os.TempDir(), "antibody")
 	if err != nil {
