@@ -13,7 +13,7 @@ I was using Antigen before. It is a good plugin manager, but at the same time
 it's bloated and slow - 5+ seconds to load on my Mac... that's way too
 much to wait for a prompt to load!
 
-Antigen is focused in performance, and, since v2.0.0, manage more than just
+Antibody is focused on performance, and, since v2.0.0, it manages more than just
 ZSH plugins, but also PATH plugins (those project with binaries) and it is easy
 enough to implement it for Fish and others.
 
