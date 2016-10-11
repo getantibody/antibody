@@ -11,7 +11,7 @@ ANTIBODY_BINARY="%s"
 antibody() {
 	case "$1" in
 	bundle)
-		source <( $ANTIBODY_BINARY $@ )
+		source <( $ANTIBODY_BINARY $@ ) 2> /dev/null || $ANTIBODY_BINARY $@
 		;;
 	*)
 		$ANTIBODY_BINARY $@
