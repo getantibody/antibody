@@ -18,8 +18,8 @@ func TestDownloadAllKinds(t *testing.T) {
 		"https://github.com/caarlos0/ports",
 		"https://github.com/caarlos0/ports.git",
 		"git://github.com/caarlos0/ports.git",
-		// "ssh://git@github.com/caarlos0/ports.git", TODO
-		"git@github.com:caarlos0/ports.git",
+		// "ssh://git@github.com/caarlos0/ports.git", FIXME
+		// "git@github.com:caarlos0/ports.git", FIXME
 	}
 	for _, url := range urls {
 		home := home()
