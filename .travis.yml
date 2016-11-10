@@ -8,7 +8,7 @@ install:
   - glide install
 script: gotestcover -race -coverprofile=coverage.out $(glide novendor)
 after_success:
-  - goveralls -coverprofile=coverage.out -service=circle-ci -repotoken="$COVERALLS_TOKEN"
+  - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
   - test ! -z "$TRAVIS_TAG" && ./scripts/release.sh
 notifications:
   email: false
