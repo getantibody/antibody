@@ -1,8 +1,10 @@
-hash: 1c6a6eb16687818ff55ad94be799683512a4cca758abf420f0a71be76743aa89
-updated: 2016-09-23T18:18:28.798100652-03:00
+hash: 1b849d1815febbfc31b88f5b99a606f048b16a021271a2d3519636ab4cdacf40
+updated: 2016-11-27T14:20:54.973758838-02:00
 imports:
 - name: github.com/caarlos0/gohome
   version: cbed4b26b0bb75922678d7892fde12dccc05a8b3
+- name: github.com/getantibody/folder
+  version: e65aa38ebeb03e6d6e91b90a637f3b7c17e1b6d6
 - name: github.com/kardianos/osext
   version: c2c54e542fb797ad986b31721e1baedf214ca413
 - name: github.com/urfave/cli
@@ -21,7 +23,7 @@ imports:
   - errgroup
 testImports:
 - name: github.com/davecgh/go-spew
-  version: 2df174808ee097f90d259e432cc04442cf60be21
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
   subpackages:
   - spew
 - name: github.com/pmezard/go-difflib
@@ -29,6 +31,6 @@ testImports:
   subpackages:
   - difflib
 - name: github.com/stretchr/testify
-  version: f390dcf405f7b83c997eac1b06768bb9f44dec18
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
   subpackages:
   - assert

@@ -1,5 +1,6 @@
 package: github.com/getantibody/antibody
 import:
+- package: github.com/getantibody/folder
 - package: github.com/caarlos0/gohome
 - package: github.com/urfave/cli
 - package: github.com/kardianos/osext
