@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/getantibody/antibody/naming"
+	"github.com/getantibody/folder"
 )
 
 type gitProject struct {
@@ -18,12 +18,12 @@ type gitProject struct {
 
 // NewClonedGit is a git project that was already cloned, so, only Update
 // will work here.
-func NewClonedGit(home, folder string) Project {
+func NewClonedGit(home, folderName string) Project {
 	version := "master"
-	version, _ = branch(folder)
-	url := naming.FolderToURL(folder)
+	version, _ = branch(folderName)
+	url := folder.ToURL(folderName)
 	return gitProject{
-		folder:  filepath.Join(home, folder),
+		folder:  filepath.Join(home, folderName),
 		Version: version,
 		URL:     url,
 	}
@@ -54,7 +54,7 @@ func NewGit(cwd, line string) Project {
 	case strings.HasPrefix(repo, "git@github.com:"):
 		url = repo
 	}
-	folder := filepath.Join(cwd, naming.URLToFolder(url))
+	folder := filepath.Join(cwd, folder.FromURL(url))
 	return gitProject{
 		Version: version,
 		URL:     url,
