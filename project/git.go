@@ -1,7 +1,6 @@
 package project
 
 import (
-	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -67,8 +66,7 @@ func (g gitProject) Download() error {
 		cmd := exec.Command(
 			"git", "clone", "--depth", "1", "-b", g.Version, g.URL, g.folder,
 		)
-		if bts, err := cmd.CombinedOutput(); err != nil {
-			log.Println("git clone failed for", g.URL, string(bts))
+		if _, err := cmd.CombinedOutput(); err != nil {
 			return err
 		}
 	}
@@ -76,10 +74,9 @@ func (g gitProject) Download() error {
 }
 
 func (g gitProject) Update() error {
-	if bts, err := exec.Command(
+	if _, err := exec.Command(
 		"git", "-C", g.folder, "pull", "origin", g.Version,
 	).CombinedOutput(); err != nil {
-		log.Println("git update failed for", g.folder, string(bts))
 		return err
 	}
 	return nil
