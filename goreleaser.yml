@@ -4,3 +4,4 @@ build:
   main: ./cmd/antibody/main.go
 brew:
   repo: getantibody/homebrew-antibody
+  caveats: "To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`."
