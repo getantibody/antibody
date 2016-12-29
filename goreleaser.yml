@@ -1,0 +1,4 @@
+repo: getantibody/antibody
+binary_name: antibody
+brew:
+  repo: getantibody/homebrew-antibody

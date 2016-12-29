@@ -1,5 +1,5 @@
 language: go
-go: 1.7.3
+go: 1.7.4
 install:
   - go get github.com/Masterminds/glide
   - go get github.com/pierrre/gotestcover
@@ -9,6 +9,6 @@ install:
 script: gotestcover -race -coverprofile=coverage.out $(glide novendor)
 after_success:
   - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
-  - test ! -z "$TRAVIS_TAG" && ./scripts/release.sh
+  - test ! -z "$TRAVIS_TAG" && curl -s https://raw.githubusercontent.com/goreleaser/get/master/latest | bash
 notifications:
   email: false
