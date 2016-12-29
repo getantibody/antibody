@@ -1,4 +1,6 @@
 repo: getantibody/antibody
 binary_name: antibody
+build:
+  main: ./cmd/antibody/main.go
 brew:
   repo: getantibody/homebrew-antibody
