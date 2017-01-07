@@ -17,7 +17,7 @@ Antibody is focused on performance, and, since v2.0.0, it manages more than just
 ZSH plugins, but also PATH plugins (those project with binaries) and it is easy
 enough to implement it for Fish and others.
 
-[![asciicast](https://asciinema.org/a/3ltopcz7dsid3iqgsg58o2sr8.png)](https://asciinema.org/a/3ltopcz7dsid3iqgsg58o2sr8)
+[![asciicast](https://asciinema.org/a/33962.png)](https://asciinema.org/a/33962)
 
 I'm aware that there are other attempts, like
 [antigen-hs](https://github.com/Tarrasch/antigen-hs), but I don't want to
