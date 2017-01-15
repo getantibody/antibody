@@ -1,6 +1,5 @@
-repo: getantibody/antibody
-binary_name: antibody
 build:
+  binary_name: antibody
   main: ./cmd/antibody/main.go
 brew:
   repo: getantibody/homebrew-antibody
