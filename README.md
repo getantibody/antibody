@@ -59,6 +59,14 @@ $ echo 'source <(antibody init)' >> ~/.zshrc
 This will put the binary in `/usr/local/bin/antibody` and setup your `~/.zshrc`
 to load what is needed on startup.
 
+You can also use homebrew (on OSX):
+
+```console
+$ brew install getantibody/tap/antibody
+```
+
+Or using [AUR](https://aur.archlinux.org/packages/antibody/) on Arch Linux.
+
 ### Usage
 
 Now, you can just `antibody bundle` stuff, e.g.,
