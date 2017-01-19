@@ -4,3 +4,6 @@ build:
 brew:
   repo: getantibody/homebrew-antibody
   caveats: "To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`."
+  dependencies:
+    - zsh
+    - git
