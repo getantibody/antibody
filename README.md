@@ -52,7 +52,7 @@ Running `antibody bundle` will already download and apply the given bundle.
 The simplest way to install Antibody is to run:
 
 ```console
-$ curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+$ curl -sL https://git.io/antibody | bash -s
 $ echo 'source <(antibody init)' >> ~/.zshrc
 ```
 
