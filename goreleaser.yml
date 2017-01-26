@@ -6,5 +6,4 @@ brew:
   caveats: "To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`."
   folder: Formula
   dependencies:
-    - zsh
     - git
