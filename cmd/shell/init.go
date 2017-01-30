@@ -7,21 +7,22 @@ import (
 )
 
 const template = `#!/usr/bin/env zsh
-ANTIBODY_BINARY="%s"
+ANTIBODY_BINARY=$'%s'
 antibody() {
-	case "$1" in
-	bundle)
-		source <( $ANTIBODY_BINARY $@ ) 2> /dev/null || $ANTIBODY_BINARY $@
-		;;
-	*)
-		$ANTIBODY_BINARY $@
-		;;
+	case $1 in
+		bundle)
+			source <( command $ANTIBODY_BINARY "$@" )
+			;;
+		*)
+			command $ANTIBODY_BINARY "$@"
+			;;
 	esac
 }
 
 _antibody() {
 	IFS=' ' read -A reply <<< "$(echo "bundle update list home init help")"
 }
+
 compctl -K _antibody antibody
 `
 
