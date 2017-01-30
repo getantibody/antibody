@@ -10,11 +10,7 @@ import (
 
 var version = "master"
 
-// Example format string. Everything except the message has a custom color
-// which is dependent on the log level. Many fields have a custom output
-// formatting too, eg. the time returns the hour down to the milli second.
 var format = logging.MustStringFormatter(
-	//`%{color}%{time:15:04:05.000} [%{module}] %{longfunc}: %{color:reset}%{message} %{color}@%{shortfile} %{color}#%{level}%{color:reset}`,
 	`%{color}%{time:15:04:05.000} %{longfunc}: %{color:bold}%{message} %{color:reset}%{color}@%{shortfile} %{color}#%{level}%{color:reset}`,
 )
 
