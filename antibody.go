@@ -22,7 +22,7 @@ type Antibody struct {
 	Home string
 }
 
-// Pipeline element
+// Result is a pipeline element messenger object
 type Result struct {
 	idx  int
 	line string
