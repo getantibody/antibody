@@ -9,6 +9,6 @@ install:
 script: gotestcover -race -coverprofile=coverage.out $(glide novendor)
 after_success:
   - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
-  - test ! -z "$TRAVIS_TAG" && curl -s https://raw.githubusercontent.com/goreleaser/get/master/latest | bash
+  - test -n "$TRAVIS_TAG" && gem install fpm && go get github.com/goreleaser/goreleaser && goreleaser
 notifications:
   email: false
