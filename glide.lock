@@ -1,26 +1,38 @@
-hash: 1b849d1815febbfc31b88f5b99a606f048b16a021271a2d3519636ab4cdacf40
-updated: 2016-11-27T14:20:54.973758838-02:00
+hash: c0bbd1cf6c0f98488e508e5b1fb5556494fb0c7ed9760ffe7c61e5a191505cea
+updated: 2017-01-30T05:25:16.222714239-08:00
 imports:
+- name: github.com/bradfitz/slice
+  version: d9036e2120b5ddfa53f3ebccd618c4af275f47da
 - name: github.com/caarlos0/gohome
-  version: cbed4b26b0bb75922678d7892fde12dccc05a8b3
+  version: 0e4f2f79d87828650a05dd14571c7773e67de445
 - name: github.com/getantibody/folder
   version: e65aa38ebeb03e6d6e91b90a637f3b7c17e1b6d6
 - name: github.com/kardianos/osext
   version: c2c54e542fb797ad986b31721e1baedf214ca413
+- name: github.com/op/go-logging
+  version: 970db520ece77730c7e4724c61121037378659d9
 - name: github.com/urfave/cli
-  version: d53eb991652b1d438abdd34ce4bfa3ef1539108e
+  version: 347a9884a87374d000eec7e6445a34487c1f4a2b
+- name: go4.org
+  version: 7ce08ca145dbe0e66a127c447b80ee7914f3e4f9
+  subpackages:
+  - reflectutil
 - name: golang.org/x/crypto
-  version: 8e06e8ddd9629eb88639aba897641bff8031f1d3
+  version: a59c127441a8ae2ad9b0fb300ab36a6558bba697
   subpackages:
   - ssh/terminal
 - name: golang.org/x/net
-  version: 6d3beaea10370160dea67f5c9327ed791afd5389
+  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
   subpackages:
   - context
 - name: golang.org/x/sync
-  version: 316e794f7b5e3df4e95175a45a5fb8b12f85cb4f
+  version: 450f422ab23cf9881c94e2db30cac0eb1b7cf80c
   subpackages:
   - errgroup
+- name: golang.org/x/sys
+  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
+  subpackages:
+  - unix
 testImports:
 - name: github.com/davecgh/go-spew
   version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
