@@ -22,6 +22,7 @@ type Antibody struct {
 	Home string
 }
 
+// Pipeline element
 type Result struct {
 	idx  int
 	line string
@@ -39,7 +40,7 @@ func New(home string, r io.Reader) *Antibody {
 func (a *Antibody) Bundle() (result string, err error) {
 	file := a.r
 
-	input_lines := make(chan Result)
+	inputLines := make(chan Result)
 	results := make(chan Result)
 
 	// I think we need a wait group, not sure.
@@ -52,7 +53,7 @@ func (a *Antibody) Bundle() (result string, err error) {
 			// Decreasing internal counter for wait-group as soon as goroutine finishes
 			defer wg.Done()
 
-			for res := range input_lines {
+			for res := range inputLines {
 				log.Debugf("Bundling: %s", res.line)
 				res.line = strings.TrimSpace(res.line)
 
@@ -83,7 +84,7 @@ func (a *Antibody) Bundle() (result string, err error) {
 			line := scan.Text()
 			line = strings.TrimSpace(line)
 
-			input_lines <- Result{idx, line}
+			inputLines <- Result{idx, line}
 			idx++
 		}
 
@@ -92,7 +93,7 @@ func (a *Antibody) Bundle() (result string, err error) {
 			log.Fatal(err)
 		}
 
-		close(input_lines)
+		close(inputLines)
 
 		log.Debugf("Done reading bundles")
 	}()
@@ -104,19 +105,19 @@ func (a *Antibody) Bundle() (result string, err error) {
 	}()
 
 	// collect
-	var all_results []Result
+	var allResults []Result
 	for res := range results {
-		all_results = append(all_results, res)
+		allResults = append(allResults, res)
 	}
 
 	// sort by original idx
-	slice.Sort(all_results[:], func(i, j int) bool {
-		return all_results[i].idx < all_results[j].idx
+	slice.Sort(allResults[:], func(i, j int) bool {
+		return allResults[i].idx < allResults[j].idx
 	})
 
 	// get values
 	var sources []string
-	for _, res := range all_results {
+	for _, res := range allResults {
 		sources = append(sources, res.line)
 	}
 
