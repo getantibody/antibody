@@ -7,3 +7,8 @@ brew:
   folder: Formula
   dependencies:
     - git
+fpm:
+  formats: 
+    - deb
+  dependencies:
+    - git
