@@ -15,21 +15,20 @@ var format = logging.MustStringFormatter(
 )
 
 func init() {
-	// For demo purposes, create two backend for os.Stderr.
 	backend := logging.NewLogBackend(os.Stderr, "", 0)
 	formatter := logging.NewBackendFormatter(backend, format)
-
 	logging.SetBackend(formatter)
-
 	logging.SetLevel(logging.INFO, "")
 }
 
 func main() {
 	app := cli.NewApp()
+
 	app.Name = "antibody"
 	app.Usage = "A faster and simpler antigen written in Golang"
 	app.Author = "Carlos Alexandro Becker (caarlos0@gmail.com)"
 	app.Version = version
+
 	app.Commands = []cli.Command{
 		command.Bundle,
 		command.Update,
@@ -37,5 +36,20 @@ func main() {
 		command.Home,
 		command.Init,
 	}
+
+	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			Name:  "verbose",
+			Usage: "Be more verbose",
+		},
+	}
+
+	app.Action = func(c *cli.Context) error {
+		if c.Bool("verbose") {
+			logging.SetLevel(logging.DEBUG, "")
+		}
+		return nil
+	}
+
 	app.Run(os.Args)
 }
