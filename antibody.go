@@ -26,6 +26,7 @@ type Antibody struct {
 type Result struct {
 	idx  int
 	line string
+	err  error
 }
 
 // New creates a new Antibody instance with the given parameters
@@ -63,12 +64,13 @@ func (a *Antibody) Bundle() (result string, err error) {
 
 				val, err := bundle.New(a.Home, res.line).Get()
 				res.line = val
+				res.err = err
 
 				if err != nil {
-					log.Fatalf("Error processing bundle=%s: %s", res.line, err)
-				} else {
-					results <- res
+					log.Errorf("Error processing line (%s): %s", err, res.line)
 				}
+
+				results <- res
 			}
 		}()
 	}
@@ -84,13 +86,13 @@ func (a *Antibody) Bundle() (result string, err error) {
 			line := scan.Text()
 			line = strings.TrimSpace(line)
 
-			inputLines <- Result{idx, line}
+			inputLines <- Result{idx, line, nil}
 			idx++
 		}
 
 		err := scan.Err()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Error reading bundles: %s", err)
 		}
 
 		close(inputLines)
@@ -119,6 +121,11 @@ func (a *Antibody) Bundle() (result string, err error) {
 	var sources []string
 	for _, res := range allResults {
 		sources = append(sources, res.line)
+
+		// Does Go have chained exceptions? Course not. Oh well.
+		if res.err != nil {
+			err = res.err
+		}
 	}
 
 	// coallesce
