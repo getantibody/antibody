@@ -36,14 +36,18 @@ func (a *Antibody) Bundle() (result string, err error) {
 		l := scanner.Text()
 		g.Go(func() error {
 			l = strings.TrimSpace(l)
-			if l != "" && l[0] != '#' {
-				s, err := bundle.New(a.Home, l).Get()
-				lock.Lock()
-				shs = append(shs, s)
-				lock.Unlock()
-				return err
+
+			if l == "" || l[0] == '#' {
+				return nil
 			}
-			return nil
+
+			s, err := bundle.New(a.Home, l).Get()
+
+			lock.Lock()
+			shs = append(shs, s)
+			lock.Unlock()
+
+			return err
 		})
 	}
 	if err := scanner.Err(); err != nil {
