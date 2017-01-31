@@ -1,6 +1,7 @@
 package bundle
 
 import (
+	"os"
 	"path/filepath"
 
 	"github.com/getantibody/antibody/project"
@@ -22,8 +23,13 @@ func (bundle zshBundle) Get() (result string, err error) {
 			continue
 		}
 		for _, file := range files {
-			return "source " + file, err
+			stat, _ := os.Lstat(file)
+			if stat.Mode()&os.ModeSymlink == os.ModeSymlink {
+				continue
+			}
+			result = "source " + file + ";\n" + result
 		}
+		return result, nil
 	}
 	return result, nil
 }

@@ -18,6 +18,17 @@ func TestZshGitBundle(t *testing.T) {
 	assert.NoError(err)
 }
 
+func TestZshGitBundleWithMultipleSourceables(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
+	defer os.RemoveAll(home)
+	result, err := bundle.New(home, "sindresorhus/pure").Get()
+	assert.Contains(result, "pure.zsh")
+	assert.Contains(result, "async.zsh")
+	assert.NotContains(result, "pure.plugin.zsh")
+	assert.NoError(err)
+}
+
 func TestZshInvalidGitBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
