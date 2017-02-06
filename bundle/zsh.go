@@ -17,13 +17,12 @@ func (bundle zshBundle) Get() (result string, err error) {
 	if err := bundle.Project.Download(); err != nil {
 		return result, err
 	}
-
-	var lines []string
 	for _, glob := range zshGlobs {
 		files, _ := filepath.Glob(filepath.Join(bundle.Project.Folder(), glob))
 		if files == nil {
 			continue
 		}
+		var lines []string
 		for _, file := range files {
 			lines = append(lines, "source "+file)
 		}
