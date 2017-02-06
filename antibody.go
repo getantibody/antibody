@@ -30,16 +30,19 @@ func New(home string, r io.Reader) *Antibody {
 func (a *Antibody) Bundle() (result string, err error) {
 	var g errgroup.Group
 	var lock sync.Mutex
-	var shs []string
+	var shs indexedLines
+	var idx int
 	scanner := bufio.NewScanner(a.r)
 	for scanner.Scan() {
 		l := scanner.Text()
+		index := idx
+		idx++
 		g.Go(func() error {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
 				s, err := bundle.New(a.Home, l).Get()
 				lock.Lock()
-				shs = append(shs, s)
+				shs = append(shs, indexedLine{index, s})
 				lock.Unlock()
 				return err
 			}
@@ -50,7 +53,7 @@ func (a *Antibody) Bundle() (result string, err error) {
 		return result, err
 	}
 	err = g.Wait()
-	return strings.Join(shs, "\n"), err
+	return shs.String(), err
 }
 
 // Home finds the right home folder to use
