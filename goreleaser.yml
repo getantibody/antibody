@@ -1,7 +1,14 @@
-repo: getantibody/antibody
-binary_name: antibody
 build:
+  binary_name: antibody
   main: ./cmd/antibody/main.go
 brew:
-  repo: getantibody/homebrew-antibody
+  repo: getantibody/homebrew-tap
   caveats: "To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`."
+  folder: Formula
+  dependencies:
+    - git
+fpm:
+  formats: 
+    - deb
+  dependencies:
+    - git

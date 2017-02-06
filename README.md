@@ -5,7 +5,15 @@ A shell plugin manager written in Golang.
 Antibody can manage plugins for shells (`zsh`, for example), both loading them
 with `source` or `export`-ing them to `PATH`, for example.
 
-[![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md) [![Build Status](https://travis-ci.org/getantibody/antibody.svg?branch=master)](https://travis-ci.org/getantibody/antibody) [![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master) [![Go Report Card](http://goreportcard.com/badge/getantibody/antibody)](http://goreportcard.com/report/getantibody/antibody) [![](https://godoc.org/github.com/getantibody/antibody?status.svg)](http://godoc.org/github.com/getantibody/antibody) [![Join the chat at https://gitter.im/getantibody/antibody](https://badges.gitter.im/getantibody/antibody.svg)](https://gitter.im/getantibody/antibody?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square)](https://github.com/goreleaser)
+[![Release](https://img.shields.io/github/release/getantibody/antibody.svg?style=flat-square)](https://github.com/getantibody/antibody/releases/latest)
+[![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square)](https://github.com/goreleaser)
+[![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md)
+[![Build Status](https://travis-ci.org/getantibody/antibody.svg?branch=master)](https://travis-ci.org/getantibody/antibody)
+[![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master)
+[![Go Report Card](http://goreportcard.com/badge/getantibody/antibody?style=flat-square)](http://goreportcard.com/report/getantibody/antibody)
+[![](https://godoc.org/github.com/getantibody/antibody?status.svg)](http://godoc.org/github.com/getantibody/antibody)
+[![Join the chat at https://gitter.im/getantibody/antibody](https://badges.gitter.im/getantibody/antibody.svg)](https://gitter.im/getantibody/antibody?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![SayThanks.io](https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg?style=flat-square)](https://saythanks.io/to/caarlos0)
 
 ### Why?
 
@@ -52,12 +60,20 @@ Running `antibody bundle` will already download and apply the given bundle.
 The simplest way to install Antibody is to run:
 
 ```console
-$ curl -s https://raw.githubusercontent.com/getantibody/installer/master/install | bash -s
+$ curl -sL https://git.io/antibody | bash -s
 $ echo 'source <(antibody init)' >> ~/.zshrc
 ```
 
 This will put the binary in `/usr/local/bin/antibody` and setup your `~/.zshrc`
 to load what is needed on startup.
+
+You can also use homebrew (on OSX):
+
+```console
+$ brew install getantibody/tap/antibody
+```
+
+Or using [AUR](https://aur.archlinux.org/packages/antibody/) on Arch Linux.
 
 ### Usage
 
@@ -128,10 +144,6 @@ $ antibody bundle < bundles.txt >> sourceables.sh
 # In your zshrc (or whatever):
 $ source sourceables.sh
 ```
-
-Beware that antibody does stuff in parallel, so bundle order is not guaranteed.
-
-> PS: since v2.0.0, this is the default behavior.
 
 ### Thanks
 

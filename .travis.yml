@@ -3,7 +3,6 @@ go: 1.7.4
 install: make setup
 script: make ci
 after_success:
-  - go get github.com/mattn/goveralls
   - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
   - test -n "$TRAVIS_TAG" && curl -s https://raw.githubusercontent.com/goreleaser/get/master/latest | bash
 notifications:
