@@ -2,6 +2,7 @@ package bundle
 
 import (
 	"path/filepath"
+	"strings"
 
 	"github.com/getantibody/antibody/project"
 )
@@ -21,9 +22,13 @@ func (bundle zshBundle) Get() (result string, err error) {
 		if files == nil {
 			continue
 		}
+		var lines []string
 		for _, file := range files {
-			return "source " + file, err
+			lines = append(lines, "source "+file)
 		}
+
+		return strings.Join(lines, "\n"), err
 	}
+
 	return result, nil
 }
