@@ -19,8 +19,10 @@ type gitProject struct {
 // NewClonedGit is a git project that was already cloned, so, only Update
 // will work here.
 func NewClonedGit(home, folderName string) Project {
-	version := "master"
-	version, _ = branch(folderName)
+	version, err := branch(folderName)
+	if err != nil {
+		version = "master"
+	}
 	url := folder.ToURL(folderName)
 	return gitProject{
 		folder:  filepath.Join(home, folderName),

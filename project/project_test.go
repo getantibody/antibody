@@ -12,7 +12,6 @@ import (
 func TestList(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	assert.NoError(project.New(home, "caarlos0/jvm branch:gh-pages").Download())
 	list, err := project.List(home)
 	assert.NoError(err)
@@ -22,7 +21,6 @@ func TestList(t *testing.T) {
 func TestListEmptyFolder(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	list, err := project.List(home)
 	assert.NoError(err)
 	assert.Len(list, 0)
@@ -38,8 +36,7 @@ func TestListNonExistentFolder(t *testing.T) {
 func TestUpdate(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
-	repo := project.New(home, "caarlos0/jvm")
+	repo := project.New(home, "caarlos0/ports")
 	assert.NoError(repo.Download())
 	assert.NoError(repo.Update())
 }
@@ -47,7 +44,6 @@ func TestUpdate(t *testing.T) {
 func TestUpdateHome(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	assert.NoError(project.New(home, "caarlos0/jvm").Download())
 	assert.NoError(project.New(home, "caarlos0/ports").Download())
 	assert.NoError(project.New(home, "/tmp").Download())
@@ -61,9 +57,8 @@ func TestUpdateNonExistentHome(t *testing.T) {
 func TestUpdateHomeWithNoGitProjects(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	repo := project.New(home, "caarlos0/jvm")
 	assert.NoError(repo.Download())
-	os.RemoveAll(filepath.Join(repo.Folder(), ".git"))
+	assert.NoError(os.RemoveAll(filepath.Join(repo.Folder(), ".git")))
 	assert.Error(project.Update(home))
 }

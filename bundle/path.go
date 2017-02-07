@@ -7,7 +7,7 @@ type pathBundle struct {
 }
 
 func (bundle pathBundle) Get() (result string, err error) {
-	if err := bundle.Project.Download(); err != nil {
+	if err = bundle.Project.Download(); err != nil {
 		return result, err
 	}
 	return "export PATH=\"" + bundle.Project.Folder() + ":$PATH\"", err

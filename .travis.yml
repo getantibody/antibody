@@ -1,14 +1,11 @@
 language: go
 go: 1.7.4
-install:
-  - go get github.com/Masterminds/glide
-  - go get github.com/pierrre/gotestcover
-  - go get github.com/mattn/goveralls
-  - go get golang.org/x/tools/cmd/cover
-  - glide install
-script: gotestcover -race -coverprofile=coverage.out $(glide novendor)
+install: make setup
+script: make ci
 after_success:
+  - go get github.com/mattn/goveralls
   - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
-  - test -n "$TRAVIS_TAG" && gem install fpm && go get github.com/goreleaser/goreleaser && goreleaser
+  - go get github.com/goreleaser/goreleaser
+  - test -n "$TRAVIS_TAG" && goreleaser
 notifications:
   email: false

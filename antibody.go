@@ -40,17 +40,17 @@ func (a *Antibody) Bundle() (result string, err error) {
 		g.Go(func() error {
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
-				s, err := bundle.New(a.Home, l).Get()
+				s, berr := bundle.New(a.Home, l).Get()
 				lock.Lock()
 				shs = append(shs, indexedLine{index, s})
 				lock.Unlock()
-				return err
+				return berr
 			}
 			return nil
 		})
 	}
-	if err := scanner.Err(); err != nil {
-		return result, err
+	if err = scanner.Err(); err != nil {
+		return
 	}
 	err = g.Wait()
 	return shs.String(), err

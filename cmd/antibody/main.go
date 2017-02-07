@@ -22,5 +22,5 @@ func main() {
 	}
 	app.Version = version
 	app.Author = "Carlos Alexandro Becker (caarlos0@gmail.com)"
-	app.Run(os.Args)
+	_ = app.Run(os.Args)
 }
