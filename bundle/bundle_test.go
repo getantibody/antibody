@@ -9,13 +9,38 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestZshGitBundle(t *testing.T) {
-	assert := assert.New(t)
+func TestSuccessfullGitBundles(t *testing.T) {
 	home := home()
 	defer os.RemoveAll(home)
-	result, err := bundle.New(home, "caarlos0/jvm").Get()
-	assert.Contains(result, "jvm.plugin.zsh")
-	assert.NoError(err)
+
+	table := []struct {
+		line, result string
+	}{
+		{
+			"caarlos0/jvm",
+			"jvm.plugin.zsh",
+		},
+		{
+			"caarlos0/zsh-open-pr kind:path",
+			"export PATH=\"",
+		},
+		{
+			"caarlos0/zsh-mkc kind:path branch:gh-pages",
+			"export PATH=\"",
+		},
+		{
+			"caarlos0/zsh-pg kind:dummy",
+			"",
+		},
+	}
+	for _, row := range table {
+		t.Run(row.line, func(t *testing.T) {
+			assert := assert.New(t)
+			result, err := bundle.New(home, row.line).Get()
+			assert.Contains(result, row.result)
+			assert.NoError(err)
+		})
+	}
 }
 
 func TestZshInvalidGitBundle(t *testing.T) {
@@ -52,15 +77,6 @@ func TestPathInvalidLocalBundle(t *testing.T) {
 	assert.Error(err)
 }
 
-func TestPathGitBundle(t *testing.T) {
-	assert := assert.New(t)
-	home := home()
-	defer os.RemoveAll(home)
-	result, err := bundle.New(home, "caarlos0/jvm kind:path").Get()
-	assert.Contains(result, "export PATH=\"")
-	assert.NoError(err)
-}
-
 func TestPathLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
@@ -68,24 +84,6 @@ func TestPathLocalBundle(t *testing.T) {
 	assert.NoError(ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
 	result, err := bundle.New(home, home+" kind:path").Get()
 	assert.Equal("export PATH=\""+home+":$PATH\"", result)
-	assert.NoError(err)
-}
-
-func TestPathGitBundleWithBranch(t *testing.T) {
-	assert := assert.New(t)
-	home := home()
-	defer os.RemoveAll(home)
-	result, err := bundle.New(home, "caarlos0/jvm kind:path branch:gh-pages").Get()
-	assert.Contains(result, "export PATH=\"")
-	assert.NoError(err)
-}
-
-func TestPathDummyBundle(t *testing.T) {
-	assert := assert.New(t)
-	home := home()
-	defer os.RemoveAll(home)
-	result, err := bundle.New(home, "caarlos0/jvm kind:dummy").Get()
-	assert.Empty(result)
 	assert.NoError(err)
 }
 

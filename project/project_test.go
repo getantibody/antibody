@@ -39,7 +39,7 @@ func TestUpdate(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	defer os.RemoveAll(home)
-	repo := project.New(home, "caarlos0/jvm")
+	repo := project.New(home, "caarlos0/ports")
 	assert.NoError(repo.Download())
 	assert.NoError(repo.Update())
 }

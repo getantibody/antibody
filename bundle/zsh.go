@@ -14,7 +14,7 @@ type zshBundle struct {
 var zshGlobs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
 func (bundle zshBundle) Get() (result string, err error) {
-	if err := bundle.Project.Download(); err != nil {
+	if err = bundle.Project.Download(); err != nil {
 		return result, err
 	}
 	for _, glob := range zshGlobs {

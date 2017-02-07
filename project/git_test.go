@@ -38,15 +38,6 @@ func TestDownloadAnotherBranch(t *testing.T) {
 	assert.NoError(project.NewGit(home, "caarlos0/jvm branch:gh-pages").Download())
 }
 
-func TestDownloadAndUpdate(t *testing.T) {
-	assert := assert.New(t)
-	home := home()
-	defer os.RemoveAll(home)
-	repo := project.NewGit(home, "caarlos0/ports")
-	assert.NoError(repo.Download())
-	assert.NoError(repo.Update())
-}
-
 func TestUpdateNonExistentLocalRepo(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
@@ -70,6 +61,7 @@ func TestDownloadMultipleTimes(t *testing.T) {
 	repo := project.NewGit(home, "caarlos0/ports")
 	assert.NoError(repo.Download())
 	assert.NoError(repo.Download())
+	assert.NoError(repo.Update())
 }
 
 func TestDownloadFolderNaming(t *testing.T) {
