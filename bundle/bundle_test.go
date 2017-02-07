@@ -10,8 +10,6 @@ import (
 )
 
 func TestSuccessfullGitBundles(t *testing.T) {
-	home := home()
-
 	table := []struct {
 		line, result string
 	}{
@@ -20,21 +18,22 @@ func TestSuccessfullGitBundles(t *testing.T) {
 			"jvm.plugin.zsh",
 		},
 		{
-			"caarlos0/zsh-open-pr kind:path",
+			"caarlos0/jvm kind:path",
 			"export PATH=\"",
 		},
 		{
-			"caarlos0/zsh-mkc kind:path branch:gh-pages",
+			"caarlos0/jvm kind:path branch:gh-pages",
 			"export PATH=\"",
 		},
 		{
-			"caarlos0/zsh-pg kind:dummy",
+			"caarlos0/jvm kind:dummy",
 			"",
 		},
 	}
 	for _, row := range table {
 		t.Run(row.line, func(t *testing.T) {
 			assert := assert.New(t)
+			home := home()
 			result, err := bundle.New(home, row.line).Get()
 			assert.Contains(result, row.result)
 			assert.NoError(err)
