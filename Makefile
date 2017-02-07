@@ -13,6 +13,9 @@ setup: ## Install all the build and lint dependencies
 test: ## Run all the tests
 	@gotestcover $(TEST_OPTIONS) -coverprofile=coverage.out $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=30s
 
+fmt: ## gofmt and goimports all go files
+	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
+
 lint: ## Run all the linters
 	@gometalinter --vendor --disable-all \
 		--enable=deadcode \
