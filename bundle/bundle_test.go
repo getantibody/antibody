@@ -11,7 +11,6 @@ import (
 
 func TestSuccessfullGitBundles(t *testing.T) {
 	home := home()
-	defer os.RemoveAll(home)
 
 	table := []struct {
 		line, result string
@@ -46,7 +45,6 @@ func TestSuccessfullGitBundles(t *testing.T) {
 func TestZshInvalidGitBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	_, err := bundle.New(home, "doesnt exist").Get()
 	assert.Error(err)
 }
@@ -54,7 +52,6 @@ func TestZshInvalidGitBundle(t *testing.T) {
 func TestZshLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	assert.NoError(ioutil.WriteFile(home+"/a.sh", []byte("echo 9"), 0644))
 	result, err := bundle.New(home, home).Get()
 	assert.Contains(result, "a.sh")
@@ -64,7 +61,6 @@ func TestZshLocalBundle(t *testing.T) {
 func TestZshInvalidLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	_, err := bundle.New(home, "/asduhasd/asdasda").Get()
 	assert.Error(err)
 }
@@ -72,7 +68,6 @@ func TestZshInvalidLocalBundle(t *testing.T) {
 func TestPathInvalidLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	_, err := bundle.New(home, "/asduhasd/asdasda kind:path").Get()
 	assert.Error(err)
 }
@@ -80,7 +75,6 @@ func TestPathInvalidLocalBundle(t *testing.T) {
 func TestPathLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	assert.NoError(ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
 	result, err := bundle.New(home, home+" kind:path").Get()
 	assert.Equal("export PATH=\""+home+":$PATH\"", result)

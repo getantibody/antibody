@@ -14,7 +14,6 @@ import (
 func TestAntibody(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	bundles := []string{
 		"# comments also are allowed",
 		"caarlos0/ports kind:path # comment at the end of the line",
@@ -42,7 +41,6 @@ func TestAntibody(t *testing.T) {
 func TestAntibodyError(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
-	defer os.RemoveAll(home)
 	bundles := bytes.NewBufferString("invalid-repo")
 	sh, err := antibody.New(home, bundles).Bundle()
 	assert.Error(err)
@@ -54,7 +52,7 @@ func TestHome(t *testing.T) {
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
-	os.Setenv("ANTIBODY_HOME", "/tmp")
+	assert.NoError(t, os.Setenv("ANTIBODY_HOME", "/tmp"))
 	assert.Equal(t, "/tmp", antibody.Home())
 }
 
