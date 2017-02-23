@@ -5,8 +5,7 @@ script: make ci
 after_success:
   - go get github.com/mattn/goveralls
   - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
-  - go get github.com/goreleaser/goreleaser
   - gem install fpm
-  - test -n "$TRAVIS_TAG" && goreleaser
+  - test -n "$TRAVIS_TAG" && curl -s https://raw.githubusercontent.com/goreleaser/get/master/latest | bash
 notifications:
   email: false
