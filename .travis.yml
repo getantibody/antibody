@@ -6,6 +6,6 @@ after_success:
   - go get github.com/mattn/goveralls
   - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
   - gem install fpm
-  - test -n "$TRAVIS_TAG" && curl -s https://raw.githubusercontent.com/goreleaser/get/master/latest | bash
+  - test -n "$TRAVIS_TAG" && curl -s https://git.io/goreleaser | bash
 notifications:
   email: false
