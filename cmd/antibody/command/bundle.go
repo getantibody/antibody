@@ -24,7 +24,7 @@ func doBundle(ctx *cli.Context) error {
 	if !terminal.IsTerminal(int(os.Stdin.Fd())) && len(ctx.Args()) == 0 {
 		input = os.Stdin
 	} else {
-		input = bytes.NewBufferString(strings.Join(ctx.Args(), "\n"))
+		input = bytes.NewBufferString(strings.Join(ctx.Args(), " "))
 	}
 	sh, err := antibody.New(antibody.Home(), input).Bundle()
 	if err != nil {
