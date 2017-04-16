@@ -1,0 +1,67 @@
+memo = "cf49b105b4c38ee9fa2a10c09e186273c1402676825bf1ea13543f6ab57be619"
+
+[[projects]]
+  name = "github.com/caarlos0/gohome"
+  packages = ["."]
+  revision = "677b1a663675ddb3cea3a1e232f5f0c70d39c246"
+  version = "v2.0"
+
+[[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "a7a0063072ed89d04285d3d3362aa590ed9f7878"
+  version = "v1.1.0"
+
+[[projects]]
+  name = "github.com/getantibody/folder"
+  packages = ["."]
+  revision = "479aa91767d47bc27599e6ebc7fd07945dd38132"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/kardianos/osext"
+  packages = ["."]
+  revision = "9d302b58e975387d0b4d9be876622c86cefe64be"
+
+[[projects]]
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "c0b812dadcf4498dede02bb7f0c5c478be997e34"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  revision = "69483b4bd14f5845b5a1e55bca19e954e827f1d0"
+  version = "v1.1.4"
+
+[[projects]]
+  name = "github.com/urfave/cli"
+  packages = ["."]
+  revision = "0bdeddeeb0f650497d603c4ad7b20cfe685682f6"
+  version = "v1.19.1"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/crypto"
+  packages = ["ssh/terminal"]
+  revision = "c78caca803c95773f48a844d3dcab04b9bc4d6dd"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "ffcf1bedda3b04ebb15a168a59800a73d6dc0f4d"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sync"
+  packages = ["errgroup"]
+  revision = "5a06fca2c336a4b2b2fcb45702e8c47621b2aa2c"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "f3918c30c5c2cb527c0b071a27c35120a6c0719a"
