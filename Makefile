@@ -8,7 +8,7 @@ setup: ## Install all the build and lint dependencies
 	go get -u github.com/pierrre/gotestcover
 	go get -u golang.org/x/tools/cmd/cover
 	dep ensure
-	gometalinter --install
+	gometalinter --install --update
 
 test: ## Run all the tests
 	gotestcover $(TEST_OPTIONS) -covermode=count -coverprofile=coverage.out $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=30s
@@ -37,8 +37,8 @@ lint: ## Run all the linters
 
 ci: lint test ## Run all the tests and code checks
 
-build: ## Build a beta version of releaser
-	go build
+build: ## Build a beta version
+	go build -o goreleaser ./cmd/antibody/main.go
 
 # Absolutely awesome: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
