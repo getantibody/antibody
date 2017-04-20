@@ -1,20 +1,19 @@
 package shell
 
 import (
-	"fmt"
-
-	"github.com/kardianos/osext"
+	"bytes"
+	"os"
+	"text/template"
 )
 
-const template = `#!/usr/bin/env zsh
-ANTIBODY_BINARY="%s"
+const tmpl = `#!/usr/bin/env zsh
 antibody() {
 	case "$1" in
 	bundle)
-		source <( $ANTIBODY_BINARY $@ ) 2> /dev/null || $ANTIBODY_BINARY $@
+		source <( {{ .Executable }} $@ ) 2> /dev/null || {{ .Executable }} $@
 		;;
 	*)
-		$ANTIBODY_BINARY $@
+		{{ .Executable }} $@
 		;;
 	esac
 }
@@ -26,7 +25,17 @@ compctl -K _antibody antibody
 `
 
 // Init returns the shell that should be loaded to antibody to work correctly.
-func Init() string {
-	executable, _ := osext.Executable()
-	return fmt.Sprintf(template, executable)
+func Init() (string, error) {
+	executable, err := os.Executable()
+	if err != nil {
+		return "", err
+	}
+	var template = template.Must(template.New("init").Parse(tmpl))
+	var out bytes.Buffer
+	err = template.Execute(&out, struct {
+		Executable string
+	}{
+		Executable: executable,
+	})
+	return out.String(), err
 }
