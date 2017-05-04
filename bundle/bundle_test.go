@@ -64,6 +64,13 @@ func TestZshInvalidLocalBundle(t *testing.T) {
 	assert.Error(err)
 }
 
+func TestZshBundleWithNoShFiles(t *testing.T) {
+	assert := assert.New(t)
+	home := home()
+	_, err := bundle.New(home, "getantibody/antibody").Get()
+	assert.NoError(err)
+}
+
 func TestPathInvalidLocalBundle(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
