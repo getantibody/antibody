@@ -8,8 +8,9 @@ import (
 )
 
 var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "Initializes the shell so Antibody can work as expected",
+	Use:     "init",
+	Aliases: []string{"i"},
+	Short:   "Initializes the shell so Antibody can work as expected",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		sh, err := shell.Init()
 		fmt.Println(sh)

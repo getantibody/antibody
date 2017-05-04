@@ -10,8 +10,9 @@ import (
 )
 
 var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "list all downloaded plugins",
+	Use:     "list",
+	Aliases: []string{"ls"},
+	Short:   "list all downloaded plugins",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		home := antibodylib.Home()
 		projects, err := project.List(home)

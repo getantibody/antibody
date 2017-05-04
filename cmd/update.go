@@ -9,8 +9,9 @@ import (
 )
 
 var updateCmd = &cobra.Command{
-	Use:   "update",
-	Short: "updates all previously bundled plugins",
+	Use:     "update",
+	Aliases: []string{"u"},
+	Short:   "updates all previously bundled plugins",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var home = antibodylib.Home()
 		fmt.Printf("Updating all bundles in %v...\n", home)
