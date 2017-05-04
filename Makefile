@@ -8,13 +8,13 @@ setup: ## Install all the build and lint dependencies
 	go get -u github.com/pierrre/gotestcover
 	go get -u golang.org/x/tools/cmd/cover
 	dep ensure
-	gometalinter --install --update
+	gometalinter --install
 
 test: ## Run all the tests
-	gotestcover $(TEST_OPTIONS) -covermode=count -coverprofile=coverage.out $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=30s
+	gotestcover $(TEST_OPTIONS) -covermode=atomic -coverprofile=coverage.txt $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=30s
 
-cover: test ## RUn all the tests and opens the coverage report
-	go tool cover -html=coverage.out
+cover: test ## Run all the tests and opens the coverage report
+	go tool cover -html=coverage.txt
 
 fmt: ## gofmt and goimports all go files
 	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
