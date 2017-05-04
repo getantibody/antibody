@@ -1,4 +1,4 @@
-memo = "cf49b105b4c38ee9fa2a10c09e186273c1402676825bf1ea13543f6ab57be619"
+memo = "23f2705339d2d8c500e4214c8ba1fa3af18f8fbe6fffb096ba37aa128f2e463d"
 
 [[projects]]
   name = "github.com/caarlos0/gohome"
@@ -9,7 +9,7 @@ memo = "cf49b105b4c38ee9fa2a10c09e186273c1402676825bf1ea13543f6ab57be619"
 [[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
-  revision = "a7a0063072ed89d04285d3d3362aa590ed9f7878"
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
   version = "v1.1.0"
 
 [[projects]]
@@ -19,15 +19,9 @@ memo = "cf49b105b4c38ee9fa2a10c09e186273c1402676825bf1ea13543f6ab57be619"
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/kardianos/osext"
-  packages = ["."]
-  revision = "9d302b58e975387d0b4d9be876622c86cefe64be"
-
-[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
-  revision = "c0b812dadcf4498dede02bb7f0c5c478be997e34"
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
 
 [[projects]]
@@ -46,19 +40,19 @@ memo = "cf49b105b4c38ee9fa2a10c09e186273c1402676825bf1ea13543f6ab57be619"
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "c78caca803c95773f48a844d3dcab04b9bc4d6dd"
+  revision = "0242f07995e684be54f2a2776327141acf1cef91"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "ffcf1bedda3b04ebb15a168a59800a73d6dc0f4d"
+  revision = "5602c733f70afc6dcec6766be0d5034d4c4f14de"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sync"
   packages = ["errgroup"]
-  revision = "5a06fca2c336a4b2b2fcb45702e8c47621b2aa2c"
+  revision = "de49d9dcd27d4f764488181bea099dfe6179bcf0"
 
 [[projects]]
   branch = "master"
