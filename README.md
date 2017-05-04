@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/16625397?v=3&s=200" height="140" />
+  <img alt="GoReleaser Logo" src="logo.png" height="140" />
   <h3 align="center">Antibody</h3>
   <p align="center">The fastest shell plugin manager.</p>
   <p align="center">
