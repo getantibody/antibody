@@ -1,15 +1,32 @@
+homepage: &homepage http://getantibody.github.io
+description: &description The fastest shell plugin manager.
 build:
   binary: antibody
   main: ./cmd/antibody/main.go
+  goos:
+    - linux
+    - darwin
+  goarch:
+    - 386
+    - amd64
+    - arm
+    - arm64
 brew:
   github:
     owner: getantibody
     name: homebrew-tap
-  caveats: "To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`."
+  caveats: To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`.
   folder: Formula
+  homepage: *homepage
+  description: *description
   dependencies:
     - git
 fpm:
+  homepage: *homepage
+  description: *description
+  maintainer: Carlos Alexandro Becker <root@carlosbecker.com>
+  license: MIT
+  vendor: Antibody
   formats:
     - deb
   dependencies:
