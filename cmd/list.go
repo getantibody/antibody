@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/getantibody/antibody/antibody"
+	"github.com/getantibody/antibody/antibodylib"
 	"github.com/getantibody/antibody/project"
 	"github.com/spf13/cobra"
 )
@@ -13,7 +13,7 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "list all downloaded plugins",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		home := antibody.Home()
+		home := antibodylib.Home()
 		projects, err := project.List(home)
 		if err != nil {
 			return err

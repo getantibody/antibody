@@ -1,4 +1,4 @@
-package antibody_test
+package antibodylib_test
 
 import (
 	"bytes"

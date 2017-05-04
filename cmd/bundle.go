@@ -21,10 +21,9 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/crypto/ssh/terminal"
-
-	"github.com/getantibody/antibody/antibody"
+	"github.com/getantibody/antibody/antibodylib"
 	"github.com/spf13/cobra"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 var bundleCmd = &cobra.Command{
@@ -37,7 +36,7 @@ var bundleCmd = &cobra.Command{
 		} else {
 			input = bytes.NewBufferString(strings.Join(args, " "))
 		}
-		sh, err := antibody.New(antibody.Home(), input).Bundle()
+		sh, err := antibodylib.New(antibodylib.Home(), input).Bundle()
 		if err != nil {
 			return err
 		}

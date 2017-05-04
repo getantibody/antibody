@@ -1,4 +1,4 @@
-package antibody
+package antibodylib
 
 import (
 	"bufio"

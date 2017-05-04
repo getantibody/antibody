@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/getantibody/antibody/antibody"
+	"github.com/getantibody/antibody/antibodylib"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +13,7 @@ var homeCmd = &cobra.Command{
 	Short:   "shows the current antibody home folder",
 	Aliases: []string{"prefix", "p"},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(antibody.Home())
+		fmt.Println(antibodylib.Home())
 	},
 }
 
