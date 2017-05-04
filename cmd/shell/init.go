@@ -10,10 +10,10 @@ const tmpl = `#!/usr/bin/env zsh
 antibody() {
 	case "$1" in
 	bundle)
-		source <( {{ .Executable }} $@ ) 2> /dev/null || {{ .Executable }} $@
+		source <( {{ . }} $@ ) 2> /dev/null || {{ . }} $@
 		;;
 	*)
-		{{ .Executable }} $@
+		{{ . }} $@
 		;;
 	esac
 }
@@ -32,10 +32,6 @@ func Init() (string, error) {
 	}
 	var template = template.Must(template.New("init").Parse(tmpl))
 	var out bytes.Buffer
-	err = template.Execute(&out, struct {
-		Executable string
-	}{
-		Executable: executable,
-	})
+	err = template.Execute(&out, executable)
 	return out.String(), err
 }
