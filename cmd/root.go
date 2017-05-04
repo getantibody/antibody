@@ -7,8 +7,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var cfgFile string
-
 // RootCmd is the cobra root command
 var RootCmd = &cobra.Command{
 	Use:   "antibody",
