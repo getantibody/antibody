@@ -1,19 +1,18 @@
-package command
+package cmd
 
 import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/getantibody/antibody"
+	"github.com/getantibody/antibody/antibody"
 	"github.com/getantibody/antibody/project"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
-// List all downloaded bundles
-var List = cli.Command{
-	Name:  "list",
-	Usage: "list all currently downloaded bundles",
-	Action: func(ctx *cli.Context) error {
+var listCmd = &cobra.Command{
+	Use:   "list",
+	Short: "list all downloaded plugins",
+	RunE: func(cmd *cobra.Command, args []string) error {
 		home := antibody.Home()
 		projects, err := project.List(home)
 		if err != nil {
@@ -24,4 +23,8 @@ var List = cli.Command{
 		}
 		return nil
 	},
+}
+
+func init() {
+	RootCmd.AddCommand(listCmd)
 }
