@@ -1,19 +1,25 @@
-<img src="logo.png" align="right" width="192px"/>
+<p align="center">
+  <img alt="GoReleaser Logo" src="https://avatars2.githubusercontent.com/u/16625397?v=3&s=200" height="140" />
+  <h3 align="center">Antibody</h3>
+  <p align="center">The fastest shell plugin manager.</p>
+  <p align="center">
+    <a href="/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/getantibody/antibody.svg?style=flat-square"></a>
+    <a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
+    <a href="https://travis-ci.org/getantibody/antibody"><img alt="Travis" src="https://img.shields.io/travis/getantibody/antibody.svg?style=flat-square"></a>
+    <a href="https://codecov.io/gh/getantibody/antibody"><img alt="Codecov branch" src="https://img.shields.io/codecov/c/github/getantibody/antibody/master.svg?style=flat-square"></a>
+    <a href="https://goreportcard.com/report/github.com/getantibody/antibody"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/getantibody/antibody?style=flat-square"></a>
+    <a href="http://godoc.org/github.com/getantibody/antibody"><img alt="Go Doc" src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"></a>
+    <a href="https://saythanks.io/to/caarlos0"><img alt="SayThanks.io" src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg?style=flat-square"></a>
+    <a href="https://github.com/goreleaser"><img alt="Powered By: GoReleaser" src="https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square"></a>
+  </p>
+</p>
 
-A shell plugin manager written in Golang.
+---
+
 
 Antibody can manage plugins for shells (`zsh`, for example), both loading them
-with `source` or `export`-ing them to `PATH`, for example.
+with `source` or `export`-ing them to `PATH`.
 
-[![Release](https://img.shields.io/github/release/getantibody/antibody.svg?style=flat-square)](https://github.com/getantibody/antibody/releases/latest)
-[![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square)](https://github.com/goreleaser)
-[![License](https://img.shields.io/github/license/getantibody/antibody.svg?style=flat-square)](/LICENSE.md)
-[![Build Status](https://travis-ci.org/getantibody/antibody.svg?branch=master)](https://travis-ci.org/getantibody/antibody)
-[![Coverage Status](https://img.shields.io/coveralls/getantibody/antibody.svg?style=flat-square)](https://coveralls.io/github/getantibody/antibody?branch=master)
-[![Go Report Card](http://goreportcard.com/badge/getantibody/antibody?style=flat-square)](http://goreportcard.com/report/getantibody/antibody)
-[![](https://godoc.org/github.com/getantibody/antibody?status.svg)](http://godoc.org/github.com/getantibody/antibody)
-[![Join the chat at https://gitter.im/getantibody/antibody](https://badges.gitter.im/getantibody/antibody.svg)](https://gitter.im/getantibody/antibody?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![SayThanks.io](https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg?style=flat-square)](https://saythanks.io/to/caarlos0)
 
 ### Why?
 
@@ -29,13 +35,13 @@ enough to implement it for Fish and others.
 
 I'm aware that there are other attempts, like
 [antigen-hs](https://github.com/Tarrasch/antigen-hs), but I don't want to
-install a lot of stuff for this to work.
+install a lot of dependencies for this to work.
 
 ### Why Go
 
 Well, the compiled Go program runs anywhere and doesn't depend on any shared
 libraries. I also don't need to source it as it would be necessary with
-plain simple shell. I also can do stuff in parallel with Go routines.
+plain simple shell. I also can do things in parallel with Go routines.
 
 ### What works
 
