@@ -73,13 +73,13 @@ $ echo 'source <(antibody init)' >> ~/.zshrc
 This will put the binary in `/usr/local/bin/antibody` and setup your `~/.zshrc`
 to load what is needed on startup.
 
-You can also use homebrew (on OSX):
+You can also use homebrew (on macOS):
 
 ```console
 $ brew install getantibody/tap/antibody
 ```
 
-Or using [AUR](https://aur.archlinux.org/packages/antibody/) on Arch Linux.
+Or even using [AUR](https://aur.archlinux.org/packages/antibody/) on Arch Linux.
 
 ### Usage
 
@@ -96,8 +96,8 @@ The ZSH bundle implementation will try to load files that match:
 
 The Path bundle implementation will just add the folder to your `PATH`.
 
-You can change the impl by adding `kind:zsh` or `kind:path` to the argument, as
-in `antibody bundle 'caarlos0/ports kind:path'`
+You can change the implementation by adding `kind:zsh` or `kind:path` to the
+argument, as in `antibody bundle 'caarlos0/ports kind:path'`
 
 You can also specify a branch to download, for example,
 `antibody bundle caarlos0/jvm branch:v2` will download the `v2` branch of that
@@ -124,7 +124,7 @@ zsh-users/zsh-history-substring-search
 $ antibody bundle < plugins.txt
 ```
 
-This way antibody can concurrently clone the bundles and find return the shell
+This way antibody can concurrently clone the bundles and return the shell
 line, so it will probably be faster than call each one separately.
 
 ### In the wild
@@ -146,7 +146,7 @@ You can use antibody in a static-loading manner (so you don't need to exec
 antibody every time you open a shell).
 
 ```sh
-$ antibody bundle < bundles.txt >> sourceables.sh
+$ antibody bundle < bundles.txt > sourceables.sh
 # In your zshrc (or whatever):
 $ source sourceables.sh
 ```
