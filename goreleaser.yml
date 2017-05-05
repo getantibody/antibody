@@ -1,7 +1,7 @@
 homepage: &homepage http://getantibody.github.io
 description: &description The fastest shell plugin manager.
 build:
-  ldflags: -s -w -X goreleaserlib.Version={{ .Version }}
+  ldflags: -s -w -X antibodylib.Version={{ .Version }}
   goos:
     - linux
     - darwin
