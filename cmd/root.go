@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version string
+
 // RootCmd is the cobra root command
 var RootCmd = &cobra.Command{
 	Use:   "antibody",
@@ -16,7 +18,8 @@ both loading them with source or export-ing them to PATH.`,
 }
 
 // Execute executes the main cobra command
-func Execute() {
+func Execute(v string) {
+	version = v
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
