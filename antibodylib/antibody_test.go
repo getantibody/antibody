@@ -1,4 +1,4 @@
-package antibody_test
+package antibodylib_test
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/getantibody/antibody"
+	"github.com/getantibody/antibody/antibodylib"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -24,7 +24,7 @@ func TestAntibody(t *testing.T) {
 		"  # trick play",
 		"/tmp kind:path",
 	}
-	sh, err := antibody.New(
+	sh, err := antibodylib.New(
 		home,
 		bytes.NewBufferString(strings.Join(bundles, "\n")),
 	).Bundle()
@@ -42,18 +42,18 @@ func TestAntibodyError(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	bundles := bytes.NewBufferString("invalid-repo")
-	sh, err := antibody.New(home, bundles).Bundle()
+	sh, err := antibodylib.New(home, bundles).Bundle()
 	assert.Error(err)
 	assert.Empty(sh)
 }
 
 func TestHome(t *testing.T) {
-	assert.Contains(t, antibody.Home(), "antibody")
+	assert.Contains(t, antibodylib.Home(), "antibody")
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
 	assert.NoError(t, os.Setenv("ANTIBODY_HOME", "/tmp"))
-	assert.Equal(t, "/tmp", antibody.Home())
+	assert.Equal(t, "/tmp", antibodylib.Home())
 }
 
 func home() string {

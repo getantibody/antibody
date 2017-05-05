@@ -1,8 +1,7 @@
 homepage: &homepage http://getantibody.github.io
 description: &description The fastest shell plugin manager.
 build:
-  binary: antibody
-  main: ./cmd/antibody/main.go
+  ldflags: -s -w -X goreleaserlib.Version={{ .Version }}
   goos:
     - linux
     - darwin

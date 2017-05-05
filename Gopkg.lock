@@ -1,4 +1,4 @@
-memo = "23f2705339d2d8c500e4214c8ba1fa3af18f8fbe6fffb096ba37aa128f2e463d"
+memo = "5c7f307f0bc026ecdc0975637945572151c07fad10cf4b162af5a86b6d59e7d0"
 
 [[projects]]
   name = "github.com/caarlos0/gohome"
@@ -19,10 +19,28 @@ memo = "23f2705339d2d8c500e4214c8ba1fa3af18f8fbe6fffb096ba37aa128f2e463d"
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/inconshreveable/mousetrap"
+  packages = ["."]
+  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/spf13/cobra"
+  packages = ["."]
+  revision = "8f0203be891287870100e4af46262cdf4a4261d1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/spf13/pflag"
+  packages = ["."]
+  revision = "c990990ab4981d84da820b7b00c85139ca150b5f"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -31,31 +49,25 @@ memo = "23f2705339d2d8c500e4214c8ba1fa3af18f8fbe6fffb096ba37aa128f2e463d"
   version = "v1.1.4"
 
 [[projects]]
-  name = "github.com/urfave/cli"
-  packages = ["."]
-  revision = "0bdeddeeb0f650497d603c4ad7b20cfe685682f6"
-  version = "v1.19.1"
-
-[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "0242f07995e684be54f2a2776327141acf1cef91"
+  revision = "5a033cc77e57eca05bdb50522851d29e03569cbe"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "5602c733f70afc6dcec6766be0d5034d4c4f14de"
+  revision = "feeb485667d1fdabe727840fe00adc22431bc86e"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sync"
   packages = ["errgroup"]
-  revision = "de49d9dcd27d4f764488181bea099dfe6179bcf0"
+  revision = "305c7b3edb4364a58141b30686a61a87bdb79a3a"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "f3918c30c5c2cb527c0b071a27c35120a6c0719a"
+  revision = "9ccfe848b9db8435a24c424abbc07a921adf1df5"

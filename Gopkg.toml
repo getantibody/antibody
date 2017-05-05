@@ -1,4 +1,3 @@
-
 [[dependencies]]
   name = "github.com/getantibody/folder"
   version = "v1.0.0"
@@ -6,15 +5,3 @@
 [[dependencies]]
   name = "github.com/stretchr/testify"
   version = "^1.1.4"
-
-[[dependencies]]
-  name = "github.com/urfave/cli"
-  version = "^1.19.1"
-
-[[dependencies]]
-  branch = "master"
-  name = "golang.org/x/crypto"
-
-[[dependencies]]
-  branch = "master"
-  name = "golang.org/x/sync"
