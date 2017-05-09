@@ -1,6 +1,6 @@
 package main
 
-import "github.com/spf13/cobra/cobra/cmd"
+import "github.com/getantibody/antibody/cmd"
 
 var version = "dev"
 
