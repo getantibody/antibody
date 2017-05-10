@@ -83,9 +83,7 @@ func (g gitProject) Download() error {
 
 func (g gitProject) Update() error {
 	if bts, err := exec.Command(
-		"git",
-		"-C", g.folder,
-		"pull",
+		"git", "-C", g.folder, "pull",
 		"--recurse-submodules",
 		"origin",
 		g.Version,

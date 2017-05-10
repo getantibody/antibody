@@ -3,6 +3,7 @@ package project_test
 import (
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/getantibody/antibody/project"
@@ -28,6 +29,18 @@ func TestDownloadAllKinds(t *testing.T) {
 			"Repo "+url+" failed to download",
 		)
 	}
+}
+
+func TestDownloadSubmodules(t *testing.T) {
+	var assert = assert.New(t)
+	var home = home()
+	var proj = project.NewGit(home, "fribmendes/geometry")
+	var module = filepath.Join(proj.Folder(), "lib/zsh-async")
+	assert.NoError(proj.Download())
+	assert.NoError(proj.Update())
+	files, err := ioutil.ReadDir(module)
+	assert.NoError(err)
+	assert.True(len(files) > 1)
 }
 
 func TestDownloadAnotherBranch(t *testing.T) {
