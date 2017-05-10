@@ -1,7 +1,7 @@
 language: go
 go: 1.8.1
 install: make setup
-script: make ci
+script: make test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - gem install fpm
