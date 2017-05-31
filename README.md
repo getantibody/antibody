@@ -140,17 +140,6 @@ line, so it will probably be faster than call each one separately.
 - @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
 - and probably [many others](https://github.com/search?q=antibody&type=Code);
 
-### Static loading
-
-You can use antibody in a static-loading manner (so you don't need to exec
-antibody every time you open a shell).
-
-```sh
-$ antibody bundle < bundles.txt > sourceables.sh
-# In your zshrc (or whatever):
-$ source sourceables.sh
-```
-
 ### Thanks
 
 - [@pragmaticivan](https://github.com/pragmaticivan), for the logo design;
