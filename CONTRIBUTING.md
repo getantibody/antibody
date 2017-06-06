@@ -16,7 +16,7 @@ Prerequisites are:
 Clone `antibody` from source into `$GOPATH`:
 
 ```sh
-$ mkdir -p $GOPATH/src/github.com/github.com/getantibody
+$ mkdir -p $GOPATH/src/github.com/getantibody
 $ cd $_
 $ git clone git@github.com:getantibody/antibody.git
 $ cd antibody

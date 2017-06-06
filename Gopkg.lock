@@ -14,12 +14,6 @@
   version = "v1.1.0"
 
 [[projects]]
-  name = "github.com/getantibody/antibody"
-  packages = ["antibodylib","bundle","cmd","project","shell"]
-  revision = "e608b772d232ca1887a336edd4c7d51b9c5b107f"
-  version = "v3.1.0"
-
-[[projects]]
   name = "github.com/getantibody/folder"
   packages = ["."]
   revision = "479aa91767d47bc27599e6ebc7fd07945dd38132"
@@ -82,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6860f3b4b29bcc0ce82354c090ea46e8f0cea6b5691283879ef3f33633ebbc71"
+  inputs-digest = "fcd6cba5561a83dcc82bd40677d2f0bd50aebaaa804a60d3fc46058aeb32278f"
   solver-name = "gps-cdcl"
   solver-version = 1
