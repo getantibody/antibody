@@ -13,7 +13,7 @@ Prerequisites are:
   * `make`
   * [Go 1.8+](http://golang.org/doc/install)
 
-Clone `goreleaser` from source into `$GOPATH`:
+Clone `antibody` from source into `$GOPATH`:
 
 ```sh
 $ mkdir -p $GOPATH/src/github.com/github.com/getantibody
