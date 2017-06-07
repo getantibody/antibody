@@ -11,6 +11,11 @@ build:
     - arm64
 archive:
   name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    386: i386
+    amd64: x86_64
 brew:
   github:
     owner: getantibody
