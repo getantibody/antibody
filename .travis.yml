@@ -1,9 +1,6 @@
 language: go
 go: 1.8.1
-install:
-  - make setup
-  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - echo -e "Host gitlab.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+install: make setup
 script: make test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
