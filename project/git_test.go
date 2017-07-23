@@ -19,6 +19,8 @@ func TestDownloadAllKinds(t *testing.T) {
 		"https://github.com/caarlos0/ports",
 		"https://github.com/caarlos0/ports.git",
 		"git://github.com/caarlos0/ports.git",
+		"https://gitlab.com/caarlos0/test.git",
+		"git@gitlab.com:caarlos0/test.git",
 		// "ssh://git@github.com/caarlos0/ports.git", FIXME
 		// "git@github.com:caarlos0/ports.git", FIXME
 	}
