@@ -1,5 +1,3 @@
-homepage: &homepage http://getantibody.github.io
-description: &description The fastest shell plugin manager.
 build:
   goos:
     - linux
@@ -22,13 +20,13 @@ brew:
     name: homebrew-tap
   caveats: To start using antibody, you need to add `source <(antibody init)` to your `~/.zshrc`.
   folder: Formula
-  homepage: *homepage
-  description: *description
+  homepage: http://getantibody.github.io
+  description: The fastest shell plugin manager
   dependencies:
     - git
 fpm:
-  homepage: *homepage
-  description: *description
+  homepage: http://getantibody.github.io
+  description: The fastest shell plugin manager
   maintainer: Carlos Alexandro Becker <root@carlosbecker.com>
   license: MIT
   vendor: Antibody
