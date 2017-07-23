@@ -21,8 +21,8 @@ func TestDownloadAllKinds(t *testing.T) {
 		"git://github.com/caarlos0/ports.git",
 		"https://gitlab.com/caarlos0/test.git",
 		"git@gitlab.com:caarlos0/test.git",
-		// "ssh://git@github.com/caarlos0/ports.git", FIXME
-		// "git@github.com:caarlos0/ports.git", FIXME
+		"ssh://git@github.com/caarlos0/ports.git",
+		"git@github.com:caarlos0/ports.git",
 	}
 	for _, url := range urls {
 		home := home()
