@@ -2,6 +2,24 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/kingpin"
+  packages = ["."]
+  revision = "297a08eca3cfe76b1bc87a752ec3272fbac539ef"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/template"
+  packages = [".","parse"]
+  revision = "a0175ee3bccc567396460bf5acd36800cb10c49c"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/units"
+  packages = ["."]
+  revision = "2efee857e7cfd4f3d0138cc3cbb1b4966962b93a"
+
+[[projects]]
   name = "github.com/caarlos0/gohome"
   packages = ["."]
   revision = "677b1a663675ddb3cea3a1e232f5f0c70d39c246"
@@ -20,28 +38,10 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/inconshreveable/mousetrap"
-  packages = ["."]
-  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
-
-[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/spf13/cobra"
-  packages = ["."]
-  revision = "84f471618b363c4e298af84c2b53aa4f687c5f70"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/spf13/pflag"
-  packages = ["."]
-  revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -76,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fcd6cba5561a83dcc82bd40677d2f0bd50aebaaa804a60d3fc46058aeb32278f"
+  inputs-digest = "4b140a3aac0174bdf1b16a983238e58a8ee1c504cf8fc2eebb993bc14c454196"
   solver-name = "gps-cdcl"
   solver-version = 1

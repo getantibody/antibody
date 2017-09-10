@@ -75,10 +75,6 @@
   version = "1.0.0"
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/spf13/cobra"
-
-[[constraint]]
   name = "github.com/stretchr/testify"
   version = "1.1.4"
 
@@ -93,3 +89,7 @@
 [[constraint]]
   branch = "master"
   name = "golang.org/x/sync"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/alecthomas/kingpin"
