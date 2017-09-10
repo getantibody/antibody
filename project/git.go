@@ -68,14 +68,14 @@ func NewGit(cwd, line string) Project {
 
 func (g gitProject) Download() error {
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
-		if bts, err := exec.Command(
-			"git", "clone",
+		var cmd = exec.Command("git", "clone",
 			"--recursive",
 			"--depth", "1",
 			"-b", g.Version,
 			g.URL,
-			g.folder,
-		).CombinedOutput(); err != nil {
+			g.folder)
+		cmd.Env = append(cmd.Env, "GIT_TERMINAL_PROMPT=0")
+		if bts, err := cmd.CombinedOutput(); err != nil {
 			log.Println("git clone failed for", g.URL, string(bts))
 			return err
 		}

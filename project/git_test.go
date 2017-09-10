@@ -59,7 +59,14 @@ func TestUpdateNonExistentLocalRepo(t *testing.T) {
 	assert.Error(repo.Update())
 }
 
-func TestDownloadNonExistenRepo(t *testing.T) {
+func TestDownloadNonExistentRepo(t *testing.T) {
+	var assert = assert.New(t)
+	home := home()
+	repo := project.NewGit(home, "caarlos0/not-a-real-repo")
+	assert.Error(repo.Download())
+}
+
+func TestDownloadMalformedRepo(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "doesn-not-exist-really branch:also-nope")
