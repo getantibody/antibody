@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"os"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -27,6 +28,7 @@ func TestAntibody(t *testing.T) {
 	sh, err := antibodylib.New(
 		home,
 		bytes.NewBufferString(strings.Join(bundles, "\n")),
+		runtime.NumCPU(),
 	).Bundle()
 	assert.NoError(err)
 	files, err := ioutil.ReadDir(home)
@@ -42,7 +44,7 @@ func TestAntibodyError(t *testing.T) {
 	assert := assert.New(t)
 	home := home()
 	bundles := bytes.NewBufferString("invalid-repo")
-	sh, err := antibodylib.New(home, bundles).Bundle()
+	sh, err := antibodylib.New(home, bundles, runtime.NumCPU()).Bundle()
 	assert.Error(err)
 	assert.Empty(sh)
 }

@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/alecthomas/kingpin"
@@ -18,7 +20,11 @@ import (
 var (
 	version = "dev"
 
-	app       = kingpin.New("antibody", "The fastest shell plugin manager")
+	app         = kingpin.New("antibody", "The fastest shell plugin manager")
+	parallelism = app.Flag("parallelism", "amount of tasks launch in parallel").
+			Short('p').
+			Default(strconv.Itoa(runtime.NumCPU())).
+			Int()
 	bundleCmd = app.Command("bundle", "downloads a bundle and prints its source line")
 	bundles   = bundleCmd.Arg("bundles", "bundle list").Strings()
 	updateCmd = app.Command("update", "updates all previously bundled bundles")
@@ -60,7 +66,7 @@ func bundle() {
 	} else {
 		input = bytes.NewBufferString(strings.Join(*bundles, " "))
 	}
-	sh, err := antibodylib.New(antibodylib.Home(), input).Bundle()
+	sh, err := antibodylib.New(antibodylib.Home(), input, *parallelism).Bundle()
 	app.FatalIfError(err, "failed to bundle")
 	fmt.Println(sh)
 }
