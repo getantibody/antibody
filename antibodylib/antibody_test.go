@@ -50,7 +50,12 @@ func TestAntibodyError(t *testing.T) {
 }
 
 func TestHome(t *testing.T) {
-	assert.Contains(t, antibodylib.Home(), "antibody")
+	home, ok := os.LookupEnv("ANTIBODY_HOME")
+	if ok {
+		assert.Equal(t, antibodylib.Home(), home)
+	} else {
+		assert.Contains(t, antibodylib.Home(), "antibody")
+	}
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {

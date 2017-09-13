@@ -2,7 +2,9 @@ package bundle_test
 
 import (
 	"io/ioutil"
+	"path"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/getantibody/antibody/bundle"
@@ -39,6 +41,48 @@ func TestSuccessfullGitBundles(t *testing.T) {
 			assert.NoError(err)
 		})
 	}
+}
+
+func TestPreGitBundle(t *testing.T) {
+	assert := assert.New(t)
+	homeDir := home()
+
+	preDir := home()
+	os.Setenv("ANTIBODY_BUNDLE_PRE", preDir)
+	bundlePre := path.Join(preDir, "https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm")
+	os.Mkdir(bundlePre, 0777)
+	os.OpenFile(path.Join(bundlePre, "test.zsh"), os.O_RDONLY|os.O_CREATE, 0666)
+
+	result, err := bundle.New(homeDir, "caarlos0/jvm").Get()
+	lines := strings.Split(result, "\n")
+	assert.Equal(len(lines), 2)
+	assert.Contains(lines[0], preDir)
+	assert.Contains(lines[0], bundlePre)
+	assert.Contains(lines[0], "test.zsh")
+	assert.Contains(lines[1], "jvm.plugin.zsh")
+	assert.NoError(err)
+	os.Unsetenv("ANTIBODY_BUNDLE_PRE")
+}
+
+func TestPostGitBundle(t *testing.T) {
+	assert := assert.New(t)
+	homeDir := home()
+
+	postDir := home()
+	os.Setenv("ANTIBODY_BUNDLE_POST", postDir)
+	bundlePost := path.Join(postDir, "https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm")
+	os.Mkdir(bundlePost, 0777)
+	os.OpenFile(path.Join(bundlePost, "test.zsh"), os.O_RDONLY|os.O_CREATE, 0666)
+
+	result, err := bundle.New(homeDir, "caarlos0/jvm").Get()
+	lines := strings.Split(result, "\n")
+	assert.Equal(len(lines), 2)
+	assert.Contains(lines[0], "jvm.plugin.zsh")
+	assert.Contains(lines[1], postDir)
+	assert.Contains(lines[1], bundlePost)
+	assert.Contains(lines[1], "test.zsh")
+	assert.NoError(err)
+	os.Unsetenv("ANTIBODY_BUNDLE_POST")
 }
 
 func TestZshInvalidGitBundle(t *testing.T) {
