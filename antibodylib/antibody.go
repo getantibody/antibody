@@ -14,15 +14,17 @@ import (
 
 // Antibody the main thing
 type Antibody struct {
-	r    io.Reader
-	Home string
+	r           io.Reader
+	parallelism int
+	Home        string
 }
 
 // New creates a new Antibody instance with the given parameters
-func New(home string, r io.Reader) *Antibody {
+func New(home string, r io.Reader, p int) *Antibody {
 	return &Antibody{
-		r:    r,
-		Home: home,
+		r:           r,
+		parallelism: p,
+		Home:        home,
 	}
 }
 
@@ -32,12 +34,17 @@ func (a *Antibody) Bundle() (result string, err error) {
 	var lock sync.Mutex
 	var shs indexedLines
 	var idx int
+	sem := make(chan bool, a.parallelism)
 	scanner := bufio.NewScanner(a.r)
 	for scanner.Scan() {
 		l := scanner.Text()
 		index := idx
 		idx++
+		sem <- true
 		g.Go(func() error {
+			defer func() {
+				<-sem
+			}()
 			l = strings.TrimSpace(l)
 			if l != "" && l[0] != '#' {
 				s, berr := bundle.New(a.Home, l).Get()
