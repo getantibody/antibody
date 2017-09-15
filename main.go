@@ -21,7 +21,7 @@ var (
 	version = "dev"
 
 	app         = kingpin.New("antibody", "The fastest shell plugin manager")
-	parallelism = app.Flag("parallelism", "amount of tasks launch in parallel").
+	parallelism = app.Flag("parallelism", "max amount of tasks to launch in parallel").
 			Short('p').
 			Default(strconv.Itoa(runtime.NumCPU())).
 			Int()
