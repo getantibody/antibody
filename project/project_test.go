@@ -3,6 +3,7 @@ package project_test
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/getantibody/antibody/project"
@@ -47,11 +48,11 @@ func TestUpdateHome(t *testing.T) {
 	assert.NoError(project.New(home, "caarlos0/jvm").Download())
 	assert.NoError(project.New(home, "caarlos0/ports").Download())
 	assert.NoError(project.New(home, "/tmp").Download())
-	assert.NoError(project.Update(home))
+	assert.NoError(project.Update(home, runtime.NumCPU()))
 }
 
 func TestUpdateNonExistentHome(t *testing.T) {
-	assert.Error(t, project.Update("/tmp/asdasdasdasksksksksnopeeeee"))
+	assert.Error(t, project.Update("/tmp/asdasdasdasksksksksnopeeeee", runtime.NumCPU()))
 }
 
 func TestUpdateHomeWithNoGitProjects(t *testing.T) {
@@ -60,5 +61,5 @@ func TestUpdateHomeWithNoGitProjects(t *testing.T) {
 	repo := project.New(home, "caarlos0/jvm")
 	assert.NoError(repo.Download())
 	assert.NoError(os.RemoveAll(filepath.Join(repo.Folder(), ".git")))
-	assert.Error(project.Update(home))
+	assert.Error(project.Update(home, runtime.NumCPU()))
 }

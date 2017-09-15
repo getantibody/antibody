@@ -36,15 +36,20 @@ func List(home string) (result []string, err error) {
 }
 
 // Update all projects in the given folder
-func Update(home string) error {
+func Update(home string, parallelism int) error {
 	folders, err := List(home)
 	if err != nil {
 		return err
 	}
+	sem := make(chan bool, parallelism)
 	var g errgroup.Group
 	for _, folder := range folders {
 		folder := folder
+		sem <- true
 		g.Go(func() error {
+			defer func() {
+				<-sem
+			}()
 			return NewClonedGit(home, folder).Update()
 		})
 	}

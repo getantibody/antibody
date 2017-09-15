@@ -74,7 +74,7 @@ func bundle() {
 func update() {
 	var home = antibodylib.Home()
 	fmt.Printf("Updating all bundles in %v...\n", home)
-	var err = project.Update(home)
+	var err = project.Update(home, *parallelism)
 	app.FatalIfError(err, "failed to update")
 }
 
