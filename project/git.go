@@ -14,6 +14,7 @@ type gitProject struct {
 	URL     string
 	Version string
 	folder  string
+	inner   string
 }
 
 // NewClonedGit is a git project that was already cloned, so, only Update
@@ -35,11 +36,14 @@ func NewClonedGit(home, folderName string) Project {
 // be downloaded to the provided cwd
 func NewGit(cwd, line string) Project {
 	version := "master"
+	inner := ""
 	parts := strings.Split(line, " ")
 	for _, part := range parts {
 		if strings.HasPrefix(part, "branch:") {
 			version = strings.Replace(part, "branch:", "", -1)
-			break
+		}
+		if strings.HasPrefix(part, "folder:") {
+			inner = strings.Replace(part, "folder:", "", -1)
 		}
 	}
 	repo := parts[0]
@@ -63,6 +67,7 @@ func NewGit(cwd, line string) Project {
 		Version: version,
 		URL:     url,
 		folder:  folder,
+		inner:   inner,
 	}
 }
 
@@ -104,5 +109,5 @@ func branch(folder string) (string, error) {
 }
 
 func (g gitProject) Folder() string {
-	return g.folder
+	return filepath.Join(g.folder, g.inner)
 }
