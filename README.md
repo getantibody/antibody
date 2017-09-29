@@ -103,6 +103,10 @@ You can also specify a branch to download, for example,
 `antibody bundle caarlos0/jvm branch:v2` will download the `v2` branch of that
 repository.
 
+You may specify a subfolder if the repo you are bundling contains multiple, for
+example `antibody bundle robbyrussell/oh-my-zsh folder:plugins/aws` will look
+for the bundle files in that specific subfolder.
+
 When you decide to update your bundles, just run `antibody update`: it will
 update all bundles inside the `antibody home` folder.
 
