@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/alecthomas/kingpin"
@@ -21,7 +23,7 @@ var (
 	app         = kingpin.New("antibody", "The fastest shell plugin manager")
 	parallelism = app.Flag("parallelism", "max amount of tasks to launch in parallel").
 			Short('p').
-			Default("4").
+			Default(strconv.Itoa(runtime.NumCPU())).
 			Int()
 	bundleCmd = app.Command("bundle", "downloads a bundle and prints its source line")
 	bundles   = bundleCmd.Arg("bundles", "bundle list").Strings()
