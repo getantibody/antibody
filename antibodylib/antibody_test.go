@@ -49,6 +49,39 @@ func TestAntibodyError(t *testing.T) {
 	assert.Empty(sh)
 }
 
+func TestMultipleRepositories(t *testing.T) {
+	var assert = assert.New(t)
+	home := home()
+	bundles := []string{
+		"# this block is in alphabetic order",
+		"caarlos0/git-add-remote kind:path",
+		"caarlos0/jvm",
+		"caarlos0/ports kind:path",
+		"caarlos0/zsh-git-fetch-merge kind:path",
+		"caarlos0/zsh-git-sync kind:path",
+		"caarlos0/zsh-mkc",
+		"caarlos0/zsh-open-pr kind:path",
+		"mafredri/zsh-async",
+		"rupa/z",
+		"Tarrasch/zsh-bd",
+		"wbinglee/zsh-wakatime",
+		"zsh-users/zsh-completions",
+		"zsh-users/zsh-autosuggestions",
+		"",
+		"# these should be at last!",
+		"sindresorhus/pure",
+		"zsh-users/zsh-syntax-highlighting",
+		"zsh-users/zsh-history-substring-search",
+	}
+	sh, err := antibodylib.New(
+		home,
+		bytes.NewBufferString(strings.Join(bundles, "\n")),
+		runtime.NumCPU(),
+	).Bundle()
+	assert.NoError(err)
+	assert.Len(strings.Split(sh, "\n"), 16)
+}
+
 func TestHome(t *testing.T) {
 	assert.Contains(t, antibodylib.Home(), "antibody")
 }
