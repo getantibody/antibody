@@ -142,6 +142,7 @@ line, so it will probably be faster than call each one separately.
 - @wkentaro's [dotfiles](https://github.com/wkentaro/dotfiles);
 - @marceldias' [dotfiles](https://github.com/marceldiass/dotfiles);
 - @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
+- @sobolevn's [dotfiles](https://github.com/sobolevn/dotfiles);
 - and probably [many others](https://github.com/search?q=antibody&type=Code);
 
 ### Static loading
