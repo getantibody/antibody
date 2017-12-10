@@ -37,11 +37,8 @@ build:
 	go build
 .PHONY: build
 
-# Generate the static documentation
-static:
-	@rm -rf dist/getantibody.github.io
-	@mkdir -p dist
-	@git clone https://github.com/getantibody/getantibody.github.io.git dist/getantibody.github.io
+# Generates the static documentation
+static-gen:
 	@rm -rf dist/getantibody.github.io/theme
 	@static-docs \
 		--in docs \
@@ -49,6 +46,19 @@ static:
 		--title Antibody \
 		--subtitle "The fastest shell plugin manager" \
 		--google UA-68164063-1
+.PHONY: static-gen
+
+# Downloads and generates the static documentation
+static:
+	@rm -rf dist/getantibody.github.io
+	@mkdir -p dist
+	@git clone https://github.com/getantibody/getantibody.github.io.git dist/getantibody.github.io
+	@make static-gen
 .PHONY: static
+
+# Opens the current docs on the default browser
+static-open:
+	open dist/getantibody.github.io/index.html
+.PHONY: static-open
 
 .DEFAULT_GOAL := build
