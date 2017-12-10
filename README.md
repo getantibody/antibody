@@ -156,6 +156,9 @@ $ antibody bundle < bundles.txt > sourceables.sh
 $ source sourceables.sh
 ```
 
+**Important**: you don't need to do the `antibody init` if you want to use
+to static loading the plugins.
+
 ### Thanks
 
 - [@pragmaticivan](https://github.com/pragmaticivan), for the logo design;
