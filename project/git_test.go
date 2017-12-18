@@ -12,7 +12,6 @@ import (
 )
 
 func TestDownloadAllKinds(t *testing.T) {
-	assert := assert.New(t)
 	urls := []string{
 		"caarlos0/ports",
 		"http://github.com/caarlos0/ports",
@@ -29,6 +28,7 @@ func TestDownloadAllKinds(t *testing.T) {
 	for _, url := range urls {
 		home := home()
 		assert.NoError(
+			t,
 			project.NewGit(home, url).Download(),
 			"Repo "+url+" failed to download",
 		)
@@ -36,75 +36,67 @@ func TestDownloadAllKinds(t *testing.T) {
 }
 
 func TestDownloadSubmodules(t *testing.T) {
-	var assert = assert.New(t)
 	var home = home()
 	var proj = project.NewGit(home, "fribmendes/geometry")
 	var module = filepath.Join(proj.Folder(), "lib/zsh-async")
-	assert.NoError(proj.Download())
-	assert.NoError(proj.Update())
+	assert.NoError(t, proj.Download())
+	assert.NoError(t, proj.Update())
 	files, err := ioutil.ReadDir(module)
-	assert.NoError(err)
-	assert.True(len(files) > 1)
+	assert.NoError(t, err)
+	assert.True(t, len(files) > 1)
 }
 
 func TestDownloadAnotherBranch(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
-	assert.NoError(project.NewGit(home, "caarlos0/jvm branch:gh-pages").Download())
+	assert.NoError(t, project.NewGit(home, "caarlos0/jvm branch:gh-pages").Download())
 }
 
 func TestUpdateNonExistentLocalRepo(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "caarlos0/ports")
-	assert.Error(repo.Update())
+	assert.Error(t, repo.Update())
 }
 
 func TestDownloadNonExistentRepo(t *testing.T) {
-	var assert = assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "caarlos0/not-a-real-repo")
-	assert.Error(repo.Download())
+	assert.Error(t, repo.Download())
 }
 
 func TestDownloadMalformedRepo(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "doesn-not-exist-really branch:also-nope")
-	assert.Error(repo.Download())
+	assert.Error(t, repo.Download())
 }
 
 func TestDownloadMultipleTimes(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "caarlos0/ports")
-	assert.NoError(repo.Download())
-	assert.NoError(repo.Download())
-	assert.NoError(repo.Update())
+	assert.NoError(t, repo.Download())
+	assert.NoError(t, repo.Download())
+	assert.NoError(t, repo.Update())
 }
 
 func TestDownloadFolderNaming(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "caarlos0/ports")
 	assert.Equal(
+		t,
 		home+"/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
 		repo.Folder(),
 	)
 }
 
 func TestSubFolder(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws")
-	assert.True(strings.HasSuffix(repo.Folder(), "plugins/aws"))
+	assert.True(t, strings.HasSuffix(repo.Folder(), "plugins/aws"))
 }
 
 func TestMultipleSubFolders(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
-	assert.NoError(project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws").Download())
-	assert.NoError(project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/battery").Download())
+	assert.NoError(t, project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws").Download())
+	assert.NoError(t, project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/battery").Download())
 }
 
 func home() string {

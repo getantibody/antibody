@@ -11,44 +11,39 @@ import (
 )
 
 func TestList(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
-	assert.NoError(project.New(home, "caarlos0/jvm branch:gh-pages").Download())
+	assert.NoError(t, project.New(home, "caarlos0/jvm branch:gh-pages").Download())
 	list, err := project.List(home)
-	assert.NoError(err)
-	assert.Len(list, 1)
+	assert.NoError(t, err)
+	assert.Len(t, list, 1)
 }
 
 func TestListEmptyFolder(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	list, err := project.List(home)
-	assert.NoError(err)
-	assert.Len(list, 0)
+	assert.NoError(t, err)
+	assert.Len(t, list, 0)
 }
 
 func TestListNonExistentFolder(t *testing.T) {
-	assert := assert.New(t)
 	list, err := project.List("/tmp/asdasdadadwhateverwtff")
-	assert.Error(err)
-	assert.Len(list, 0)
+	assert.Error(t, err)
+	assert.Len(t, list, 0)
 }
 
 func TestUpdate(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.New(home, "caarlos0/ports")
-	assert.NoError(repo.Download())
-	assert.NoError(repo.Update())
+	assert.NoError(t, repo.Download())
+	assert.NoError(t, repo.Update())
 }
 
 func TestUpdateHome(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
-	assert.NoError(project.New(home, "caarlos0/jvm").Download())
-	assert.NoError(project.New(home, "caarlos0/ports").Download())
-	assert.NoError(project.New(home, "/tmp").Download())
-	assert.NoError(project.Update(home, runtime.NumCPU()))
+	assert.NoError(t, project.New(home, "caarlos0/jvm").Download())
+	assert.NoError(t, project.New(home, "caarlos0/ports").Download())
+	assert.NoError(t, project.New(home, "/tmp").Download())
+	assert.NoError(t, project.Update(home, runtime.NumCPU()))
 }
 
 func TestUpdateNonExistentHome(t *testing.T) {
@@ -56,10 +51,9 @@ func TestUpdateNonExistentHome(t *testing.T) {
 }
 
 func TestUpdateHomeWithNoGitProjects(t *testing.T) {
-	assert := assert.New(t)
 	home := home()
 	repo := project.New(home, "caarlos0/jvm")
-	assert.NoError(repo.Download())
-	assert.NoError(os.RemoveAll(filepath.Join(repo.Folder(), ".git")))
-	assert.Error(project.Update(home, runtime.NumCPU()))
+	assert.NoError(t, repo.Download())
+	assert.NoError(t, os.RemoveAll(filepath.Join(repo.Folder(), ".git")))
+	assert.Error(t, project.Update(home, runtime.NumCPU()))
 }
