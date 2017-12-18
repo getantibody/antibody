@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-    "strings"
+	"strings"
 	"testing"
 
 	"github.com/getantibody/antibody/project"
@@ -94,17 +94,17 @@ func TestDownloadFolderNaming(t *testing.T) {
 }
 
 func TestSubFolder(t *testing.T) {
-    assert := assert.New(t)
-    home := home()
-    repo := project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws")
-    assert.True(strings.HasSuffix(repo.Folder(), "plugins/aws"))
+	assert := assert.New(t)
+	home := home()
+	repo := project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws")
+	assert.True(strings.HasSuffix(repo.Folder(), "plugins/aws"))
 }
 
 func TestMultipleSubFolders(t *testing.T) {
-    assert := assert.New(t)
-    home := home()
-    assert.NoError(project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws").Download())
-    assert.NoError(project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/battery").Download())
+	assert := assert.New(t)
+	home := home()
+	assert.NoError(project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws").Download())
+	assert.NoError(project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/battery").Download())
 }
 
 func home() string {

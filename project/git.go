@@ -73,6 +73,7 @@ func NewGit(cwd, line string) Project {
 
 func (g gitProject) Download() error {
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
+		// #nosec
 		var cmd = exec.Command("git", "clone",
 			"--recursive",
 			"--depth", "1",
@@ -89,6 +90,7 @@ func (g gitProject) Download() error {
 }
 
 func (g gitProject) Update() error {
+	// #nosec
 	if bts, err := exec.Command(
 		"git", "-C", g.folder, "pull",
 		"--recurse-submodules",
@@ -102,6 +104,7 @@ func (g gitProject) Update() error {
 }
 
 func branch(folder string) (string, error) {
+	// #nosec
 	branch, err := exec.Command(
 		"git", "-C", folder, "rev-parse", "--abbrev-ref", "HEAD",
 	).Output()

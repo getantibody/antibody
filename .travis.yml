@@ -1,7 +1,9 @@
 language: go
 go: 1.9
-install: make setup
-script: make test
+install:
+  - make setup
+  - npm install -g prettier
+script: make ci
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - gem install fpm

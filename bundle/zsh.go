@@ -18,7 +18,10 @@ func (bundle zshBundle) Get() (result string, err error) {
 		return result, err
 	}
 	for _, glob := range zshGlobs {
-		files, _ := filepath.Glob(filepath.Join(bundle.Project.Folder(), glob))
+		files, err := filepath.Glob(filepath.Join(bundle.Project.Folder(), glob))
+		if err != nil {
+			return result, err
+		}
 		if files == nil {
 			continue
 		}

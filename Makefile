@@ -26,6 +26,7 @@ cover: test
 # Run all the linters
 lint:
 	gometalinter --vendor ./...
+	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier -l
 .PHONY: lint
 
 # Run all the tests and code checks
@@ -36,6 +37,12 @@ ci: lint test
 build:
 	go build
 .PHONY: build
+
+# gofmt and goimports all go files
+fmt:
+	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
+	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier --write
+.PHONY: fmt
 
 # Generates the static documentation
 static-gen:
