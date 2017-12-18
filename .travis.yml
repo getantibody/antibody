@@ -17,6 +17,6 @@ deploy:
   local_dir: ./dist/getantibody.github.io
   target_branch: master
   on:
-    tags: true
+    master: true
 notifications:
   email: false
