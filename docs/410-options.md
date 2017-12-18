@@ -11,10 +11,10 @@ The `kind` annotation can be used to determine how a bundle should be treated.
 
 The default is `kind:zsh`, which will look for files that match these globs:
 
-- `*.plugin.zsh`
-- `*.zsh`
-- `*.sh`
-- `*.zsh-theme`
+* `*.plugin.zsh`
+* `*.zsh`
+* `*.sh`
+* `*.zsh-theme`
 
 And `source` them.
 

@@ -8,9 +8,8 @@ import (
 )
 
 func TestLocalProject(t *testing.T) {
-	assert := assert.New(t)
 	proj := project.NewLocal("/tmp")
-	assert.NoError(proj.Download())
-	assert.NoError(proj.Update())
-	assert.Equal("/tmp", proj.Folder())
+	assert.NoError(t, proj.Download())
+	assert.NoError(t, proj.Update())
+	assert.Equal(t, "/tmp", proj.Folder())
 }

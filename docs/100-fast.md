@@ -7,7 +7,6 @@ Let's see how much faster antibody is over antigen:
 <div id="chart1"></div>
 <div id="chart2"></div>
 
-
 <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
 
 <script type="text/javascript">
