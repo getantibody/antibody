@@ -80,7 +80,7 @@ func TestMultipleRepositories(t *testing.T) {
 }
 
 func TestHome(t *testing.T) {
-	assert.Contains(t, t, antibodylib.Home(), "antibody")
+	assert.Contains(t, antibodylib.Home(), "antibody")
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
