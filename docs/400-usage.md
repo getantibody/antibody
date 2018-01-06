@@ -59,7 +59,9 @@ antibody bundle < ~/.zsh_plugins.txt
 This is the faster alternative. Basically, you'll run antibody only when
 you change your plugins, and then you can just load the "static" plugins file.
 
-Note that in this case, we don't need to pur `antibody init` on our `~/.zshrc`.
+Note that in this case, **we should not put `antibody init` on our `~/.zshrc`**.
+If you did that already, remove it from your `~/.zshrc` and start a fresh
+terminal session.
 
 Assuming the same `~/.zsh_plugins.txt` as before, we can run:
 
