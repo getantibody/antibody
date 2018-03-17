@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -34,6 +35,12 @@ var (
 	listCmd   = app.Command("list", "lists all currently installed bundles").Alias("ls")
 	initCmd   = app.Command("init", "initializes the shell so Antibody can work as expected")
 )
+
+func init() {
+	log.SetOutput(os.Stderr)
+	log.SetPrefix("antibody: ")
+	log.SetFlags(0)
+}
 
 func main() {
 	app.Author("Carlos Alexandro Becker <caarlos0@gmail.com>")
