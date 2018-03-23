@@ -2,7 +2,6 @@ build:
   goos:
     - linux
     - darwin
-    - freebsd
   goarch:
     - 386
     - amd64
