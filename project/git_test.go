@@ -93,6 +93,12 @@ func TestSubFolder(t *testing.T) {
 	assert.True(t, strings.HasSuffix(repo.Folder(), "plugins/aws"))
 }
 
+func TestPath(t *testing.T) {
+	home := home()
+	repo := project.NewGit(home, "docker/cli path:contrib/completion/zsh/_docker")
+	assert.True(t, strings.HasSuffix(repo.Folder(), "contrib/completion/zsh/_docker"))
+}
+
 func TestMultipleSubFolders(t *testing.T) {
 	home := home()
 	assert.NoError(t, project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws").Download())

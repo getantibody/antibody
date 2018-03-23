@@ -32,6 +32,12 @@ func NewClonedGit(home, folderName string) Project {
 	}
 }
 
+const (
+	branchMarker = "branch:"
+	folderMarker = "folder:"
+	pathMarker   = "path:"
+)
+
 // NewGit A git project can be any repository in any given branch. It will
 // be downloaded to the provided cwd
 func NewGit(cwd, line string) Project {
@@ -39,11 +45,14 @@ func NewGit(cwd, line string) Project {
 	inner := ""
 	parts := strings.Split(line, " ")
 	for _, part := range parts {
-		if strings.HasPrefix(part, "branch:") {
-			version = strings.Replace(part, "branch:", "", -1)
+		if strings.HasPrefix(part, branchMarker) {
+			version = strings.Replace(part, branchMarker, "", -1)
 		}
-		if strings.HasPrefix(part, "folder:") {
-			inner = strings.Replace(part, "folder:", "", -1)
+		if strings.HasPrefix(part, folderMarker) {
+			inner = strings.Replace(part, folderMarker, "", -1)
+		}
+		if strings.HasPrefix(part, pathMarker) {
+			inner = strings.Replace(part, pathMarker, "", -1)
 		}
 	}
 	repo := parts[0]
