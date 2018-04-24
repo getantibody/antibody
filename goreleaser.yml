@@ -24,7 +24,7 @@ brew:
   description: The fastest shell plugin manager
   dependencies:
     - git
-fpm:
+nfpm:
   homepage: http://getantibody.github.io
   description: The fastest shell plugin manager
   maintainer: Carlos Alexandro Becker <root@carlosbecker.com>
