@@ -18,7 +18,7 @@ deploy:
       master: true
   - provider: script
     skip_cleanup: true
-    script: curl -sL https://git.io/goreleaser | bash -- --rm-dist
+    script: curl -sL https://git.io/goreleaser | bash -s -- --rm-dist
     on:
       tags: true
 notifications:
