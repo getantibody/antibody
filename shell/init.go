@@ -10,7 +10,7 @@ const tmpl = `#!/usr/bin/env zsh
 antibody() {
 	case "$1" in
 	bundle)
-		source <( {{ . }} $@ ) 2> /dev/null || {{ . }} $@
+		source <( {{ . }} $@ ) || {{ . }} $@
 		;;
 	*)
 		{{ . }} $@
