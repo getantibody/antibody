@@ -30,7 +30,7 @@ var (
 	updateCmd = app.Command("update", "updates all previously bundled bundles")
 	homeCmd   = app.Command("home", "prints where antibody is cloning the bundles")
 	purgeCmd  = app.Command("purge", "purges a bundle from your computer")
-	purgee    = purgeCmd.Arg("bundle", "bundle to be purged").String()
+	purgee    = purgeCmd.Arg("bundle", "bundle to be purged").Required().String()
 	listCmd   = app.Command("list", "lists all currently installed bundles").Alias("ls")
 	initCmd   = app.Command("init", "initializes the shell so Antibody can work as expected")
 )
