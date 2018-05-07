@@ -2,7 +2,7 @@
 title: Install
 ---
 
-Antibody can be installed trhough a variety of sources.
+Antibody can be installed through a variety of sources.
 
 The simplest way is to run:
 
