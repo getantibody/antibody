@@ -1,6 +1,7 @@
 package bundle
 
 import (
+	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -29,7 +30,7 @@ func (bundle zshBundle) Get() (result string, err error) {
 		for _, file := range files {
 			lines = append(lines, "source "+file)
 		}
-
+		lines = append(lines, fmt.Sprintf("fpath+=( %s )", bundle.Project.Folder()))
 		return strings.Join(lines, "\n"), err
 	}
 
