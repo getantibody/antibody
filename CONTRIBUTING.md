@@ -9,9 +9,9 @@ conduct](/CODE_OF_CONDUCT.md).
 
 Prerequisites are:
 
-* Build:
-  * `make`
-  * [Go 1.8+](http://golang.org/doc/install)
+- Build:
+  - `make`
+  - [Go 1.8+](http://golang.org/doc/install)
 
 Clone `antibody` from source into `$GOPATH`:
 

@@ -26,18 +26,18 @@ at https://getantibody.github.io
 
 ## In the wild
 
-* I did this mostly for myself, so, my [dotfiles](https://github.com/caarlos0/dotfiles);
-* @mkwmms' [dotfiles](https://github.com/mkwmms/dotfiles);
-* @oieduardorabelo's [dotfiles](https://github.com/oieduardorabelo/dotfiles);
-* @nisaacson's [dotfiles](https://github.com/nisaacson/dotfiles);
-* @pragmaticivan's [dotfiles](https://github.com/pragmaticivan/dotfiles);
-* @wkentaro's [dotfiles](https://github.com/wkentaro/dotfiles);
-* @marceldias' [dotfiles](https://github.com/marceldiass/dotfiles);
-* @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
-* @sobolevn's [dotfiles](https://github.com/sobolevn/dotfiles);
-* and probably [many others](https://github.com/search?q=antibody&type=Code);
+- I did this mostly for myself, so, my [dotfiles](https://github.com/caarlos0/dotfiles);
+- @mkwmms' [dotfiles](https://github.com/mkwmms/dotfiles);
+- @oieduardorabelo's [dotfiles](https://github.com/oieduardorabelo/dotfiles);
+- @nisaacson's [dotfiles](https://github.com/nisaacson/dotfiles);
+- @pragmaticivan's [dotfiles](https://github.com/pragmaticivan/dotfiles);
+- @wkentaro's [dotfiles](https://github.com/wkentaro/dotfiles);
+- @marceldias' [dotfiles](https://github.com/marceldiass/dotfiles);
+- @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
+- @sobolevn's [dotfiles](https://github.com/sobolevn/dotfiles);
+- and probably [many others](https://github.com/search?q=antibody&type=Code);
 
 ## Thanks
 
-* [@pragmaticivan](https://github.com/pragmaticivan), for the logo design;
-* All the amazing [contributors](https://github.com/getantibody/antibody/graphs/contributors).
+- [@pragmaticivan](https://github.com/pragmaticivan), for the logo design;
+- All the amazing [contributors](https://github.com/getantibody/antibody/graphs/contributors).
