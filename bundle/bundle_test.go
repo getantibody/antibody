@@ -15,7 +15,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 	}{
 		{
 			"caarlos0/jvm",
-			"jvm.plugin.zsh",
+			"jvm.plugin.zsh\nfpath+=( ",
 		},
 		{
 			"caarlos0/jvm kind:path",
@@ -32,6 +32,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 	}
 	for _, row := range table {
 		t.Run(row.line, func(t *testing.T) {
+			t.Parallel()
 			home := home()
 			result, err := bundle.New(home, row.line).Get()
 			assert.Contains(t, result, row.result)

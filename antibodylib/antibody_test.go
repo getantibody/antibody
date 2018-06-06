@@ -76,7 +76,7 @@ func TestMultipleRepositories(t *testing.T) {
 		runtime.NumCPU(),
 	).Bundle()
 	assert.NoError(t, err)
-	assert.Len(t, strings.Split(sh, "\n"), 16)
+	assert.Len(t, strings.Split(sh, "\n"), 27)
 }
 
 func TestHome(t *testing.T) {
