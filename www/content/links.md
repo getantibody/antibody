@@ -1,5 +1,7 @@
 ---
 title: Links
+weight: 999
+menu: true
 ---
 
 - Follow the progress on the [GitHub repository](https://github.com/getantibody/antibody)

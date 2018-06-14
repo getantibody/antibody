@@ -1,0 +1,11 @@
+baseURL = "https://getantibody.github.io/"
+languageCode = "en-us"
+title = "GetAntibody"
+copyright = "Made with ❤️ by GetAntibody contributors."
+googleAnalytics = "UA-68164063-1"
+theme = "hugo-apex-theme"
+pygmentsCodeFences = true
+pygmentsStyle = "dracula"
+
+[params]
+logo = "https://avatars2.githubusercontent.com/u/16625397?v=3&s=140"

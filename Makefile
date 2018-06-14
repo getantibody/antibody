@@ -7,6 +7,7 @@ export PATH := ./bin:$(PATH)
 
 # Install all the build and lint dependencies
 setup:
+	curl -sfL https://install.goreleaser.com/github.com/gohugoio/hugo.sh | sh
 	curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh
 ifeq ($(OS), Darwin)
 	brew install dep
@@ -47,23 +48,19 @@ fmt:
 	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier --write
 .PHONY: fmt
 
-# Generates the static documentation
-static-gen:
-	@rm -rf dist/getantibody.github.io/theme
-	@static-docs \
-		--in docs \
-		--out dist/getantibody.github.io \
-		--title Antibody \
-		--subtitle "The fastest shell plugin manager" \
-		--google UA-68164063-1
-.PHONY: static-gen
-
-# Downloads and generates the static documentation
+# Generate the static documentation
 static:
-	@rm -rf dist/getantibody.github.io
-	@mkdir -p dist
-	@git clone https://github.com/getantibody/getantibody.github.io.git dist/getantibody.github.io
-	@make static-gen
+	@hugo --source www
 .PHONY: static
+
+serve:
+	@hugo server -w -s www
+.PHONY: serve
+
+favicon:
+	wget -O www/static/avatar.png https://avatars2.githubusercontent.com/u/16625397
+	convert www/static/avatar.png -define icon:auto-resize=64,48,32,16 www/static/favicon.ico
+	convert www/static/avatar.png -resize x120 www/static/apple-touch-icon.png
+.PHONY: favicon
 
 .DEFAULT_GOAL := build

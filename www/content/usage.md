@@ -1,5 +1,7 @@
 ---
 title: Usage
+weight: 400
+menu: true
 ---
 
 There are mainly two ways of using antibody: static and dynamic.

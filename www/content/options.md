@@ -1,5 +1,7 @@
 ---
 title: Options
+weight: 410
+menu: true
 ---
 
 There are a few options you can use that should cover most common use cases.

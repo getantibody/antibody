@@ -1,5 +1,7 @@
 ---
 title: Introduction
+weight: 1
+menu: true
 ---
 
 Antibody is a shell plugin manager made from the ground up thinking about

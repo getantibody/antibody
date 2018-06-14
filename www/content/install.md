@@ -1,5 +1,7 @@
 ---
 title: Install
+weight: 300
+menu: true
 ---
 
 Antibody can be installed through a variety of sources.

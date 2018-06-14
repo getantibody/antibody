@@ -11,11 +11,12 @@ deploy:
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
-    repo: getantibody/getantibody.github.io
-    local_dir: ./dist/getantibody.github.io
+    local_dir: www/public
     target_branch: master
+    repo: getantibody/getantibody.github.io
+    verbose: true
     on:
-      master: true
+      branch: master
   - provider: script
     skip_cleanup: true
     script: curl -sL https://git.io/goreleaser | bash -s -- --rm-dist

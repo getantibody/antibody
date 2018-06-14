@@ -1,5 +1,7 @@
 ---
 title: Outro
+weight: 500
+menu: true
 ---
 
 Let's look what other commands antibody has available for us!

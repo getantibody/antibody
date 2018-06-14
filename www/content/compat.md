@@ -1,5 +1,7 @@
 ---
 title: Compatibility
+weight: 200
+menu: true
 ---
 
 Since antibody started as a subset clone of antigen, one might wonder
