@@ -50,11 +50,11 @@ fmt:
 
 # Generate the static documentation
 static:
-	@hugo --source www
+	@hugo --enableGitInfo --source www
 .PHONY: static
 
 serve:
-	@hugo server -w -s www
+	@hugo server --enableGitInfo --watch --source www
 .PHONY: serve
 
 favicon:
