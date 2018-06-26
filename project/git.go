@@ -1,6 +1,7 @@
 package project
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -90,6 +91,7 @@ func (g gitProject) Download() error {
 }
 
 func (g gitProject) Update() error {
+	fmt.Println("updating:", g.URL)
 	// #nosec
 	if bts, err := exec.Command(
 		"git", "-C", g.folder, "pull",
