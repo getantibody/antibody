@@ -7,7 +7,7 @@ import (
 
 // NewLocal Returns a local project, which can be any folder you want to
 func NewLocal(folder string) Project {
-	return localProject{strings.Split(folder, " ")[0]}
+	return localProject{folder: strings.Split(folder, " ")[0]}
 }
 
 type localProject struct {

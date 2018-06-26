@@ -29,7 +29,7 @@ cover: test
 
 # Run all the linters
 lint:
-	golangci-lint run --enable-all ./...
+	./bin/golangci-lint run --enable-all ./...
 	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier -l
 .PHONY: lint
 
