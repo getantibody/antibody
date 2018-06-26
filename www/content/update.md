@@ -35,8 +35,8 @@ course list them:
 
 ```console
 $ antibody list
-/Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-Tarrasch-SLASH-zsh-bd
-/Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-git-add-remote
+https://github.com/Tarrasch/zsh-bd            /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-Tarrasch-SLASH-zsh-bd
+https://github.com/caarlos0/git-add-remote    /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-git-add-remote
 # ...
 ```
 
