@@ -10,11 +10,13 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"text/tabwriter"
 
 	"github.com/alecthomas/kingpin"
 	"github.com/getantibody/antibody/antibodylib"
 	"github.com/getantibody/antibody/project"
 	"github.com/getantibody/antibody/shell"
+	"github.com/getantibody/folder"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -95,7 +97,9 @@ func list() {
 	home := antibodylib.Home()
 	projects, err := project.List(home)
 	app.FatalIfError(err, "failed to list bundles")
+	w := tabwriter.NewWriter(os.Stdout, 0, 1, 4, ' ', tabwriter.TabIndent)
 	for _, b := range projects {
-		fmt.Println(filepath.Join(home, b))
+		fmt.Fprintf(w, "%s\t%s\n", folder.ToURL(b), filepath.Join(home, b))
 	}
+	w.Flush()
 }
