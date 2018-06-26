@@ -51,7 +51,7 @@ func (a *Antibody) Bundle() (result string, err error) {
 			}
 			s, berr := bundle.New(a.Home, l).Get()
 			lock.Lock()
-			shs = append(shs, indexedLine{index, s})
+			shs = append(shs, indexedLine{idx: index, line: s})
 			lock.Unlock()
 			return berr
 		})
