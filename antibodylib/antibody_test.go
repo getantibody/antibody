@@ -36,6 +36,7 @@ func TestAntibody(t *testing.T) {
 	assert.Contains(t, sh, `export PATH="/tmp:$PATH"`)
 	assert.Contains(t, sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
 	assert.Contains(t, sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
+	// nolint: lll
 	assert.Contains(t, sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/git-open-pr.plugin.zsh`)
 }
 

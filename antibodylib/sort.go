@@ -30,6 +30,7 @@ func (slice indexedLines) Swap(i, j int) {
 // Sort all lines and join them in a string
 func (slice indexedLines) String() string {
 	sort.Sort(slice)
+	// nolint: prealloc
 	var lines []string
 	for _, line := range slice {
 		lines = append(lines, line.line)
