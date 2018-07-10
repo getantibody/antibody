@@ -81,7 +81,8 @@ func (g gitProject) Download() error {
 			"-b", g.Version,
 			g.URL,
 			g.folder)
-		cmd.Env = append(cmd.Env, "GIT_TERMINAL_PROMPT=0")
+		cmd.Env = append(os.Environ(), "GIT_TERMINAL_PROMPT=0")
+
 		if bts, err := cmd.CombinedOutput(); err != nil {
 			log.Println("git clone failed for", g.URL, string(bts))
 			return err
