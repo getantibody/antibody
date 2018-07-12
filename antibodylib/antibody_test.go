@@ -82,6 +82,44 @@ func TestMultipleRepositories(t *testing.T) {
 	assert.Len(t, strings.Split(sh, "\n"), 31)
 }
 
+func BenchmarkDownload(b *testing.B) {
+	var bundles = strings.Join([]string{
+		"robbyrussell/oh-my-zsh folder:plugins/aws",
+		"caarlos0/git-add-remote kind:path",
+		"caarlos0/jvm",
+		"caarlos0/ports kind:path",
+		"",
+		"# comment whatever",
+		"caarlos0/zsh-git-fetch-merge kind:path",
+		"robbyrussell/oh-my-zsh folder:plugins/battery",
+		"caarlos0/zsh-git-sync kind:path",
+		"caarlos0/zsh-mkc",
+		"caarlos0/zsh-open-pr kind:path",
+		"robbyrussell/oh-my-zsh folder:plugins/asdf",
+		"mafredri/zsh-async",
+		"rupa/z",
+		"Tarrasch/zsh-bd",
+		"",
+		"wbinglee/zsh-wakatime",
+		"zsh-users/zsh-completions",
+		"zsh-users/zsh-autosuggestions",
+		"robbyrussell/oh-my-zsh folder:plugins/autoenv",
+		"# these should be at last!",
+		"sindresorhus/pure",
+		"zsh-users/zsh-syntax-highlighting",
+		"zsh-users/zsh-history-substring-search",
+	}, "\n")
+	for i := 0; i < b.N; i++ {
+		home := home()
+		_, err := antibodylib.New(
+			home,
+			bytes.NewBufferString(bundles),
+			runtime.NumCPU(),
+		).Bundle()
+		assert.NoError(b, err)
+	}
+}
+
 func TestHome(t *testing.T) {
 	assert.Contains(t, antibodylib.Home(), "antibody")
 }
