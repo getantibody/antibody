@@ -82,6 +82,8 @@ func TestMultipleRepositories(t *testing.T) {
 	assert.Len(t, strings.Split(sh, "\n"), 31)
 }
 
+// BenchmarkDownload-8   	       1	2907868713 ns/op	  480296 B/op	    2996 allocs/op v1
+// BenchmarkDownload-8   	       1	2708120385 ns/op	  475904 B/op	    3052 allocs/op v2
 func BenchmarkDownload(b *testing.B) {
 	var bundles = strings.Join([]string{
 		"robbyrussell/oh-my-zsh folder:plugins/aws",

@@ -73,17 +73,13 @@ func NewGit(cwd, line string) Project {
 	}
 }
 
-var locks = map[string]*sync.Mutex{}
-var lock sync.Mutex
+var locks sync.Map
 
 func (g gitProject) Download() error {
+	l, _ := locks.LoadOrStore(g.folder, &sync.Mutex{})
+	lock := l.(*sync.Mutex)
 	lock.Lock()
-	if locks[g.folder] == nil {
-		locks[g.folder] = &sync.Mutex{}
-	}
-	lock.Unlock()
-	locks[g.folder].Lock()
-	defer locks[g.folder].Unlock()
+	defer lock.Unlock()
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
 		// #nosec
 		var cmd = exec.Command("git", "clone",
