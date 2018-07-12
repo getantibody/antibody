@@ -66,6 +66,8 @@ func TestMultipleRepositories(t *testing.T) {
 		"zsh-users/zsh-completions",
 		"zsh-users/zsh-autosuggestions",
 		"",
+		"robbyrussell/oh-my-zsh folder:plugins/asdf",
+		"robbyrussell/oh-my-zsh folder:plugins/autoenv",
 		"# these should be at last!",
 		"sindresorhus/pure",
 		"zsh-users/zsh-syntax-highlighting",
@@ -77,7 +79,7 @@ func TestMultipleRepositories(t *testing.T) {
 		runtime.NumCPU(),
 	).Bundle()
 	assert.NoError(t, err)
-	assert.Len(t, strings.Split(sh, "\n"), 27)
+	assert.Len(t, strings.Split(sh, "\n"), 31)
 }
 
 func TestHome(t *testing.T) {
