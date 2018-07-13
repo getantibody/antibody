@@ -9,7 +9,6 @@ import (
 
 	"github.com/getantibody/antibody/project"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestDownloadAllKinds(t *testing.T) {
@@ -39,7 +38,7 @@ func TestDownloadAllKinds(t *testing.T) {
 func TestDownloadSubmodules(t *testing.T) {
 	var home = home()
 	var proj = project.NewGit(home, "fribmendes/geometry")
-	var module = filepath.Join(proj.Folders()[0], "lib/zsh-async")
+	var module = filepath.Join(proj.Folder(), "lib/zsh-async")
 	assert.NoError(t, proj.Download())
 	assert.NoError(t, proj.Update())
 	files, err := ioutil.ReadDir(module)
@@ -84,16 +83,14 @@ func TestDownloadFolderNaming(t *testing.T) {
 	assert.Equal(
 		t,
 		home+"/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
-		repo.Folders()[0],
+		repo.Folder(),
 	)
 }
 
 func TestSubFolder(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws folder:plugins/asdf")
-	require.Len(t, repo.Folders(), 2)
-	assert.True(t, strings.HasSuffix(repo.Folders()[0], "plugins/aws"))
-	assert.True(t, strings.HasSuffix(repo.Folders()[1], "plugins/asdf"))
+	repo := project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws")
+	assert.True(t, strings.HasSuffix(repo.Folder(), "plugins/aws"))
 }
 
 func TestMultipleSubFolders(t *testing.T) {

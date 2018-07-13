@@ -7,7 +7,6 @@ import (
 
 	"github.com/getantibody/antibody/bundle"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestSuccessfullGitBundles(t *testing.T) {
@@ -33,20 +32,13 @@ func TestSuccessfullGitBundles(t *testing.T) {
 	}
 	for _, row := range table {
 		t.Run(row.line, func(t *testing.T) {
+			t.Parallel()
 			home := home()
 			result, err := bundle.New(home, row.line).Get()
-			assert.NoError(t, err)
 			assert.Contains(t, result, row.result)
+			assert.NoError(t, err)
 		})
 	}
-}
-
-func TestMultipleFolders(t *testing.T) {
-	home := home()
-	result, err := bundle.New(home, "caarlos0/jvm kind:path folder:abc folder:defg").Get()
-	require.NoError(t, err)
-	require.Contains(t, result, "jvm/abc:")
-	require.Contains(t, result, "jvm/defg")
 }
 
 func TestZshInvalidGitBundle(t *testing.T) {

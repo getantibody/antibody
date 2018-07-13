@@ -23,6 +23,6 @@ func (l localProject) Update() error {
 	return l.Download()
 }
 
-func (l localProject) Folders() []string {
-	return []string{l.folder}
+func (l localProject) Folder() string {
+	return l.folder
 }

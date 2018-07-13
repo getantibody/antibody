@@ -10,7 +10,7 @@ import (
 type Project interface {
 	Download() error
 	Update() error
-	Folders() []string
+	Folder() string
 }
 
 // New decides what kind of project it is, based on the given line

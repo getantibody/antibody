@@ -10,7 +10,6 @@ import (
 
 	"github.com/getantibody/antibody/antibodylib"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestAntibody(t *testing.T) {
@@ -67,7 +66,8 @@ func TestMultipleRepositories(t *testing.T) {
 		"zsh-users/zsh-completions",
 		"zsh-users/zsh-autosuggestions",
 		"",
-		"robbyrussell/oh-my-zsh folder:plugins/asdf folder:plugins/autoenv",
+		"robbyrussell/oh-my-zsh folder:plugins/asdf",
+		"robbyrussell/oh-my-zsh folder:plugins/autoenv",
 		"# these should be at last!",
 		"sindresorhus/pure",
 		"zsh-users/zsh-syntax-highlighting",
@@ -82,31 +82,22 @@ func TestMultipleRepositories(t *testing.T) {
 	assert.Len(t, strings.Split(sh, "\n"), 31)
 }
 
-func TestMultipleFolders(t *testing.T) {
-	home := home()
-	sh, err := antibodylib.New(
-		home,
-		bytes.NewBufferString(
-			"robbyrussell/oh-my-zsh folder:plugins/asdf folder:plugins/autoenv",
-		),
-		runtime.NumCPU(),
-	).Bundle()
-	require.NoError(t, err)
-	require.Len(t, strings.Split(sh, "\n"), 4)
-}
-
+// BenchmarkDownload-8   	       1	2907868713 ns/op	  480296 B/op	    2996 allocs/op v1
+// BenchmarkDownload-8   	       1	2708120385 ns/op	  475904 B/op	    3052 allocs/op v2
 func BenchmarkDownload(b *testing.B) {
 	var bundles = strings.Join([]string{
-		"robbyrussell/oh-my-zsh folder:plugins/aws folder:plugins/battery folder:plugins/asdf folder:plugins/autoenv",
+		"robbyrussell/oh-my-zsh folder:plugins/aws",
 		"caarlos0/git-add-remote kind:path",
 		"caarlos0/jvm",
 		"caarlos0/ports kind:path",
 		"",
 		"# comment whatever",
 		"caarlos0/zsh-git-fetch-merge kind:path",
+		"robbyrussell/oh-my-zsh folder:plugins/battery",
 		"caarlos0/zsh-git-sync kind:path",
 		"caarlos0/zsh-mkc",
 		"caarlos0/zsh-open-pr kind:path",
+		"robbyrussell/oh-my-zsh folder:plugins/asdf",
 		"mafredri/zsh-async",
 		"rupa/z",
 		"Tarrasch/zsh-bd",
@@ -114,6 +105,7 @@ func BenchmarkDownload(b *testing.B) {
 		"wbinglee/zsh-wakatime",
 		"zsh-users/zsh-completions",
 		"zsh-users/zsh-autosuggestions",
+		"robbyrussell/oh-my-zsh folder:plugins/autoenv",
 		"# these should be at last!",
 		"sindresorhus/pure",
 		"zsh-users/zsh-syntax-highlighting",

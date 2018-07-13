@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 
 	"github.com/getantibody/folder"
 )
@@ -15,7 +16,7 @@ type gitProject struct {
 	URL     string
 	Version string
 	folder  string
-	inners  []string
+	inner   string
 }
 
 // NewClonedGit is a git project that was already cloned, so, only Update
@@ -37,14 +38,14 @@ func NewClonedGit(home, folderName string) Project {
 // be downloaded to the provided cwd
 func NewGit(cwd, line string) Project {
 	version := "master"
-	inners := []string{}
+	inner := ""
 	parts := strings.Split(line, " ")
 	for _, part := range parts {
 		if strings.HasPrefix(part, "branch:") {
 			version = strings.Replace(part, "branch:", "", -1)
 		}
 		if strings.HasPrefix(part, "folder:") {
-			inners = append(inners, strings.Replace(part, "folder:", "", -1))
+			inner = strings.Replace(part, "folder:", "", -1)
 		}
 	}
 	repo := parts[0]
@@ -68,11 +69,25 @@ func NewGit(cwd, line string) Project {
 		Version: version,
 		URL:     url,
 		folder:  folder,
-		inners:  inners,
+		inner:   inner,
 	}
 }
 
+var locks = struct {
+	sync.Mutex
+	m map[string]*sync.Mutex
+}{
+	m: map[string]*sync.Mutex{},
+}
+
 func (g gitProject) Download() error {
+	if _, ok := locks.m[g.folder]; !ok {
+		locks.Lock()
+		locks.m[g.folder] = new(sync.Mutex)
+		locks.Unlock()
+	}
+	locks.m[g.folder].Lock()
+	defer locks.m[g.folder].Unlock()
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
 		// #nosec
 		var cmd = exec.Command(
@@ -118,13 +133,6 @@ func branch(folder string) (string, error) {
 	return strings.Replace(string(branch), "\n", "", -1), err
 }
 
-func (g gitProject) Folders() []string {
-	if len(g.inners) == 0 {
-		return []string{g.folder}
-	}
-	var result = make([]string, len(g.inners))
-	for i := range g.inners {
-		result[i] = filepath.Join(g.folder, g.inners[i])
-	}
-	return result
+func (g gitProject) Folder() string {
+	return filepath.Join(g.folder, g.inner)
 }
