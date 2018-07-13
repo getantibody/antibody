@@ -21,7 +21,6 @@ func (bundle zshBundle) Get() (string, error) {
 	var lines = []string{}
 	for _, folder := range bundle.Project.Folders() {
 		for _, glob := range zshGlobs {
-			fmt.Println("vaaaaaai", folder)
 			files, err := filepath.Glob(filepath.Join(folder, glob))
 			if err != nil {
 				return "", err
