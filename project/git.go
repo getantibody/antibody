@@ -73,33 +73,21 @@ func NewGit(cwd, line string) Project {
 	}
 }
 
-var locks = struct {
-	sync.Mutex
-	m map[string]*sync.Mutex
-}{
-	m: map[string]*sync.Mutex{},
-}
+var locks sync.Map
 
 func (g gitProject) Download() error {
-	if _, ok := locks.m[g.folder]; !ok {
-		locks.Lock()
-		locks.m[g.folder] = new(sync.Mutex)
-		locks.Unlock()
-	}
-	locks.m[g.folder].Lock()
-	defer locks.m[g.folder].Unlock()
+	l, _ := locks.LoadOrStore(g.folder, &sync.Mutex{})
+	lock := l.(*sync.Mutex)
+	lock.Lock()
+	defer lock.Unlock()
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
 		// #nosec
-		var cmd = exec.Command(
-			"git", "clone",
+		var cmd = exec.Command("git", "clone",
 			"--recursive",
 			"--depth", "1",
-			"--quiet",
-			"--single-branch",
 			"-b", g.Version,
 			g.URL,
-			g.folder,
-		)
+			g.folder)
 		cmd.Env = append(os.Environ(), "GIT_TERMINAL_PROMPT=0")
 
 		if bts, err := cmd.CombinedOutput(); err != nil {
