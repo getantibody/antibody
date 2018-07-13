@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/getantibody/antibody/antibodylib"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAntibody(t *testing.T) {
@@ -29,23 +29,23 @@ func TestAntibody(t *testing.T) {
 		bytes.NewBufferString(strings.Join(bundles, "\n")),
 		runtime.NumCPU(),
 	).Bundle()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	files, err := ioutil.ReadDir(home)
-	assert.NoError(t, err)
-	assert.Len(t, files, 3)
-	assert.Contains(t, sh, `export PATH="/tmp:$PATH"`)
-	assert.Contains(t, sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
-	assert.Contains(t, sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
+	require.NoError(t, err)
+	require.Len(t, files, 3)
+	require.Contains(t, sh, `export PATH="/tmp:$PATH"`)
+	require.Contains(t, sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"`)
+	require.Contains(t, sh, `export PATH="`+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm:$PATH"`)
 	// nolint: lll
-	assert.Contains(t, sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/git-open-pr.plugin.zsh`)
+	require.Contains(t, sh, `source `+home+`/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-zsh-open-pr/git-open-pr.plugin.zsh`)
 }
 
 func TestAntibodyError(t *testing.T) {
 	home := home()
 	bundles := bytes.NewBufferString("invalid-repo")
 	sh, err := antibodylib.New(home, bundles, runtime.NumCPU()).Bundle()
-	assert.Error(t, err)
-	assert.Empty(t, sh)
+	require.Error(t, err)
+	require.Empty(t, sh)
 }
 
 func TestMultipleRepositories(t *testing.T) {
@@ -78,8 +78,8 @@ func TestMultipleRepositories(t *testing.T) {
 		bytes.NewBufferString(strings.Join(bundles, "\n")),
 		runtime.NumCPU(),
 	).Bundle()
-	assert.NoError(t, err)
-	assert.Len(t, strings.Split(sh, "\n"), 31)
+	require.NoError(t, err)
+	require.Len(t, strings.Split(sh, "\n"), 31)
 }
 
 // BenchmarkDownload-8   	       1	2907868713 ns/op	  480296 B/op	    2996 allocs/op v1
@@ -118,17 +118,17 @@ func BenchmarkDownload(b *testing.B) {
 			bytes.NewBufferString(bundles),
 			runtime.NumCPU(),
 		).Bundle()
-		assert.NoError(b, err)
+		require.NoError(b, err)
 	}
 }
 
 func TestHome(t *testing.T) {
-	assert.Contains(t, antibodylib.Home(), "antibody")
+	require.Contains(t, antibodylib.Home(), "antibody")
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
-	assert.NoError(t, os.Setenv("ANTIBODY_HOME", "/tmp"))
-	assert.Equal(t, "/tmp", antibodylib.Home())
+	require.NoError(t, os.Setenv("ANTIBODY_HOME", "/tmp"))
+	require.Equal(t, "/tmp", antibodylib.Home())
 }
 
 func home() string {

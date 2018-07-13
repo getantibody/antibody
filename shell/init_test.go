@@ -4,11 +4,11 @@ import (
 	"testing"
 
 	"github.com/getantibody/antibody/shell"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGeneratesInit(t *testing.T) {
 	shell, err := shell.Init()
-	assert.NoError(t, err)
-	assert.NotEmpty(t, shell)
+	require.NoError(t, err)
+	require.NotEmpty(t, shell)
 }
