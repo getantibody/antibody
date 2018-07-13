@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 
 	"github.com/getantibody/folder"
 )
@@ -72,7 +73,13 @@ func NewGit(cwd, line string) Project {
 	}
 }
 
+var locks sync.Map
+
 func (g gitProject) Download() error {
+	l, _ := locks.LoadOrStore(g.folder, &sync.Mutex{})
+	lock := l.(*sync.Mutex)
+	lock.Lock()
+	defer lock.Unlock()
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
 		// #nosec
 		var cmd = exec.Command("git", "clone",

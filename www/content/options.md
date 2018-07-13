@@ -58,4 +58,17 @@ Example:
 ```console
 $ antibody bundle robbyrussell/oh-my-zsh folder:plugins/aws
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
+```
+
+If you want multiple folders from the same plugin, you can just repeat the
+plugin with a different `folder` option:
+
+```console
+$ antibody bundle "robbyrussell/oh-my-zsh folder:plugins/aws
+  robbyrussell/oh-my-zsh folder:plugins/asdf"
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf/asdf.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf )
 ```

@@ -95,8 +95,10 @@ func TestSubFolder(t *testing.T) {
 
 func TestMultipleSubFolders(t *testing.T) {
 	home := home()
-	assert.NoError(t, project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws").Download())
-	assert.NoError(t, project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/battery").Download())
+	assert.NoError(t, project.NewGit(home, strings.Join([]string{
+		"robbyrussell/oh-my-zsh folder:plugins/aws",
+		"robbyrussell/oh-my-zsh folder:plugins/battery",
+	}, "\n")).Download())
 }
 
 func home() string {
