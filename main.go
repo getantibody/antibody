@@ -89,8 +89,10 @@ func update() {
 
 func purge() {
 	fmt.Println("Removing", *purgee)
-	var err = os.RemoveAll(project.New(antibodylib.Home(), *purgee).Folder())
-	app.FatalIfError(err, "failed to purge")
+	for _, folder := range project.New(antibodylib.Home(), *purgee).Folders() {
+		var err = os.RemoveAll(folder)
+		app.FatalIfError(err, "failed to purge")
+	}
 }
 
 func list() {

@@ -14,25 +14,28 @@ type zshBundle struct {
 
 var zshGlobs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
 
-func (bundle zshBundle) Get() (result string, err error) {
-	if err = bundle.Project.Download(); err != nil {
-		return result, err
+func (bundle zshBundle) Get() (string, error) {
+	if err := bundle.Project.Download(); err != nil {
+		return "", err
 	}
-	for _, glob := range zshGlobs {
-		files, err := filepath.Glob(filepath.Join(bundle.Project.Folder(), glob))
-		if err != nil {
-			return result, err
+	var lines = []string{}
+	for _, folder := range bundle.Project.Folders() {
+		for _, glob := range zshGlobs {
+			fmt.Println("vaaaaaai", folder)
+			files, err := filepath.Glob(filepath.Join(folder, glob))
+			if err != nil {
+				return "", err
+			}
+			if files == nil {
+				continue
+			}
+			for _, file := range files {
+				lines = append(lines, "source "+file)
+			}
+			lines = append(lines, fmt.Sprintf("fpath+=( %s )", folder))
+			break
 		}
-		if files == nil {
-			continue
-		}
-		var lines []string
-		for _, file := range files {
-			lines = append(lines, "source "+file)
-		}
-		lines = append(lines, fmt.Sprintf("fpath+=( %s )", bundle.Project.Folder()))
-		return strings.Join(lines, "\n"), err
 	}
 
-	return result, nil
+	return strings.Join(lines, "\n"), nil
 }

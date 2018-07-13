@@ -11,5 +11,5 @@ func TestLocalProject(t *testing.T) {
 	proj := project.NewLocal("/tmp")
 	assert.NoError(t, proj.Download())
 	assert.NoError(t, proj.Update())
-	assert.Equal(t, "/tmp", proj.Folder())
+	assert.Equal(t, []string{"/tmp"}, proj.Folders())
 }
