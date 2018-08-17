@@ -67,6 +67,14 @@ func TestUpdateExistentLocalRepo(t *testing.T) {
 	require.NoError(t, alreadyClonedRepo.Update())
 }
 
+func TestDownloadChangeBranch(t *testing.T) {
+	home := home()
+	repo := project.NewGit(home, "caarlos0/jvm")
+	require.NoError(t, repo.Download())
+	repo = project.NewGit(home, "caarlos0/jvm branch:gh-pages")
+	require.NoError(t, repo.Download())
+}
+
 func TestUpdateNonExistentLocalRepo(t *testing.T) {
 	home := home()
 	repo := project.NewGit(home, "caarlos0/ports")

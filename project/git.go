@@ -96,6 +96,25 @@ func (g gitProject) Download() error {
 			return err
 		}
 	}
+
+	if _, err := os.Stat(g.folder); err == nil {
+		// #nosec
+		var cmd = exec.Command("sh", "-c",
+			"git -C "+g.folder+
+				" checkout"+
+				" -B "+g.Version+
+				" && git -C "+g.folder+
+				" fetch"+
+				" --recurse-submodules"+
+				" --depth 1"+
+				" origin "+g.Version)
+		cmd.Env = append(os.Environ(), "GIT_TERMINAL_PROMPT=0")
+
+		if bts, err := cmd.CombinedOutput(); err != nil {
+			log.Println("git checkout to and fetch of specified branch failed for", g.folder, string(bts))
+			return err
+		}
+	}
 	return nil
 }
 
