@@ -101,5 +101,5 @@ func list() {
 	for _, b := range projects {
 		fmt.Fprintf(w, "%s\t%s\n", folder.ToURL(b), filepath.Join(home, b))
 	}
-	w.Flush()
+	app.FatalIfError(w.Flush(), "failed to flush")
 }
