@@ -112,7 +112,7 @@ func TestSubFolder(t *testing.T) {
 func TestPath(t *testing.T) {
 	home := home()
 	repo := project.NewGit(home, "docker/cli path:contrib/completion/zsh/_docker")
-	assert.True(t, strings.HasSuffix(repo.Folder(), "contrib/completion/zsh/_docker"))
+	require.True(t, strings.HasSuffix(repo.Folder(), "contrib/completion/zsh/_docker"))
 }
 
 func TestMultipleSubFolders(t *testing.T) {
