@@ -29,12 +29,12 @@ func New(home, line string) Bundle {
 	kind := extract(line)
 	proj := project.New(home, line)
 	if kind == "path" {
-		return pathBundle{proj}
+		return pathBundle{Project: proj}
 	}
 	if kind == "dummy" {
-		return dummyBundle{proj}
+		return dummyBundle{Project: proj}
 	}
-	return zshBundle{proj}
+	return zshBundle{Project: proj}
 }
 
 func extract(line string) string {

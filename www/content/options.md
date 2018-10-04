@@ -1,5 +1,7 @@
 ---
 title: Options
+weight: 410
+menu: true
 ---
 
 There are a few options you can use that should cover most common use cases.
@@ -11,10 +13,10 @@ The `kind` annotation can be used to determine how a bundle should be treated.
 
 The default is `kind:zsh`, which will look for files that match these globs:
 
-* `*.plugin.zsh`
-* `*.zsh`
-* `*.sh`
-* `*.zsh-theme`
+- `*.plugin.zsh`
+- `*.zsh`
+- `*.sh`
+- `*.zsh-theme`
 
 And `source` them.
 
@@ -56,4 +58,17 @@ Example:
 ```console
 $ antibody bundle robbyrussell/oh-my-zsh folder:plugins/aws
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
+```
+
+If you want multiple folders from the same plugin, you can just repeat the
+plugin with a different `folder` option:
+
+```console
+$ antibody bundle "robbyrussell/oh-my-zsh folder:plugins/aws
+  robbyrussell/oh-my-zsh folder:plugins/asdf"
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf/asdf.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf )
 ```

@@ -1,22 +1,26 @@
 language: go
-go: 1.9
+go: '1.10'
 install:
   - make setup
   - npm install -g prettier
 script: make ci
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - gem install fpm
-  - test -n "$TRAVIS_TAG" && curl -sL https://git.io/goreleaser | bash
   - make static
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  repo: getantibody/getantibody.github.io
-  local_dir: ./dist/getantibody.github.io
-  target_branch: master
-  on:
-    master: true
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: www/public
+    target_branch: master
+    repo: getantibody/getantibody.github.io
+    verbose: true
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: curl -sL https://git.io/goreleaser | bash -s -- --rm-dist
+    on:
+      tags: true
 notifications:
   email: false

@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/getantibody/antibody/bundle"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSuccessfullGitBundles(t *testing.T) {
@@ -15,7 +15,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 	}{
 		{
 			"caarlos0/jvm",
-			"jvm.plugin.zsh",
+			"jvm.plugin.zsh\nfpath+=( ",
 		},
 		{
 			"caarlos0/jvm kind:path",
@@ -36,10 +36,11 @@ func TestSuccessfullGitBundles(t *testing.T) {
 	}
 	for _, row := range table {
 		t.Run(row.line, func(t *testing.T) {
+			t.Parallel()
 			home := home()
 			result, err := bundle.New(home, row.line).Get()
-			assert.Contains(t, result, row.result)
-			assert.NoError(t, err)
+			require.Contains(t, result, row.result)
+			require.NoError(t, err)
 		})
 	}
 }
@@ -47,41 +48,41 @@ func TestSuccessfullGitBundles(t *testing.T) {
 func TestZshInvalidGitBundle(t *testing.T) {
 	home := home()
 	_, err := bundle.New(home, "doesnt exist").Get()
-	assert.Error(t, err)
+	require.Error(t, err)
 }
 
 func TestZshLocalBundle(t *testing.T) {
 	home := home()
-	assert.NoError(t, ioutil.WriteFile(home+"/a.sh", []byte("echo 9"), 0644))
+	require.NoError(t, ioutil.WriteFile(home+"/a.sh", []byte("echo 9"), 0644))
 	result, err := bundle.New(home, home).Get()
-	assert.Contains(t, result, "a.sh")
-	assert.NoError(t, err)
+	require.Contains(t, result, "a.sh")
+	require.NoError(t, err)
 }
 
 func TestZshInvalidLocalBundle(t *testing.T) {
 	home := home()
 	_, err := bundle.New(home, "/asduhasd/asdasda").Get()
-	assert.Error(t, err)
+	require.Error(t, err)
 }
 
 func TestZshBundleWithNoShFiles(t *testing.T) {
 	home := home()
 	_, err := bundle.New(home, "getantibody/antibody").Get()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestPathInvalidLocalBundle(t *testing.T) {
 	home := home()
 	_, err := bundle.New(home, "/asduhasd/asdasda kind:path").Get()
-	assert.Error(t, err)
+	require.Error(t, err)
 }
 
 func TestPathLocalBundle(t *testing.T) {
 	home := home()
-	assert.NoError(t, ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
+	require.NoError(t, ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
 	result, err := bundle.New(home, home+" kind:path").Get()
-	assert.Equal(t, "export PATH=\""+home+":$PATH\"", result)
-	assert.NoError(t, err)
+	require.Equal(t, "export PATH=\""+home+":$PATH\"", result)
+	require.NoError(t, err)
 }
 
 func home() string {

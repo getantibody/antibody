@@ -1,13 +1,15 @@
 ---
 title: Install
+weight: 300
+menu: true
 ---
 
-Antibody can be installed trhough a variety of sources.
+Antibody can be installed through a variety of sources.
 
 The simplest way is to run:
 
 ```sh
-curl -sL git.io/antibody | bash -s
+curl -sL git.io/antibody | sh -s
 ```
 
 This will put the binary in `/usr/local/bin/antibody`

@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/getantibody/antibody/project"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestLocalProject(t *testing.T) {
 	proj := project.NewLocal("/tmp")
-	assert.NoError(t, proj.Download())
-	assert.NoError(t, proj.Update())
-	assert.Equal(t, "/tmp", proj.Folder())
+	require.NoError(t, proj.Download())
+	require.NoError(t, proj.Update())
+	require.Equal(t, "/tmp", proj.Folder())
 }

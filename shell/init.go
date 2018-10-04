@@ -10,7 +10,7 @@ const tmpl = `#!/usr/bin/env zsh
 antibody() {
 	case "$1" in
 	bundle)
-		source <( {{ . }} $@ ) 2> /dev/null || {{ . }} $@
+		source <( {{ . }} $@ ) || {{ . }} $@
 		;;
 	*)
 		{{ . }} $@
@@ -19,7 +19,7 @@ antibody() {
 }
 
 _antibody() {
-	IFS=' ' read -A reply <<< "$(echo "bundle update list home init help")"
+	IFS=' ' read -A reply <<< "help bundle update home purge list init"
 }
 compctl -K _antibody antibody
 `
