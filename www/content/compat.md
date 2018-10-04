@@ -16,5 +16,5 @@ The `theme` command is not implemented. You can just use `bundle` instead.
 oh-my-zsh plugins are supported by using the [folder annotation](#options.sub_folders):
 
 ```sh
-antibody bundle robbyrussell/oh-my-zsh folder:plugins/aws
+antibody bundle robbyrussell/oh-my-zsh path:plugins/aws
 ```

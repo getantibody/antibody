@@ -48,25 +48,25 @@ $ antibody bundle caarlos0/jvm branch:v2
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm/jvm.plugin.zsh
 ```
 
-## Sub-folders
+## Path
 
-You may specify a subfolder if the repo you are bundling contains multiple
-plugins.
+You may specify a subfolder or a specific file if the repo you are bundling
+contains multiple plugins.
 
 Example:
 
 ```console
-$ antibody bundle robbyrussell/oh-my-zsh folder:plugins/aws
+$ antibody bundle robbyrussell/oh-my-zsh path:plugins/aws
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
 fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
 ```
 
-If you want multiple folders from the same plugin, you can just repeat the
-plugin with a different `folder` option:
+If you want multiple paths within from the same plugin, you can just repeat the
+plugin with a different `path` option:
 
 ```console
-$ antibody bundle "robbyrussell/oh-my-zsh folder:plugins/aws
-  robbyrussell/oh-my-zsh folder:plugins/asdf"
+$ antibody bundle "robbyrussell/oh-my-zsh path:plugins/aws/aws.plugin.zsh
+  robbyrussell/oh-my-zsh path:plugins/asdf"
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
 fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf/asdf.plugin.zsh

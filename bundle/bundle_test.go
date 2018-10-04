@@ -29,6 +29,10 @@ func TestSuccessfullGitBundles(t *testing.T) {
 			"caarlos0/jvm kind:dummy",
 			"",
 		},
+		{
+			"docker/cli path:contrib/completion/zsh/_docker",
+			"contrib/completion/zsh/_docker",
+		},
 	}
 	for _, row := range table {
 		t.Run(row.line, func(t *testing.T) {

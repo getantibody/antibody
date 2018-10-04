@@ -25,7 +25,7 @@ caarlos0/zsh-open-github-pr
 # empty lines are skipped
 
 # annotations are also allowed:
-robbyrussell/oh-my-zsh folder:plugins/aws
+robbyrussell/oh-my-zsh path:plugins/aws
 
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
