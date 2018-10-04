@@ -80,3 +80,8 @@ source ~/.zsh_plugins.sh
 ```
 
 And that's it!
+
+## CleanMyMac and others
+
+If you use CleanMyMac or similar tools, make sure to set it up to ignore the
+`antibody home` folder, otherwise it may delete your plugins.
