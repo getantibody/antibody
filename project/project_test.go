@@ -54,6 +54,6 @@ func TestUpdateHomeWithNoGitProjects(t *testing.T) {
 	home := home()
 	repo := project.New(home, "caarlos0/jvm")
 	require.NoError(t, repo.Download())
-	require.NoError(t, os.RemoveAll(filepath.Join(repo.Folder(), ".git")))
+	require.NoError(t, os.RemoveAll(filepath.Join(repo.Path(), ".git")))
 	require.Error(t, project.Update(home, runtime.NumCPU()))
 }

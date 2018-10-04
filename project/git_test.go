@@ -38,7 +38,7 @@ func TestDownloadAllKinds(t *testing.T) {
 func TestDownloadSubmodules(t *testing.T) {
 	var home = home()
 	var proj = project.NewGit(home, "fribmendes/geometry")
-	var module = filepath.Join(proj.Folder(), "lib/zsh-async")
+	var module = filepath.Join(proj.Path(), "lib/zsh-async")
 	require.NoError(t, proj.Download())
 	require.NoError(t, proj.Update())
 	files, err := ioutil.ReadDir(module)
@@ -99,27 +99,27 @@ func TestDownloadFolderNaming(t *testing.T) {
 	require.Equal(
 		t,
 		home+"/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
-		repo.Folder(),
+		repo.Path(),
 	)
 }
 
 func TestSubFolder(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "robbyrussell/oh-my-zsh folder:plugins/aws")
-	require.True(t, strings.HasSuffix(repo.Folder(), "plugins/aws"))
+	repo := project.NewGit(home, "robbyrussell/oh-my-zsh path:plugins/aws")
+	require.True(t, strings.HasSuffix(repo.Path(), "plugins/aws"))
 }
 
 func TestPath(t *testing.T) {
 	home := home()
 	repo := project.NewGit(home, "docker/cli path:contrib/completion/zsh/_docker")
-	require.True(t, strings.HasSuffix(repo.Folder(), "contrib/completion/zsh/_docker"))
+	require.True(t, strings.HasSuffix(repo.Path(), "contrib/completion/zsh/_docker"))
 }
 
 func TestMultipleSubFolders(t *testing.T) {
 	home := home()
 	require.NoError(t, project.NewGit(home, strings.Join([]string{
-		"robbyrussell/oh-my-zsh folder:plugins/aws",
-		"robbyrussell/oh-my-zsh folder:plugins/battery",
+		"robbyrussell/oh-my-zsh path:plugins/aws",
+		"robbyrussell/oh-my-zsh path:plugins/battery",
 	}, "\n")).Download())
 }
 
