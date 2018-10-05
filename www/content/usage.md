@@ -85,3 +85,9 @@ And that's it!
 
 If you use CleanMyMac or similar tools, make sure to set it up to ignore the
 `antibody home` folder, otherwise it may delete your plugins.
+
+You may also change Antibody's home folder, for example:
+
+```sh
+export ANTIBODY_HOME=~/Libary/antibody
+```
