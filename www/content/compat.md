@@ -13,7 +13,7 @@ given plugin.
 
 The `theme` command is not implemented. You can just use `bundle` instead.
 
-oh-my-zsh plugins are supported by using the [folder annotation](#options.sub_folders):
+oh-my-zsh plugins are supported by using the [`path` annotation](#options.path):
 
 ```sh
 antibody bundle robbyrussell/oh-my-zsh path:plugins/aws
