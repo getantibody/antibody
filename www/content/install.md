@@ -20,6 +20,12 @@ You can also use homebrew (on macOS):
 brew install getantibody/tap/antibody
 ```
 
+Or install using [Snapcraft](https://snapcraft.io/antibody):
+
+```sh
+snap install antibody
+```
+
 Or even using [AUR](https://aur.archlinux.org/packages/antibody/) on Arch Linux.
 
 You can also always download and install manually via tar.gz archives or
