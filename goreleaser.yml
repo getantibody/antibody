@@ -8,6 +8,9 @@ build:
     - amd64
     - arm
     - arm64
+  goarm:
+    - 6
+    - 7
 archive:
   name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   replacements:
