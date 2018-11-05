@@ -1,5 +1,11 @@
 language: go
-go: '1.10'
+go: '1.11.x'
+addons:
+  apt:
+    packages:
+      - snapd
+env:
+  - PATH=/snap/bin:$PATH
 install:
   - make setup
   - npm install -g prettier
@@ -7,10 +13,12 @@ script: make ci
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - make static
+  - test -n "$TRAVIS_TAG" && sudo snap install snapcraft --classic
+  - test -n "$TRAVIS_TAG" && openssl aes-256-cbc -K $encrypted_8582487a7970_key -iv $encrypted_8582487a7970_iv -in snap.login.enc -out snap.login -d
 deploy:
   - provider: pages
     skip_cleanup: true
-    github_token: $GITHUB_TOKEN
+    github_token: "$GITHUB_TOKEN"
     local_dir: www/public
     target_branch: master
     repo: getantibody/getantibody.github.io
