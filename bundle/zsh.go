@@ -25,7 +25,8 @@ func (bundle zshBundle) Get() (result string, err error) {
 	}
 	// it is a file, not a folder, so just return it
 	if info.Mode().IsRegular() {
-		return bundle.Project.Path(), nil
+		// XXX: should we add the parent folder to fpath too?
+		return "source " + bundle.Project.Path(), nil
 	}
 	for _, glob := range zshGlobs {
 		files, err := filepath.Glob(filepath.Join(bundle.Project.Path(), glob))

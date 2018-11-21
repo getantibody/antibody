@@ -47,7 +47,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 
 func TestZshInvalidGitBundle(t *testing.T) {
 	home := home()
-	_, err := bundle.New(home, "doesnt exist").Get()
+	_, err := bundle.New(home, "does not exist").Get()
 	require.Error(t, err)
 }
 
