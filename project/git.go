@@ -79,6 +79,7 @@ func NewGit(cwd, line string) Project {
 	}
 }
 
+// nolint: gochecknoglobals
 var locks sync.Map
 
 func (g gitProject) Download() error {

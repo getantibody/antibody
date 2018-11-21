@@ -20,6 +20,7 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
+// nolint: gochecknoglobals
 var (
 	version = "dev"
 
@@ -38,6 +39,7 @@ var (
 	initCmd   = app.Command("init", "initializes the shell so Antibody can work as expected")
 )
 
+// nolint: gochecknoinits
 func init() {
 	log.SetOutput(os.Stderr)
 	log.SetPrefix("antibody: ")

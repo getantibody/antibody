@@ -13,8 +13,6 @@ type zshBundle struct {
 	Project project.Project
 }
 
-var zshGlobs = []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"}
-
 func (bundle zshBundle) Get() (result string, err error) {
 	if err = bundle.Project.Download(); err != nil {
 		return result, err
@@ -28,7 +26,7 @@ func (bundle zshBundle) Get() (result string, err error) {
 		// XXX: should we add the parent folder to fpath too?
 		return "source " + bundle.Project.Path(), nil
 	}
-	for _, glob := range zshGlobs {
+	for _, glob := range []string{"*.plugin.zsh", "*.zsh", "*.sh", "*.zsh-theme"} {
 		files, err := filepath.Glob(filepath.Join(bundle.Project.Path(), glob))
 		if err != nil {
 			return result, err

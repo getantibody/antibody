@@ -35,6 +35,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 		},
 	}
 	for _, row := range table {
+		row := row
 		t.Run(row.line, func(t *testing.T) {
 			t.Parallel()
 			home := home()
