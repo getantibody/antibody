@@ -102,6 +102,7 @@ func BenchmarkDownload(b *testing.B) {
 		"rupa/z",
 		"Tarrasch/zsh-bd",
 		"",
+		"Linuxbrew/brew path:completions/zsh kind:fpath",
 		"wbinglee/zsh-wakatime",
 		"zsh-users/zsh-completions",
 		"zsh-users/zsh-autosuggestions",

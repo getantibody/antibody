@@ -31,6 +31,9 @@ func New(home, line string) Bundle {
 	if kind == "path" {
 		return pathBundle{Project: proj}
 	}
+	if kind == "fpath" {
+		return fpathBundle{Project: proj}
+	}
 	if kind == "dummy" {
 		return dummyBundle{Project: proj}
 	}

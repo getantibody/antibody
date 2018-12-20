@@ -11,6 +11,8 @@ Let's take a look!
 
 The `kind` annotation can be used to determine how a bundle should be treated.
 
+### zsh
+
 The default is `kind:zsh`, which will look for files that match these globs:
 
 - `*.plugin.zsh`
@@ -27,6 +29,8 @@ $ antibody bundle caarlos0/jvm kind:zsh
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm/jvm.plugin.zsh
 ```
 
+### path
+
 The `kind:path` mode will just put the plugin folder in your `$PATH`.
 
 Example:
@@ -35,6 +39,21 @@ Example:
 $ antibody bundle caarlos0/ports kind:path
 export PATH="/Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports:$PATH"
 ```
+
+### fpath
+
+The `kind:fpath` only puts the plugin folder on the `fpath`, doing nothing else.
+It can be specially useful for completion scripts that won't allow to be
+sourced.
+
+Example:
+
+```console
+$ antibody bundle Linuxbrew/brew path:completions/zsh kind:fpath
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-Linuxbrew-SLASH-brew/completions/zsh )
+```
+
+<!-- TODO: document kind:dummy? -->
 
 ## Branch
 

@@ -30,6 +30,10 @@ func TestSuccessfullGitBundles(t *testing.T) {
 			"",
 		},
 		{
+			"caarlos0/jvm kind:fpath",
+			"fpath+=( ",
+		},
+		{
 			"docker/cli path:contrib/completion/zsh/_docker",
 			"contrib/completion/zsh/_docker",
 		},
