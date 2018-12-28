@@ -1,4 +1,4 @@
-package antibodylib_test
+package antibodylib
 
 import (
 	"bytes"
@@ -8,7 +8,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/getantibody/antibody/antibodylib"
 	"github.com/stretchr/testify/require"
 )
 
@@ -24,7 +23,7 @@ func TestAntibody(t *testing.T) {
 		"  # trick play",
 		"/tmp kind:path",
 	}
-	sh, err := antibodylib.New(
+	sh, err := New(
 		home,
 		bytes.NewBufferString(strings.Join(bundles, "\n")),
 		runtime.NumCPU(),
@@ -43,7 +42,7 @@ func TestAntibody(t *testing.T) {
 func TestAntibodyError(t *testing.T) {
 	home := home()
 	bundles := bytes.NewBufferString("invalid-repo")
-	sh, err := antibodylib.New(home, bundles, runtime.NumCPU()).Bundle()
+	sh, err := New(home, bundles, runtime.NumCPU()).Bundle()
 	require.Error(t, err)
 	require.Empty(t, sh)
 }
@@ -73,7 +72,7 @@ func TestMultipleRepositories(t *testing.T) {
 		"zsh-users/zsh-syntax-highlighting",
 		"zsh-users/zsh-history-substring-search",
 	}
-	sh, err := antibodylib.New(
+	sh, err := New(
 		home,
 		bytes.NewBufferString(strings.Join(bundles, "\n")),
 		runtime.NumCPU(),
@@ -114,7 +113,7 @@ func BenchmarkDownload(b *testing.B) {
 	}, "\n")
 	for i := 0; i < b.N; i++ {
 		home := home()
-		_, err := antibodylib.New(
+		_, err := New(
 			home,
 			bytes.NewBufferString(bundles),
 			runtime.NumCPU(),
@@ -124,12 +123,12 @@ func BenchmarkDownload(b *testing.B) {
 }
 
 func TestHome(t *testing.T) {
-	require.Contains(t, antibodylib.Home(), "antibody")
+	require.Contains(t, Home(), "antibody")
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
 	require.NoError(t, os.Setenv("ANTIBODY_HOME", "/tmp"))
-	require.Equal(t, "/tmp", antibodylib.Home())
+	require.Equal(t, "/tmp", Home())
 }
 
 func home() string {

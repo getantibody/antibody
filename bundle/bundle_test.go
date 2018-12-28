@@ -1,11 +1,10 @@
-package bundle_test
+package bundle
 
 import (
 	"io/ioutil"
 	"os"
 	"testing"
 
-	"github.com/getantibody/antibody/bundle"
 	"github.com/stretchr/testify/require"
 )
 
@@ -43,7 +42,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 		t.Run(row.line, func(t *testing.T) {
 			t.Parallel()
 			home := home()
-			result, err := bundle.New(home, row.line).Get()
+			result, err := New(home, row.line).Get()
 			require.Contains(t, result, row.result)
 			require.NoError(t, err)
 		})
@@ -52,40 +51,40 @@ func TestSuccessfullGitBundles(t *testing.T) {
 
 func TestZshInvalidGitBundle(t *testing.T) {
 	home := home()
-	_, err := bundle.New(home, "does not exist").Get()
+	_, err := New(home, "does not exist").Get()
 	require.Error(t, err)
 }
 
 func TestZshLocalBundle(t *testing.T) {
 	home := home()
 	require.NoError(t, ioutil.WriteFile(home+"/a.sh", []byte("echo 9"), 0644))
-	result, err := bundle.New(home, home).Get()
+	result, err := New(home, home).Get()
 	require.Contains(t, result, "a.sh")
 	require.NoError(t, err)
 }
 
 func TestZshInvalidLocalBundle(t *testing.T) {
 	home := home()
-	_, err := bundle.New(home, "/asduhasd/asdasda").Get()
+	_, err := New(home, "/asduhasd/asdasda").Get()
 	require.Error(t, err)
 }
 
 func TestZshBundleWithNoShFiles(t *testing.T) {
 	home := home()
-	_, err := bundle.New(home, "getantibody/antibody").Get()
+	_, err := New(home, "getantibody/antibody").Get()
 	require.NoError(t, err)
 }
 
 func TestPathInvalidLocalBundle(t *testing.T) {
 	home := home()
-	_, err := bundle.New(home, "/asduhasd/asdasda kind:path").Get()
+	_, err := New(home, "/asduhasd/asdasda kind:path").Get()
 	require.Error(t, err)
 }
 
 func TestPathLocalBundle(t *testing.T) {
 	home := home()
 	require.NoError(t, ioutil.WriteFile(home+"whatever.sh", []byte(""), 0644))
-	result, err := bundle.New(home, home+" kind:path").Get()
+	result, err := New(home, home+" kind:path").Get()
 	require.Equal(t, "export PATH=\""+home+":$PATH\"", result)
 	require.NoError(t, err)
 }

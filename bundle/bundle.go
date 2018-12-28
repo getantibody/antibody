@@ -26,21 +26,20 @@ type Bundle interface {
 // - Any git repo, specifying a branch:
 //		caarlos0/versioned-with-branch branch:v1.0 kind:zsh
 func New(home, line string) Bundle {
-	kind := extract(line)
 	proj := project.New(home, line)
-	if kind == "path" {
+	switch kind(line) {
+	case "path":
 		return pathBundle{Project: proj}
-	}
-	if kind == "fpath" {
+	case "fpath":
 		return fpathBundle{Project: proj}
-	}
-	if kind == "dummy" {
+	case "dummy":
 		return dummyBundle{Project: proj}
+	default:
+		return zshBundle{Project: proj}
 	}
-	return zshBundle{Project: proj}
 }
 
-func extract(line string) string {
+func kind(line string) string {
 	for _, part := range strings.Split(line, " ") {
 		if strings.HasPrefix(part, "kind:") {
 			return strings.Replace(part, "kind:", "", -1)
