@@ -1,14 +1,13 @@
-package shell_test
+package shell
 
 import (
 	"testing"
 
-	"github.com/getantibody/antibody/shell"
 	"github.com/stretchr/testify/require"
 )
 
 func TestGeneratesInit(t *testing.T) {
-	shell, err := shell.Init()
+	shell, err := Init()
 	require.NoError(t, err)
 	require.NotEmpty(t, shell)
 }

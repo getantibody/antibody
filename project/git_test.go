@@ -1,4 +1,4 @@
-package project_test
+package project
 
 import (
 	"io/ioutil"
@@ -7,7 +7,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/getantibody/antibody/project"
 	"github.com/stretchr/testify/require"
 )
 
@@ -29,7 +28,7 @@ func TestDownloadAllKinds(t *testing.T) {
 		home := home()
 		require.NoError(
 			t,
-			project.NewGit(home, url).Download(),
+			NewGit(home, url).Download(),
 			"Repo "+url+" failed to download",
 		)
 	}
@@ -37,7 +36,7 @@ func TestDownloadAllKinds(t *testing.T) {
 
 func TestDownloadSubmodules(t *testing.T) {
 	var home = home()
-	var proj = project.NewGit(home, "fribmendes/geometry")
+	var proj = NewGit(home, "fribmendes/geometry")
 	var module = filepath.Join(proj.Path(), "lib/zsh-async")
 	require.NoError(t, proj.Download())
 	require.NoError(t, proj.Update())
@@ -48,46 +47,46 @@ func TestDownloadSubmodules(t *testing.T) {
 
 func TestDownloadAnotherBranch(t *testing.T) {
 	home := home()
-	require.NoError(t, project.NewGit(home, "caarlos0/jvm branch:gh-pages").Download())
+	require.NoError(t, NewGit(home, "caarlos0/jvm branch:gh-pages").Download())
 }
 
 func TestUpdateAnotherBranch(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "caarlos0/jvm branch:gh-pages")
+	repo := NewGit(home, "caarlos0/jvm branch:gh-pages")
 	require.NoError(t, repo.Download())
-	alreadyClonedRepo := project.NewClonedGit(home, "https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm")
+	alreadyClonedRepo := NewClonedGit(home, "https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-jvm")
 	require.NoError(t, alreadyClonedRepo.Update())
 }
 
 func TestUpdateExistentLocalRepo(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "caarlos0/ports")
+	repo := NewGit(home, "caarlos0/ports")
 	require.NoError(t, repo.Download())
-	alreadyClonedRepo := project.NewClonedGit(home, "https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports")
+	alreadyClonedRepo := NewClonedGit(home, "https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports")
 	require.NoError(t, alreadyClonedRepo.Update())
 }
 
 func TestUpdateNonExistentLocalRepo(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "caarlos0/ports")
+	repo := NewGit(home, "caarlos0/ports")
 	require.Error(t, repo.Update())
 }
 
 func TestDownloadNonExistentRepo(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "caarlos0/not-a-real-repo")
+	repo := NewGit(home, "caarlos0/not-a-real-repo")
 	require.Error(t, repo.Download())
 }
 
 func TestDownloadMalformedRepo(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "doesn-not-exist-really branch:also-nope")
+	repo := NewGit(home, "doesn-not-exist-really branch:also-nope")
 	require.Error(t, repo.Download())
 }
 
 func TestDownloadMultipleTimes(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "caarlos0/ports")
+	repo := NewGit(home, "caarlos0/ports")
 	require.NoError(t, repo.Download())
 	require.NoError(t, repo.Download())
 	require.NoError(t, repo.Update())
@@ -95,7 +94,7 @@ func TestDownloadMultipleTimes(t *testing.T) {
 
 func TestDownloadFolderNaming(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "caarlos0/ports")
+	repo := NewGit(home, "caarlos0/ports")
 	require.Equal(
 		t,
 		home+"/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-ports",
@@ -105,19 +104,19 @@ func TestDownloadFolderNaming(t *testing.T) {
 
 func TestSubFolder(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "robbyrussell/oh-my-zsh path:plugins/aws")
+	repo := NewGit(home, "robbyrussell/oh-my-zsh path:plugins/aws")
 	require.True(t, strings.HasSuffix(repo.Path(), "plugins/aws"))
 }
 
 func TestPath(t *testing.T) {
 	home := home()
-	repo := project.NewGit(home, "docker/cli path:contrib/completion/zsh/_docker")
+	repo := NewGit(home, "docker/cli path:contrib/completion/zsh/_docker")
 	require.True(t, strings.HasSuffix(repo.Path(), "contrib/completion/zsh/_docker"))
 }
 
 func TestMultipleSubFolders(t *testing.T) {
 	home := home()
-	require.NoError(t, project.NewGit(home, strings.Join([]string{
+	require.NoError(t, NewGit(home, strings.Join([]string{
 		"robbyrussell/oh-my-zsh path:plugins/aws",
 		"robbyrussell/oh-my-zsh path:plugins/battery",
 	}, "\n")).Download())
