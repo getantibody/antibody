@@ -41,8 +41,3 @@ nfpm:
     - deb
   dependencies:
     - git
-snapcraft:
-  summary: The fastest shell plugin manager.
-  publish: true
-  description: |
-    Antibody is a shell plugin manager made from the ground up thinking about performance.
