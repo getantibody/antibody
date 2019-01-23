@@ -22,8 +22,7 @@ performance.
 
 ## Documentation
 
-Documentation can be found in the [docs folder](www/content) and live
-at https://getantibody.github.io
+Documentation can be found at https://getantibody.github.io
 
 ## In the wild
 
