@@ -90,9 +90,13 @@ func update() {
 }
 
 func purge() {
-	fmt.Println("Removing", *purgee)
-	var err = os.RemoveAll(project.New(antibodylib.Home(), *purgee).Path())
-	app.FatalIfError(err, "failed to purge")
+	fmt.Printf("Removing %s...\n", *purgee)
+	var path = project.New(antibodylib.Home(), *purgee).Path()
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		app.Fatalf("%s does not exist on expected location: %s", *purgee, path)
+	}
+	app.FatalIfError(os.RemoveAll(path), "failed to purge")
+	fmt.Println("removed!")
 }
 
 func list() {
