@@ -1,7 +1,8 @@
 before:
   hooks:
   - go mod download
-build:
+builds:
+-
   goos:
     - linux
     - darwin
@@ -14,14 +15,16 @@ build:
   goarm:
     - 6
     - 7
-archive:
+archives:
+-
   name_template: '{{ .Binary }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   replacements:
     darwin: Darwin
     linux: Linux
     386: i386
     amd64: x86_64
-brew:
+brews:
+-
   github:
     owner: getantibody
     name: homebrew-tap
@@ -31,7 +34,8 @@ brew:
   description: The fastest shell plugin manager
   dependencies:
     - git
-nfpm:
+nfpms:
+-
   homepage: http://getantibody.github.io
   description: The fastest shell plugin manager
   maintainer: Carlos Alexandro Becker <root@carlosbecker.com>
