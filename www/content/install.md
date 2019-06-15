@@ -9,7 +9,7 @@ Antibody can be installed through a variety of sources.
 The simplest way is to run:
 
 ```sh
-curl -sL git.io/antibody | sh -s
+curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 ```
 
 This will put the binary in `/usr/local/bin/antibody`
