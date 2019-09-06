@@ -108,12 +108,14 @@ func (g gitProject) Download() error {
 func (g gitProject) Update() error {
 	fmt.Println("updating:", g.URL)
 	// #nosec
-	if bts, err := exec.Command(
-		"git", "-C", g.folder, "pull",
+	cmd := exec.Command(
+		"git", "pull",
 		"--recurse-submodules",
 		"origin",
 		g.Version,
-	).CombinedOutput(); err != nil {
+	)
+	cmd.Dir = g.folder
+	if bts, err := cmd.CombinedOutput(); err != nil {
 		log.Println("git update failed for", g.folder, string(bts))
 		return err
 	}
@@ -122,9 +124,9 @@ func (g gitProject) Update() error {
 
 func branch(folder string) (string, error) {
 	// #nosec
-	branch, err := exec.Command(
-		"git", "-C", folder, "rev-parse", "--abbrev-ref", "HEAD",
-	).Output()
+	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	cmd.Dir = folder
+	branch, err := cmd.Output()
 	return strings.Replace(string(branch), "\n", "", -1), err
 }
 
