@@ -2,8 +2,8 @@ package project
 
 import (
 	"os"
-	"strings"
 	"os/user"
+	"strings"
 )
 
 // NewLocal Returns a local project, which can be any folder you want to
