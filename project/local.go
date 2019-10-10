@@ -17,7 +17,7 @@ func PrepareFolder(folder string) string {
 		usr, _ := user.Current()
 		folder = strings.Replace(folder, "~", usr.HomeDir, 1)
 	}
-	return folder
+	return strings.Split(folder, " ")[0]
 }
 
 type localProject struct {
