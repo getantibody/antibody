@@ -2,6 +2,7 @@ package project
 
 import (
 	"io/ioutil"
+	"strings"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -15,7 +16,7 @@ type Project interface {
 
 // New decides what kind of project it is, based on the given line
 func New(home, line string) Project {
-	if line[0] == '/' {
+	if line[0] == '/' || strings.HasPrefix(line, "~/") {
 		return NewLocal(line)
 	}
 	return NewGit(home, line)
