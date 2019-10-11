@@ -36,6 +36,8 @@ var (
 	purgeCmd  = app.Command("purge", "purges a bundle from your computer")
 	purgee    = purgeCmd.Arg("bundle", "bundle to be purged").Required().String()
 	listCmd   = app.Command("list", "lists all currently installed bundles").Alias("ls")
+	pathCmd   = app.Command("path", "prints the path of a currently cloned bundle")
+	pathee    = pathCmd.Arg("bundle", "bundle in which to find and print cloned path").Required().String()
 	initCmd   = app.Command("init", "initializes the shell so Antibody can work as expected")
 )
 
@@ -63,6 +65,8 @@ func main() {
 		purge()
 	case listCmd.FullCommand():
 		list()
+	case pathCmd.FullCommand():
+		path()
 	case initCmd.FullCommand():
 		sh, err := shell.Init()
 		app.FatalIfError(err, "failed to init")
@@ -108,4 +112,13 @@ func list() {
 		fmt.Fprintf(w, "%s\t%s\n", folder.ToURL(b), filepath.Join(home, b))
 	}
 	app.FatalIfError(w.Flush(), "failed to flush")
+}
+
+func path() {
+	var path = project.New(antibodylib.Home(), *pathee).Path()
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		app.Fatalf("%s does not exist in cloned paths", *pathee)
+	} else {
+		fmt.Println(path)
+	}
 }
