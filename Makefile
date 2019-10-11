@@ -1,6 +1,6 @@
 SOURCE_FILES?=./...
 TEST_PATTERN?=.
-TEST_OPTIONS?=
+TEST_OPTIONS?=-v
 
 export PATH := ./bin:$(PATH)
 export GO111MODULE := on

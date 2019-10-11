@@ -123,12 +123,16 @@ func BenchmarkDownload(b *testing.B) {
 }
 
 func TestHome(t *testing.T) {
-	require.Contains(t, Home(), "antibody")
+	h, err := Home()
+	require.NoError(t, err)
+	require.Contains(t, h, "antibody")
 }
 
 func TestHomeFromEnvironmentVariable(t *testing.T) {
 	require.NoError(t, os.Setenv("ANTIBODY_HOME", "/tmp"))
-	require.Equal(t, "/tmp", Home())
+	h, err := Home()
+	require.NoError(t, err)
+	require.Equal(t, "/tmp", h)
 }
 
 func home() string {

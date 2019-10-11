@@ -25,17 +25,20 @@ type Bundle interface {
 //		caarlos0/add-to-path-style kind:path
 // - Any git repo, specifying a branch:
 //		caarlos0/versioned-with-branch branch:v1.0 kind:zsh
-func New(home, line string) Bundle {
-	proj := project.New(home, line)
+func New(home, line string) (Bundle, error) {
+	proj, err := project.New(home, line)
+	if err != nil {
+		return nil, err
+	}
 	switch kind(line) {
 	case "path":
-		return pathBundle{Project: proj}
+		return pathBundle{Project: proj}, nil
 	case "fpath":
-		return fpathBundle{Project: proj}
+		return fpathBundle{Project: proj}, nil
 	case "dummy":
-		return dummyBundle{Project: proj}
+		return dummyBundle{Project: proj}, nil
 	default:
-		return zshBundle{Project: proj}
+		return zshBundle{Project: proj}, nil
 	}
 }
 

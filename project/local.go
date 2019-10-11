@@ -2,22 +2,24 @@ package project
 
 import (
 	"os"
-	"os/user"
 	"strings"
 )
 
 // NewLocal Returns a local project, which can be any folder you want to
-func NewLocal(folder string) Project {
-	return localProject{folder: PrepareFolder(folder)}
+func NewLocal(line string) (Project, error) {
+	folder, err := expandFolder(strings.Split(line, " ")[0])
+	return localProject{folder: folder}, err
 }
 
-// PrepareFolder performs path normalization/expansion on local folder path
-func PrepareFolder(folder string) string {
+func expandFolder(folder string) (string, error) {
 	if strings.HasPrefix(folder, "~/") {
-		usr, _ := user.Current()
-		folder = strings.Replace(folder, "~", usr.HomeDir, 1)
+		dir, err := os.UserHomeDir()
+		if err != nil {
+			return "", err
+		}
+		return strings.Replace(folder, "~", dir, 1), nil
 	}
-	return strings.Split(folder, " ")[0]
+	return folder, nil
 }
 
 type localProject struct {

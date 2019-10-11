@@ -12,12 +12,12 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/alecthomas/kingpin"
 	"github.com/getantibody/antibody/antibodylib"
 	"github.com/getantibody/antibody/project"
 	"github.com/getantibody/antibody/shell"
 	"github.com/getantibody/folder"
 	"golang.org/x/crypto/ssh/terminal"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 // nolint: gochecknoglobals
@@ -60,7 +60,7 @@ func main() {
 	case updateCmd.FullCommand():
 		update()
 	case homeCmd.FullCommand():
-		fmt.Println(antibodylib.Home())
+		fmt.Println(findHome())
 	case purgeCmd.FullCommand():
 		purge()
 	case listCmd.FullCommand():
@@ -81,13 +81,13 @@ func bundle() {
 	} else {
 		input = bytes.NewBufferString(strings.Join(*bundles, " "))
 	}
-	sh, err := antibodylib.New(antibodylib.Home(), input, *parallelism).Bundle()
+	sh, err := antibodylib.New(findHome(), input, *parallelism).Bundle()
 	app.FatalIfError(err, "failed to bundle")
 	fmt.Println(sh)
 }
 
 func update() {
-	var home = antibodylib.Home()
+	var home = findHome()
 	fmt.Printf("Updating all bundles in %v...\n", home)
 	var err = project.Update(home, *parallelism)
 	app.FatalIfError(err, "failed to update")
@@ -95,7 +95,11 @@ func update() {
 
 func purge() {
 	fmt.Printf("Removing %s...\n", *purgee)
-	var path = project.New(antibodylib.Home(), *purgee).Path()
+	project, err := project.New(findHome(), *purgee)
+	if err != nil {
+		app.Fatalf(err.Error())
+	}
+	var path = project.Path()
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		app.Fatalf("%s does not exist on expected location: %s", *purgee, path)
 	}
@@ -104,7 +108,7 @@ func purge() {
 }
 
 func list() {
-	home := antibodylib.Home()
+	var home = findHome()
 	projects, err := project.List(home)
 	app.FatalIfError(err, "failed to list bundles")
 	w := tabwriter.NewWriter(os.Stdout, 0, 1, 4, ' ', tabwriter.TabIndent)
@@ -115,10 +119,22 @@ func list() {
 }
 
 func path() {
-	var path = project.New(antibodylib.Home(), *pathee).Path()
+	proj, err := project.New(findHome(), *pathee)
+	if err != nil {
+		app.Fatalf(err.Error())
+	}
+	var path = proj.Path()
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		app.Fatalf("%s does not exist in cloned paths", *pathee)
 	} else {
 		fmt.Println(path)
 	}
+}
+
+func findHome() string {
+	h, err := antibodylib.Home()
+	if err != nil {
+		app.Fatalf("could't get cache folder: %v", err)
+	}
+	return h
 }
