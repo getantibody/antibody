@@ -1,15 +1,15 @@
 module github.com/getantibody/antibody
 
 require (
-	github.com/alecthomas/kingpin v0.0.0-20180312062423-a39589180ebd
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/getantibody/folder v1.0.0
 	github.com/stretchr/testify v1.4.0
-	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc
-	golang.org/x/net v0.0.0-20191003171128-d98b1b443823 // indirect
-	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f
+	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
+	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
+	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 )
 
 go 1.13

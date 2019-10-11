@@ -12,12 +12,12 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/alecthomas/kingpin"
 	"github.com/getantibody/antibody/antibodylib"
 	"github.com/getantibody/antibody/project"
 	"github.com/getantibody/antibody/shell"
 	"github.com/getantibody/folder"
 	"golang.org/x/crypto/ssh/terminal"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 // nolint: gochecknoglobals
@@ -60,7 +60,7 @@ func main() {
 	case updateCmd.FullCommand():
 		update()
 	case homeCmd.FullCommand():
-		fmt.Println(antibodylib.Home())
+		fmt.Println(findHome())
 	case purgeCmd.FullCommand():
 		purge()
 	case listCmd.FullCommand():
