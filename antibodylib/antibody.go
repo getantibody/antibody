@@ -4,10 +4,9 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
-	"sync"
 
-	"github.com/caarlos0/gohome"
 	"github.com/getantibody/antibody/bundle"
 	"golang.org/x/sync/errgroup"
 )
@@ -29,45 +28,46 @@ func New(home string, r io.Reader, p int) *Antibody {
 }
 
 // Bundle processes all given lines and returns the shell content to execute
-func (a *Antibody) Bundle() (result string, err error) {
+func (a *Antibody) Bundle() (string, error) {
 	var g errgroup.Group
-	var lock sync.Mutex
-	var shs indexedLines
+	var shs safeIndexedLines
 	var idx int
-	sem := make(chan bool, a.parallelism)
-	scanner := bufio.NewScanner(a.r)
+	var sem = make(chan bool, a.parallelism)
+	var scanner = bufio.NewScanner(a.r)
 	for scanner.Scan() {
-		l := scanner.Text()
-		index := idx
+		var line = scanner.Text()
+		var index = idx
 		idx++
 		sem <- true
 		g.Go(func() error {
 			defer func() {
 				<-sem
 			}()
-			l = strings.TrimSpace(l)
-			if l == "" || l[0] == '#' {
+			line = strings.TrimSpace(line)
+			if line == "" || line[0] == '#' {
 				return nil
 			}
-			s, berr := bundle.New(a.Home, l).Get()
-			lock.Lock()
-			shs = append(shs, indexedLine{idx: index, line: s})
-			lock.Unlock()
+			lineBundle, berr := bundle.New(a.Home, line)
+			if berr != nil {
+				return berr
+			}
+			sh, berr := lineBundle.Get()
+			shs.Append(indexedLine{idx: index, line: sh})
 			return berr
 		})
 	}
-	if err = scanner.Err(); err != nil {
-		return
+	if err := scanner.Err(); err != nil {
+		return "", err
 	}
-	err = g.Wait()
-	return shs.String(), err
+	var err = g.Wait()
+	return shs.Items().String(), err
 }
 
 // Home finds the right home folder to use
-func Home() string {
-	home := os.Getenv("ANTIBODY_HOME")
-	if home == "" {
-		home = gohome.Cache("antibody")
+func Home() (string, error) {
+	if dir := os.Getenv("ANTIBODY_HOME"); dir != "" {
+		return dir, nil
 	}
-	return home
+	dir, err := os.UserCacheDir()
+	return filepath.Join(dir, "antibody"), err
 }

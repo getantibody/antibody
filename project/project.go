@@ -15,11 +15,11 @@ type Project interface {
 }
 
 // New decides what kind of project it is, based on the given line
-func New(home, line string) Project {
+func New(home, line string) (Project, error) {
 	if line[0] == '/' || strings.HasPrefix(line, "~/") {
 		return NewLocal(line)
 	}
-	return NewGit(home, line)
+	return NewGit(home, line), nil
 }
 
 // List all projects in the given folder

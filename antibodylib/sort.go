@@ -3,6 +3,7 @@ package antibodylib
 import (
 	"sort"
 	"strings"
+	"sync"
 )
 
 type indexedLine struct {
@@ -11,6 +12,25 @@ type indexedLine struct {
 }
 
 type indexedLines []indexedLine
+
+type safeIndexedLines struct {
+	mutex sync.Mutex
+	data  indexedLines
+}
+
+// Append safely appends items to the slice
+func (slice *safeIndexedLines) Append(item indexedLine) {
+	slice.mutex.Lock()
+	defer slice.mutex.Unlock()
+
+	slice.data = append(slice.data, item)
+}
+
+func (slice *safeIndexedLines) Items() indexedLines {
+	slice.mutex.Lock()
+	defer slice.mutex.Unlock()
+	return slice.data
+}
 
 // Len is needed by Sort interface
 func (slice indexedLines) Len() int {
