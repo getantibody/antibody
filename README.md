@@ -35,6 +35,7 @@ Documentation can be found at https://getantibody.github.io
 - @marceldias' [dotfiles](https://github.com/marceldiass/dotfiles);
 - @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
 - @sobolevn's [dotfiles](https://github.com/sobolevn/dotfiles);
+- @jesseleite's [dotfiles](https://github.com/jesseleite/dotfiles);
 - and probably [many others](https://github.com/search?q=antibody&type=Code);
 
 ## Thanks
