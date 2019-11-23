@@ -6,7 +6,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/getantibody/folder v1.0.0
 	github.com/stretchr/testify v1.4.0
-	golang.org/x/crypto v0.0.0-20191108234033-bd318be0434a
+	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
