@@ -27,8 +27,6 @@ Documentation can be found at https://getantibody.github.io
 ## In the wild
 
 - I did this mostly for myself, so, my [dotfiles](https://github.com/caarlos0/dotfiles);
-- @mkwmms' [dotfiles](https://github.com/mkwmms/dotfiles);
-- @oieduardorabelo's [dotfiles](https://github.com/oieduardorabelo/dotfiles);
 - @nisaacson's [dotfiles](https://github.com/nisaacson/dotfiles);
 - @pragmaticivan's [dotfiles](https://github.com/pragmaticivan/dotfiles);
 - @wkentaro's [dotfiles](https://github.com/wkentaro/dotfiles);
