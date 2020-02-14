@@ -11,6 +11,7 @@ import (
 	"github.com/getantibody/folder"
 )
 
+// nolint: gochecknoglobals
 var gitCmdEnv = append(os.Environ(), "GIT_CONFIG_NOSYSTEM=1", "GIT_TERMINAL_PROMPT=0", "GIT_ASKPASS=0")
 
 type gitProject struct {

@@ -24,7 +24,7 @@ cover: test
 
 # Run all the linters
 lint:
-	./bin/golangci-lint run --disable godox --disable wsl --enable-all ./...
+	./bin/golangci-lint run --disable godox --disable wsl --disable gomnd --enable-all ./...
 	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier -l
 .PHONY: lint
 
