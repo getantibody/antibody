@@ -1,7 +1,6 @@
 package project
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -109,7 +108,11 @@ func (g gitProject) Download() error {
 }
 
 func (g gitProject) Update() error {
-	fmt.Println("updating:", g.URL)
+	log.Println("updating:", g.URL)
+	oldRev, err := commit(g.folder)
+	if err != nil {
+		return err
+	}
 	// #nosec
 	cmd := exec.Command(
 		"git", "pull",
@@ -124,7 +127,22 @@ func (g gitProject) Update() error {
 		log.Println("git update failed for", g.folder, string(bts))
 		return err
 	}
+	rev, err := commit(g.folder)
+	if err != nil {
+		return err
+	}
+	if rev != oldRev {
+		log.Println("updated:", g.URL, oldRev, "->", rev)
+	}
 	return nil
+}
+
+func commit(folder string) (string, error) {
+	// #nosec
+	cmd := exec.Command("git", "rev-parse", "--short", "HEAD")
+	cmd.Dir = folder
+	rev, err := cmd.Output()
+	return strings.Replace(string(rev), "\n", "", -1), err
 }
 
 func branch(folder string) (string, error) {
