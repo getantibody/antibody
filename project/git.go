@@ -12,6 +12,8 @@ import (
 	"github.com/getantibody/folder"
 )
 
+var gitCmdEnv = append(os.Environ(), "GIT_CONFIG_NOSYSTEM=1", "GIT_TERMINAL_PROMPT=0", "GIT_ASKPASS=0")
+
 type gitProject struct {
 	URL     string
 	Version string
@@ -94,8 +96,9 @@ func (g gitProject) Download() error {
 			"--depth", "1",
 			"-b", g.Version,
 			g.URL,
-			g.folder)
-		cmd.Env = append(os.Environ(), "GIT_TERMINAL_PROMPT=0")
+			g.folder,
+		)
+		cmd.Env = gitCmdEnv
 
 		if bts, err := cmd.CombinedOutput(); err != nil {
 			log.Println("git clone failed for", g.URL, string(bts))
@@ -114,6 +117,8 @@ func (g gitProject) Update() error {
 		"origin",
 		g.Version,
 	)
+	cmd.Env = gitCmdEnv
+
 	cmd.Dir = g.folder
 	if bts, err := cmd.CombinedOutput(); err != nil {
 		log.Println("git update failed for", g.folder, string(bts))
