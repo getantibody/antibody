@@ -24,8 +24,8 @@ type gitProject struct {
 // will work here.
 func NewClonedGit(home, folderName string) Project {
 	return gitProject{
-		folder:  filepath.Join(home, folderName),
-		URL:     folder.ToURL(folderName),
+		folder: filepath.Join(home, folderName),
+		URL:    folder.ToURL(folderName),
 	}
 }
 
