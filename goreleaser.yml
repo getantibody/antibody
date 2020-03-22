@@ -32,8 +32,6 @@ brews:
   folder: Formula
   homepage: http://getantibody.github.io
   description: The fastest shell plugin manager
-  dependencies:
-    - git
 nfpms:
 -
   homepage: http://getantibody.github.io
@@ -43,5 +41,4 @@ nfpms:
   vendor: Antibody
   formats:
     - deb
-  dependencies:
-    - git
+    - rpm
