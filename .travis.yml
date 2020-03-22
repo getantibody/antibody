@@ -2,9 +2,7 @@ language: go
 go: '1.14.x'
 env:
   - GO111MODULE=on
-install:
-  - make setup
-  - npm install -g prettier
+install: make setup
 script: make ci
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -25,7 +25,6 @@ cover: test
 # Run all the linters
 lint:
 	./bin/golangci-lint run --disable godox --disable wsl --disable gomnd --enable-all ./...
-	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier -l
 .PHONY: lint
 
 # Run all the tests and code checks
@@ -40,7 +39,6 @@ build:
 # gofmt and goimports all go files
 fmt:
 	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
-	find . -name '*.md' -not -wholename './vendor/*' | xargs prettier --write
 .PHONY: fmt
 
 # Generate the static documentation
