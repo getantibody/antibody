@@ -131,7 +131,15 @@ func (g gitProject) Update() error {
 		Progress:          &w,
 		Force:             true,
 	}); err != nil && err != git.NoErrAlreadyUpToDate {
-		log.Println("git update failed for", g.folder, g.Version, w.String())
+		log.Println("git clone failed", err, g.URL, w.String())
+		if err == plumbing.ErrObjectNotFound {
+			log.Printf(
+				"This means your local copy probably is in a funky state (maybe someone force-pushed the repo). "+
+					"You can fix this by running: `rm -rf %s && antibody bundle %s`",
+				g.folder,
+				g.URL,
+			)
+		}
 		return err
 	}
 
