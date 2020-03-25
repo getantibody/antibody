@@ -1,17 +1,18 @@
 package project
 
 import (
-	"bytes"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
 
 	"github.com/getantibody/folder"
-	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing"
 )
+
+// nolint: gochecknoglobals
+var gitCmdEnv = append(os.Environ(), "GIT_TERMINAL_PROMPT=0", "GIT_ASKPASS=0", "SSH_ASKPASS=0")
 
 type gitProject struct {
 	URL     string
@@ -23,9 +24,16 @@ type gitProject struct {
 // NewClonedGit is a git project that was already cloned, so, only Update
 // will work here.
 func NewClonedGit(home, folderName string) Project {
+	folderPath := filepath.Join(home, folderName)
+	version, err := branch(folderPath)
+	if err != nil {
+		version = "master"
+	}
+	url := folder.ToURL(folderName)
 	return gitProject{
-		folder: filepath.Join(home, folderName),
-		URL:    folder.ToURL(folderName),
+		folder:  folderPath,
+		Version: version,
+		URL:     url,
 	}
 }
 
@@ -64,10 +72,11 @@ func NewGit(cwd, line string) Project {
 	case strings.HasPrefix(repo, "git@github.com:"):
 		url = repo
 	}
+	folder := filepath.Join(cwd, folder.FromURL(url))
 	return gitProject{
 		Version: version,
 		URL:     url,
-		folder:  filepath.Join(cwd, folder.FromURL(url)),
+		folder:  folder,
 		inner:   inner,
 	}
 }
@@ -81,17 +90,18 @@ func (g gitProject) Download() error {
 	lock.Lock()
 	defer lock.Unlock()
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
-		var w bytes.Buffer
-		if _, err := git.PlainClone(g.folder, false, &git.CloneOptions{
-			URL:               g.URL,
-			ReferenceName:     plumbing.NewBranchReferenceName(g.Version),
-			SingleBranch:      true,
-			NoCheckout:        false,
-			Depth:             1,
-			RecurseSubmodules: 1,
-			Progress:          &w,
-		}); err != nil {
-			log.Println("git clone failed for", g.URL, w.String())
+		// #nosec
+		var cmd = exec.Command("git", "clone",
+			"--recursive",
+			"--depth", "1",
+			"-b", g.Version,
+			g.URL,
+			g.folder,
+		)
+		cmd.Env = gitCmdEnv
+
+		if bts, err := cmd.CombinedOutput(); err != nil {
+			log.Println("git clone failed for", g.URL, string(bts))
 			return err
 		}
 	}
@@ -100,51 +110,48 @@ func (g gitProject) Download() error {
 
 func (g gitProject) Update() error {
 	log.Println("updating:", g.URL)
-
-	repo, err := git.PlainOpen(g.folder)
+	oldRev, err := commit(g.folder)
 	if err != nil {
 		return err
 	}
+	// #nosec
+	cmd := exec.Command(
+		"git", "pull",
+		"--recurse-submodules",
+		"origin",
+		g.Version,
+	)
+	cmd.Env = gitCmdEnv
 
-	ref, err := repo.Head()
-	if err != nil {
-		panic(err)
-	}
-
-	oldRev, err := repo.ResolveRevision(plumbing.Revision(plumbing.HEAD))
-	if err != nil {
+	cmd.Dir = g.folder
+	if bts, err := cmd.CombinedOutput(); err != nil {
+		log.Println("git update failed for", g.folder, string(bts))
 		return err
 	}
-
-	wt, err := repo.Worktree()
-	if err != nil {
-		return err
-	}
-
-	var w bytes.Buffer
-	if err := wt.Pull(&git.PullOptions{
-		RemoteName:        "origin",
-		ReferenceName:     ref.Name(),
-		SingleBranch:      true,
-		Depth:             1,
-		RecurseSubmodules: 1,
-		Progress:          &w,
-		Force:             true,
-	}); err != git.NoErrAlreadyUpToDate {
-		log.Println("git update failed for", g.folder, g.Version, w.String())
-		return err
-	}
-
-	rev, err := repo.ResolveRevision(plumbing.Revision(plumbing.HEAD))
+	rev, err := commit(g.folder)
 	if err != nil {
 		return err
 	}
-
-	if rev.String() != oldRev.String() {
+	if rev != oldRev {
 		log.Println("updated:", g.URL, oldRev, "->", rev)
 	}
-
 	return nil
+}
+
+func commit(folder string) (string, error) {
+	// #nosec
+	cmd := exec.Command("git", "rev-parse", "--short", "HEAD")
+	cmd.Dir = folder
+	rev, err := cmd.Output()
+	return strings.Replace(string(rev), "\n", "", -1), err
+}
+
+func branch(folder string) (string, error) {
+	// #nosec
+	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	cmd.Dir = folder
+	branch, err := cmd.Output()
+	return strings.Replace(string(branch), "\n", "", -1), err
 }
 
 func (g gitProject) Path() string {
