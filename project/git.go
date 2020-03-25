@@ -108,7 +108,7 @@ func (g gitProject) Update() error {
 
 	ref, err := repo.Head()
 	if err != nil {
-		return err
+		panic(err)
 	}
 
 	oldRev, err := repo.ResolveRevision(plumbing.Revision(plumbing.HEAD))
@@ -130,7 +130,7 @@ func (g gitProject) Update() error {
 		RecurseSubmodules: 1,
 		Progress:          &w,
 		Force:             true,
-	}); err != nil && err != git.NoErrAlreadyUpToDate {
+	}); err != git.NoErrAlreadyUpToDate {
 		log.Println("git update failed for", g.folder, g.Version, w.String())
 		return err
 	}
