@@ -7,7 +7,7 @@ require (
 	github.com/getantibody/folder v1.0.0
 	github.com/stretchr/testify v1.6.0
 	golang.org/x/crypto v0.0.0-20200320181102-891825fb96df
-	golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a
+	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
 	golang.org/x/sys v0.0.0-20200212091648-12a6c2dcc1e4 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 )
