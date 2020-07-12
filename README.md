@@ -3,15 +3,11 @@
   <h3 align="center">Antibody</h3>
   <p align="center">The fastest shell plugin manager.</p>
   <p align="center">
-    <a href="https://github.com/getantibody/antibody/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/getantibody/antibody.svg?style=flat-square"></a>
     <a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
     <a href="https://travis-ci.org/getantibody/antibody"><img alt="Travis" src="https://img.shields.io/travis/getantibody/antibody/master.svg?style=flat-square"></a>
     <a href="https://codecov.io/gh/getantibody/antibody"><img alt="Codecov branch" src="https://img.shields.io/codecov/c/github/getantibody/antibody/master.svg?style=flat-square"></a>
     <a href="https://goreportcard.com/report/github.com/getantibody/antibody"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/getantibody/antibody?style=flat-square"></a>
-    <a href="http://godoc.org/github.com/getantibody/antibody"><img alt="Go Doc" src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"></a>
-    <a href="https://saythanks.io/to/caarlos0"><img alt="SayThanks.io" src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg?style=flat-square"></a>
-    <a href="https://github.com/goreleaser"><img alt="Powered By: GoReleaser" src="https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square"></a>
-    <a href="https://houndci.com"><img alt="Reviewed by Hound" src="https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg?style=flat-square&longCache=true"></a>
+    <a href="http://godoc.org/github.com/getantibody/antibody"><img alt="Go Doc" src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"></a>>
   </p>
 </p>
 
