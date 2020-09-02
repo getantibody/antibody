@@ -24,7 +24,7 @@ cover: test
 
 # Run all the linters
 lint:
-	./bin/golangci-lint run --disable godox --disable wsl --disable gomnd --disable testpackage --disable gofumpt --disable godot --enable-all ./...
+	./bin/golangci-lint run --disable godox --disable wsl --disable gomnd --disable testpackage --disable gofumpt --disable godot --disable nlreturn --enable-all ./...
 .PHONY: lint
 
 # Run all the tests and code checks
