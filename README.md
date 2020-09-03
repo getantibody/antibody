@@ -40,6 +40,7 @@ Documentation can be found at https://getantibody.github.io
 - @davidkna's [dotfiles](https://github.com/davidkna/dotfiles);
 - @sobolevn's [dotfiles](https://github.com/sobolevn/dotfiles);
 - @jesseleite's [dotfiles](https://github.com/jesseleite/dotfiles);
+- @mattmc3's [dotfiles](https://github.com/mattmc3/zdotdir/tree/antibody)
 - and probably [many others](https://github.com/search?q=antibody&type=Code);
 
 ## Thanks

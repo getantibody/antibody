@@ -27,7 +27,7 @@ func NewClonedGit(home, folderName string) Project {
 	folderPath := filepath.Join(home, folderName)
 	version, err := branch(folderPath)
 	if err != nil {
-		version = "master"
+		version = ""
 	}
 	url := folder.ToURL(folderName)
 	return gitProject{
@@ -45,7 +45,7 @@ const (
 // NewGit A git project can be any repository in any given branch. It will
 // be downloaded to the provided cwd
 func NewGit(cwd, line string) Project {
-	version := "master"
+	version := ""
 	inner := ""
 	parts := strings.Split(line, " ")
 	for _, part := range parts {
@@ -91,13 +91,16 @@ func (g gitProject) Download() error {
 	defer lock.Unlock()
 	if _, err := os.Stat(g.folder); os.IsNotExist(err) {
 		// #nosec
-		var cmd = exec.Command("git", "clone",
+		args := []string{
+			"clone",
 			"--recursive",
 			"--depth", "1",
-			"-b", g.Version,
-			g.URL,
-			g.folder,
-		)
+		}
+		if g.Version != "" {
+			args = append(args, "-b", g.Version)
+		}
+		args = append(args, g.URL, g.folder)
+		var cmd = exec.Command("git", args...)
 		cmd.Env = gitCmdEnv
 
 		if bts, err := cmd.CombinedOutput(); err != nil {
@@ -115,12 +118,15 @@ func (g gitProject) Update() error {
 		return err
 	}
 	// #nosec
-	cmd := exec.Command(
-		"git", "pull",
+	args := []string{
+		"pull",
 		"--recurse-submodules",
 		"origin",
-		g.Version,
-	)
+	}
+	if g.Version != "" {
+		args = append(args, g.Version)
+	}
+	cmd := exec.Command("git", args...)
 	cmd.Env = gitCmdEnv
 
 	cmd.Dir = g.folder

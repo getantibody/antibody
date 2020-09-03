@@ -36,7 +36,7 @@ func TestDownloadAllKinds(t *testing.T) {
 
 func TestDownloadSubmodules(t *testing.T) {
 	var home = home()
-	var proj = NewGit(home, "fribmendes/geometry")
+	var proj = NewGit(home, "fribmendes/geometry branch:master")
 	var module = filepath.Join(proj.Path(), "lib/zsh-async")
 	require.NoError(t, proj.Download())
 	require.NoError(t, proj.Update())
