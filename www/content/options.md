@@ -102,3 +102,15 @@ fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.
 source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/asdf/asdf.plugin.zsh
 fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/asdf )
 ```
+
+## Submodules
+
+If a plugin contains submodules, those will automatically be downloaded with the
+bundle. If you don't want a project's submodules, you can suppress them with the
+`submodules:off` option.
+
+Example:
+
+```console
+antibody bundle sorin-ionescu/prezto submodules:off
+```

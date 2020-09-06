@@ -45,6 +45,17 @@ func TestDownloadSubmodules(t *testing.T) {
 	require.True(t, len(files) > 1)
 }
 
+func TestSkipSubmodules(t *testing.T) {
+	var home = home()
+	var proj = NewGit(home, "fribmendes/geometry branch:master submodules:no")
+	var module = filepath.Join(proj.Path(), "lib/zsh-async")
+	require.NoError(t, proj.Download())
+	require.NoError(t, proj.Update())
+	files, err := ioutil.ReadDir(module)
+	require.NoError(t, err)
+	require.True(t, len(files) == 0)
+}
+
 func TestDownloadAnotherBranch(t *testing.T) {
 	home := home()
 	require.NoError(t, NewGit(home, "caarlos0/jvm branch:gh-pages").Download())

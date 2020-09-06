@@ -15,10 +15,11 @@ import (
 var gitCmdEnv = append(os.Environ(), "GIT_TERMINAL_PROMPT=0", "GIT_ASKPASS=0", "SSH_ASKPASS=0")
 
 type gitProject struct {
-	URL     string
-	Version string
-	folder  string
-	inner   string
+	URL        string
+	Version    string
+	Submodules bool
+	folder     string
+	inner      string
 }
 
 // NewClonedGit is a git project that was already cloned, so, only Update
@@ -38,8 +39,9 @@ func NewClonedGit(home, folderName string) Project {
 }
 
 const (
-	branchMarker = "branch:"
-	pathMarker   = "path:"
+	branchMarker     = "branch:"
+	pathMarker       = "path:"
+	submodulesMarker = "submodules:"
 )
 
 // NewGit A git project can be any repository in any given branch. It will
@@ -47,6 +49,7 @@ const (
 func NewGit(cwd, line string) Project {
 	version := ""
 	inner := ""
+	submodules := true
 	parts := strings.Split(line, " ")
 	for _, part := range parts {
 		if strings.HasPrefix(part, branchMarker) {
@@ -54,6 +57,10 @@ func NewGit(cwd, line string) Project {
 		}
 		if strings.HasPrefix(part, pathMarker) {
 			inner = strings.ReplaceAll(part, pathMarker, "")
+		}
+		if strings.HasPrefix(part, submodulesMarker) {
+			submodulesVal := strings.Replace(part, submodulesMarker, "", -1)
+			submodules = recurseSubmodules(submodulesVal)
 		}
 	}
 	repo := parts[0]
@@ -74,10 +81,11 @@ func NewGit(cwd, line string) Project {
 	}
 	folder := filepath.Join(cwd, folder.FromURL(url))
 	return gitProject{
-		Version: version,
-		URL:     url,
-		folder:  folder,
-		inner:   inner,
+		Version:    version,
+		URL:        url,
+		Submodules: submodules,
+		folder:     folder,
+		inner:      inner,
 	}
 }
 
@@ -93,8 +101,10 @@ func (g gitProject) Download() error {
 		// #nosec
 		args := []string{
 			"clone",
-			"--recursive",
 			"--depth", "1",
+		}
+		if g.Submodules {
+			args = append(args, "--recursive")
 		}
 		if g.Version != "" {
 			args = append(args, "-b", g.Version)
@@ -118,11 +128,11 @@ func (g gitProject) Update() error {
 		return err
 	}
 	// #nosec
-	args := []string{
-		"pull",
-		"--recurse-submodules",
-		"origin",
+	args := []string{"pull"}
+	if g.Submodules {
+		args = append(args, "--recurse-submodules")
 	}
+	args = append(args, "origin")
 	if g.Version != "" {
 		args = append(args, g.Version)
 	}
@@ -142,6 +152,14 @@ func (g gitProject) Update() error {
 		log.Println("updated:", g.URL, oldRev, "->", rev)
 	}
 	return nil
+}
+
+func recurseSubmodules(str string) bool {
+	switch strings.ToLower(str) {
+	case "0", "f", "false", "off", "no":
+		return false
+	}
+	return true
 }
 
 func commit(folder string) (string, error) {
