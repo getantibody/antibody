@@ -53,7 +53,18 @@ $ antibody bundle Linuxbrew/brew path:completions/zsh kind:fpath
 fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-Linuxbrew-SLASH-brew/completions/zsh )
 ```
 
-<!-- TODO: document kind:dummy? -->
+### clone
+
+The `kind:clone` only gets the plugin, doing nothing else. It can be useful for
+managing a package that isn't directly used as a shell plugin.
+
+Example:
+
+```console
+$ antibody bundle mbadolato/iTerm2-Color-Schemes kind:clone
+```
+
+
 
 ## Branch
 

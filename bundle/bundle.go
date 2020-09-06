@@ -35,8 +35,8 @@ func New(home, line string) (Bundle, error) {
 		return pathBundle{Project: proj}, nil
 	case "fpath":
 		return fpathBundle{Project: proj}, nil
-	case "dummy":
-		return dummyBundle{Project: proj}, nil
+	case "clone":
+		return cloneBundle{Project: proj}, nil
 	default:
 		return zshBundle{Project: proj}, nil
 	}

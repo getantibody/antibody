@@ -26,7 +26,7 @@ func TestSuccessfullGitBundles(t *testing.T) {
 			"export PATH=\"",
 		},
 		{
-			"caarlos0/jvm kind:dummy",
+			"caarlos0/jvm kind:clone",
 			"",
 		},
 		{
