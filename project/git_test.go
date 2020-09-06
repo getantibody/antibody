@@ -104,7 +104,7 @@ func TestDownloadFolderNaming(t *testing.T) {
 
 func TestSubFolder(t *testing.T) {
 	home := home()
-	repo := NewGit(home, "robbyrussell/oh-my-zsh path:plugins/aws")
+	repo := NewGit(home, "ohmyzsh/ohmyzsh path:plugins/aws")
 	require.True(t, strings.HasSuffix(repo.Path(), "plugins/aws"))
 }
 
@@ -117,8 +117,8 @@ func TestPath(t *testing.T) {
 func TestMultipleSubFolders(t *testing.T) {
 	home := home()
 	require.NoError(t, NewGit(home, strings.Join([]string{
-		"robbyrussell/oh-my-zsh path:plugins/aws",
-		"robbyrussell/oh-my-zsh path:plugins/battery",
+		"ohmyzsh/ohmyzsh path:plugins/aws",
+		"ohmyzsh/ohmyzsh path:plugins/battery",
 	}, "\n")).Download())
 }
 

@@ -24,8 +24,8 @@ and that's it.
 You can remove a bundle completely by purging it:
 
 ```console
-$ antibody purge robbyrussell/oh-my-zsh
-Removing robbyrussell/oh-my-zsh...
+$ antibody purge ohmyzsh/ohmyzsh
+Removing ohmyzsh/ohmyzsh...
 ```
 
 ## List
