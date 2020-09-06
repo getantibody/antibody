@@ -32,9 +32,10 @@ func NewClonedGit(home, folderName string) Project {
 	}
 	url := folder.ToURL(folderName)
 	return gitProject{
-		folder:  folderPath,
-		Version: version,
-		URL:     url,
+		folder:     folderPath,
+		Version:    version,
+		Submodules: true,
+		URL:        url,
 	}
 }
 
