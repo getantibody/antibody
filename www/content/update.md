@@ -40,6 +40,22 @@ https://github.com/caarlos0/git-add-remote    /Users/carlos/Library/Caches/antib
 # ...
 ```
 
+## Path
+
+You can see the path being used for a cloned bundle.
+
+```console
+$ antibody path ohmyzsh/ohmyzsh
+/Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh
+```
+
+This is particularly useful for projects like oh-my-zsh that rely on
+storing its path in the `$ZSH` environment variable:
+
+```console
+$ ZSH=$(antibody path ohmyzsh/ohmyzsh)
+```
+
 ## Home
 
 You can also see where antibody is keeping the plugins with the home
