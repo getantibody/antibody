@@ -50,10 +50,10 @@ func NewGit(cwd, line string) Project {
 	parts := strings.Split(line, " ")
 	for _, part := range parts {
 		if strings.HasPrefix(part, branchMarker) {
-			version = strings.Replace(part, branchMarker, "", -1)
+			version = strings.ReplaceAll(part, branchMarker, "")
 		}
 		if strings.HasPrefix(part, pathMarker) {
-			inner = strings.Replace(part, pathMarker, "", -1)
+			inner = strings.ReplaceAll(part, pathMarker, "")
 		}
 	}
 	repo := parts[0]
@@ -149,7 +149,7 @@ func commit(folder string) (string, error) {
 	cmd := exec.Command("git", "rev-parse", "--short", "HEAD")
 	cmd.Dir = folder
 	rev, err := cmd.Output()
-	return strings.Replace(string(rev), "\n", "", -1), err
+	return strings.ReplaceAll(string(rev), "\n", ""), err
 }
 
 func branch(folder string) (string, error) {
@@ -157,7 +157,7 @@ func branch(folder string) (string, error) {
 	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
 	cmd.Dir = folder
 	branch, err := cmd.Output()
-	return strings.Replace(string(branch), "\n", "", -1), err
+	return strings.ReplaceAll(string(branch), "\n", ""), err
 }
 
 func (g gitProject) Path() string {

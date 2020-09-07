@@ -45,7 +45,7 @@ func New(home, line string) (Bundle, error) {
 func kind(line string) string {
 	for _, part := range strings.Split(line, " ") {
 		if strings.HasPrefix(part, "kind:") {
-			return strings.Replace(part, "kind:", "", -1)
+			return strings.ReplaceAll(part, "kind:", "")
 		}
 	}
 	return "zsh"
