@@ -24,8 +24,8 @@ and that's it.
 You can remove a bundle completely by purging it:
 
 ```console
-$ antibody purge robbyrussell/oh-my-zsh
-Removing robbyrussell/oh-my-zsh...
+$ antibody purge ohmyzsh/ohmyzsh
+Removing ohmyzsh/ohmyzsh...
 ```
 
 ## List
@@ -38,6 +38,22 @@ $ antibody list
 https://github.com/Tarrasch/zsh-bd            /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-Tarrasch-SLASH-zsh-bd
 https://github.com/caarlos0/git-add-remote    /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-caarlos0-SLASH-git-add-remote
 # ...
+```
+
+## Path
+
+You can see the path being used for a cloned bundle.
+
+```console
+$ antibody path ohmyzsh/ohmyzsh
+/Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh
+```
+
+This is particularly useful for projects like oh-my-zsh that rely on
+storing its path in the `$ZSH` environment variable:
+
+```console
+$ ZSH=$(antibody path ohmyzsh/ohmyzsh)
 ```
 
 ## Home

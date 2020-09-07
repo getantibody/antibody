@@ -53,7 +53,18 @@ $ antibody bundle Linuxbrew/brew path:completions/zsh kind:fpath
 fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-Linuxbrew-SLASH-brew/completions/zsh )
 ```
 
-<!-- TODO: document kind:dummy? -->
+### clone
+
+The `kind:clone` only gets the plugin, doing nothing else. It can be useful for
+managing a package that isn't directly used as a shell plugin.
+
+Example:
+
+```console
+$ antibody bundle mbadolato/iTerm2-Color-Schemes kind:clone
+```
+
+
 
 ## Branch
 
@@ -75,19 +86,19 @@ contains multiple plugins.
 Example:
 
 ```console
-$ antibody bundle robbyrussell/oh-my-zsh path:plugins/aws
-source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
-fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
+$ antibody bundle ohmyzsh/ohmyzsh path:plugins/aws
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/aws/aws.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/aws )
 ```
 
 If you want multiple paths within from the same plugin, you can just repeat the
 plugin with a different `path` option:
 
 ```console
-$ antibody bundle "robbyrussell/oh-my-zsh path:plugins/aws/aws.plugin.zsh
-  robbyrussell/oh-my-zsh path:plugins/asdf"
-source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws/aws.plugin.zsh
-fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/aws )
-source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf/asdf.plugin.zsh
-fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh/plugins/asdf )
+$ antibody bundle "ohmyzsh/ohmyzsh path:plugins/aws/aws.plugin.zsh
+  ohmyzsh/ohmyzsh path:plugins/asdf"
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/aws/aws.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/aws )
+source /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/asdf/asdf.plugin.zsh
+fpath+=( /Users/carlos/Library/Caches/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/asdf )
 ```
