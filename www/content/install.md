@@ -17,7 +17,7 @@ This will put the binary in `/usr/local/bin/antibody`
 You can also use homebrew (on macOS):
 
 ```sh
-brew install getantibody/tap/antibody
+brew install antibody
 ```
 
 Or even using [AUR](https://aur.archlinux.org/packages/antibody/) on Arch Linux.
