@@ -1,3 +1,19 @@
+# DEPRECATED
+
+Antibody is now deprecated. Most of the other plugin managers catch up on performance,
+thus keeping this does not make sense anymore.
+
+If you static load your plugins (like Antibody suggest you too), the plugin manager
+is pretty much irrelevant performance-wise.
+
+I also want to thank everyone who contributed, used and recommended Antibody over
+the years. You're all awesome!
+
+Cheers,
+Carlos aka caarlos0.
+
+---
+
 <p align="center">
   <img alt="GoReleaser Logo" src="logo.png" height="140" />
   <h3 align="center">Antibody</h3>
