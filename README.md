@@ -1,13 +1,13 @@
-# DEPRECATED
+# Maintenance Mode
 
-Antibody is now deprecated. Most of the other plugin managers catch up on performance,
-thus keeping this does not make sense anymore.
+Antibody is now in maintenance mode. This means we won't add any new features, and only
+fix bugs should any be found.
 
-If you static load your plugins (like Antibody suggest you too), the plugin manager
-is pretty much irrelevant performance-wise.
+If you need more features that currently provided, check other plugin managers available.
+Most of them have catch up on performance, so Antibody is not that different in that sense anymore.
+Also, if you static load your plugins (like Antibody suggest you too), the plugin manager is pretty much irrelevant performance-wise.
 
-I also want to thank everyone who contributed, used and recommended Antibody over
-the years. You're all awesome!
+I also want to thank everyone who contributed, used and recommended Antibody over the years. You're all awesome!
 
 Cheers,
 Carlos aka caarlos0.
