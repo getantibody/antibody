@@ -2,6 +2,9 @@ SOURCE_FILES?=./...
 TEST_PATTERN?=.
 TEST_OPTIONS?=-v
 
+TAG := $(shell git describe --always --tags --abbrev=0 | tr -d "[v\r\n]")
+COMMIT := $(shell git rev-parse --short HEAD| tr -d "[ \r\n\']")
+
 export PATH := ./bin:$(PATH)
 export GO111MODULE := on
 
@@ -33,8 +36,12 @@ ci: build test lint
 
 # Build a beta version
 build:
-	go build
+	go build -ldflags="-s -w -X main.version=v$(TAG)-$(COMMIT)" -o antibody .
 .PHONY: build
+
+clean:
+	rm -f ./antibody
+.PHONY: clean
 
 # gofmt and goimports all go files
 fmt:
