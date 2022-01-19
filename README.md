@@ -4,7 +4,7 @@ Antibody is now in maintenance mode. This means we won't add any new features, a
 fix bugs should any be found.
 
 If you need more features than currently provided, check other available plugin managers.
-Most of them have cought up on performance, so Antibody is not that different in that sense anymore.
+Most managers have cought up on performance so Antibody does not differ in this sense anymore.
 Also, if you static load your plugins (like the Antibody docs suggest), the plugin manager is pretty much irrelevant performance-wise.
 
 I also want to thank everyone who contributed, used and recommended Antibody over the years. You're all awesome!
