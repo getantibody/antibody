@@ -1,11 +1,13 @@
 # Maintenance Mode
 
-Antibody is now in maintenance mode. This means we won't add any new features, and only
-fix bugs should any be found.
+Antibody is now in deprecated.
+No new features or bugfixes will be included.
 
-If you need more features than currently provided, check other available plugin managers.
 Most managers have cought up on performance so Antibody does not differ in this sense anymore.
 Also, if you static load your plugins (like the Antibody docs suggest), the plugin manager is pretty much irrelevant performance-wise.
+
+If you're looking for a drop-in replacement, check out [antidote](https://github.com/mattmc3/antidote).
+If you need more features than currently provided, check other available ZSH plugin managers - there's a bunch to choose from.
 
 I also want to thank everyone who contributed, used and recommended Antibody over the years. You're all awesome!
 
